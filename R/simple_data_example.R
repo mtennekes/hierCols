@@ -1,7 +1,7 @@
 library(devtools); load_all("../treemap/pkg")
 library(RColorBrewer)
 pal <- c(brewer.pal(9, "Set1"), brewer.pal(12, "Set3"))
-source("treefunctions.R")
+source("./R/treefunctions.R")
 require(data.table)
 
 ### simple example

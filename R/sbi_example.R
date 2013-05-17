@@ -3,35 +3,20 @@ library(RColorBrewer)
 library(data.table)
 library(colorspace)
 library(grid)
-#pal <- c(brewer.pal(9, "Set1"), brewer.pal(12, "Set3"))
 source("./R/treefunctions.R")
-
-# ### simple example
-# test <- data.frame(a=c("A", "A", "A", "A", "B", "C", "C", "C", 
-# 					   "D", "D", "D", "D", "D", "D", "D", "E"),
-# 				   b=c(NA, "1", "2", "3", NA, NA, "1", "2", 
-# 				   	NA, "1", "1", "1", "2", "3", "4", NA),
-# 				   c=c(NA, NA, NA, NA, NA, NA, NA, NA, 
-# 				   	NA, NA, "a", "b", NA, NA, NA, NA))
-# test$x <- 1
-# # tmPlot(test, index=c("a", "b", "c"), vSize="x", type="index")
-# 
-# 
-# test$color <- treepalette(test[,1:3], frc=0.5)
-# tmPlot(test, index=c("a", "b", "c"), vSize="x", vColor="color", type="color", palette=pal)
-# drawtree(test[,1:3], color=test$color)
-
+source("./R/treeplots.R")
 
 
 ### sbi example
+source("./R/preprocess_SBI.R")
 
-sbi <- read.csv("./data/sbi_all.csv")
-sbi$x <- rnorm(1412, mean=1000, sd=200)
+### create random variable
+sbi$x <- rnorm(nrow(sbi), mean=100, sd=20) #rlnorm(1412, sdlog=3)
 # tmPlot(sbi, index=c("SBI1", "SBI2", "SBI3", "SBI4"), vSize="x", type="index", palette=pal)
 
 sbi$color <- treepalette(sbi[,3:6], frc=0.5)
-sbi$color <- treepalette(sbi[,3:6], method="HSV", palette=pal)
-sbi$color <- treepalette(sbi[,3:6], method="LUV", palette=pal)
+#pal <- c(brewer.pal(9, "Set1"), brewer.pal(12, "Set3"))
+#sbi$color <- treepalette(sbi[,3:6], method="HSV", palette=pal)
 
 pdf("./plots/sbi_all.pdf", width=7, height=7)
 drawtree(sbi[,3:6], color=sbi$color)
@@ -43,22 +28,23 @@ tmPlot(sbi, index=c("SBI1", "SBI2", "SBI3", "SBI4"), vSize="x", vColor="color", 
 ### sbi (selection) example
 sbiSel <- sbi[sbi$SBI1=="F" & !is.na(sbi$SBI2), ]
 sbiSel$color <- treepalette(sbiSel[,4:6], frc=0.5)
-#sbiSel$color <- treepalette(sbiSel[,4:6], method="HSV", palette=pal)
+sbiSel2 <- sbiSel[sbiSel$SBI.level=="SBI4",]
+sbiSel2 <- sbiSel2[!is.na(sbiSel2$name4),]
 
 pdf("plots/sbi_F.pdf", width=7, height=7)
     drawtree(sbiSel[,4:6], color=sbiSel$color, vertex.size=8, show.labels=TRUE, rootlabel="F", vertex.label.dist=.3, vertex.label.cex=1)
 dev.off()
 
-tmPlot(sbiSel, index=c("SBI2", "SBI3", "SBI4"), vSize="x", vColor="color", type="color")
+
+pdf("plots/treemap_F.pdf", width=10, height=6)
+    tmPlot(sbiSel2, index=c("name2", "name3", "name4"), vSize="x", type="index",title="", position.legend="none")
+dev.off()
 
 
+library(devtools); load_all("../tableplot/pkg")
+tableplot(sbiSel2)
 
 
-
-
-
-
-grid.newpage()
 
 
 ## method description with SBI2008 F sector
@@ -68,8 +54,8 @@ k <- ncol(dat)
 res <- treeapply(dat, list(lb=0, ub=360), fun="addRange", frc=0.5)
 
 res$point <- with(res, (lb+ub)/2)
-res$C <- 100 - (k-res$l) * 10 #75
-res$L <- 90 - res$l * 10 #95
+res$C <- 75 - (k-res$l) * 10 #75
+res$L <- 95 - res$l * 10 #95
 res$color <- hcl(point,c=chr, l=lum)
 
 dat <- cbind(dat, res)

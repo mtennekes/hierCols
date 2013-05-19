@@ -24,6 +24,9 @@ dev.off()
 
 tmPlot(sbi, index=c("SBI1", "SBI2", "SBI3", "SBI4"), vSize="x", vColor="color", type="color", palette=pal)
 
+sbi_SBI4 <- sbi[!is.na(sbi$SBI4), ]
+tmPlot(sbi_SBI4, index=c("name1", "name2", "name3", "name4"), vSize="x", type="index")
+
 
 ### sbi (selection) example
 sbiSel <- sbi[sbi$SBI1=="F" & !is.na(sbi$SBI2), ]

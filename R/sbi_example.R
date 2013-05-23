@@ -3,7 +3,7 @@ library(RColorBrewer)
 library(data.table)
 library(colorspace)
 library(grid)
-source("./R/treefunctions.R")
+#source("./R/treefunctions.R")
 source("./R/treeplots.R")
 
 
@@ -14,7 +14,15 @@ source("./R/preprocess_SBI.R")
 sbi$x <- rnorm(nrow(sbi), mean=100, sd=20) #rlnorm(1412, sdlog=3)
 # tmPlot(sbi, index=c("SBI1", "SBI2", "SBI3", "SBI4"), vSize="x", type="index", palette=pal)
 
-sbi$color <- treepalette(sbi[,3:6], frc=0.5)
+
+palette.HCL.options <- list(hue_start=30, hue_end=390, hue_spread=TRUE,
+                            hue_fraction=0.5, chroma=60, luminance=70, 
+                            chroma_slope=5, luminance_slope=-10)
+
+sbi$color <- treepalette(sbi[,3:6], palette.HCL.options=palette.HCL.options, prepare.dat=TRUE)
+
+
+
 #pal <- c(brewer.pal(9, "Set1"), brewer.pal(12, "Set3"))
 #sbi$color <- treepalette(sbi[,3:6], method="HSV", palette=pal)
 
@@ -25,12 +33,16 @@ dev.off()
 tmPlot(sbi, index=c("SBI1", "SBI2", "SBI3", "SBI4"), vSize="x", vColor="color", type="color", palette=pal)
 
 sbi_SBI4 <- sbi[!is.na(sbi$SBI4), ]
-tmPlot(sbi_SBI4, index=c("name1", "name2", "name3", "name4"), vSize="x", type="index")
+
+pdf("plots/treemap_all.pdf", width=10, height=6)
+    tmPlot(sbi_SBI4, index=c("name1", "name2", "name3"), vSize="x", type="index")
+dev.off()
+
 
 
 ### sbi (selection) example
 sbiSel <- sbi[sbi$SBI1=="F" & !is.na(sbi$SBI2), ]
-sbiSel$color <- treepalette(sbiSel[,4:6], frc=0.5)
+sbiSel$color <- treepalette(sbiSel[,4:6], palette.HCL.options=palette.HCL.options, prepare.dat=TRUE)
 sbiSel2 <- sbiSel[sbiSel$SBI.level=="SBI4",]
 sbiSel2 <- sbiSel2[!is.na(sbiSel2$name4),]
 
@@ -42,6 +54,10 @@ dev.off()
 pdf("plots/treemap_F.pdf", width=10, height=6)
     tmPlot(sbiSel2, index=c("name2", "name3", "name4"), vSize="x", type="index",title="", position.legend="none")
 dev.off()
+
+data(business)
+tmPlot(business[as.integer(business$NACE1)==6,], index=c("NACE2", "NACE3", "NACE4"), vSize="employees", type="index",title="", position.legend="none")
+
 
 
 library(devtools); load_all("../tableplot/pkg")

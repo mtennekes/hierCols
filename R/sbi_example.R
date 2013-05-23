@@ -35,7 +35,7 @@ tmPlot(sbi, index=c("SBI1", "SBI2", "SBI3", "SBI4"), vSize="x", vColor="color", 
 sbi_SBI4 <- sbi[!is.na(sbi$SBI4), ]
 
 pdf("plots/treemap_all.pdf", width=10, height=6)
-    tmPlot(sbi_SBI4, index=c("name1", "name2", "name3"), vSize="x", type="index")
+    tmPlot(sbi_SBI4, index=c("name1", "name2", "name3"), vSize="x", type="index",title="")
 dev.off()
 
 

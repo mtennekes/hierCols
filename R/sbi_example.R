@@ -70,12 +70,12 @@ tableplot(sbiSel2)
 
 dat <- sbiSel[,4:6]
 k <- ncol(dat)
-res <- treeapply(dat, list(lb=0, ub=360), fun="addRange", frc=0.5)
+res <- treeapply(dat, list(lb=0, ub=360), fun="addRange", frc=0.5, prepare.dat=TRUE)
 
 res$point <- with(res, (lb+ub)/2)
-res$C <- 75 - (k-res$l) * 10 #75
-res$L <- 95 - res$l * 10 #95
-res$color <- hcl(point,c=chr, l=lum)
+res$C <- 60 - (k-res$l) * 5 #75
+res$L <- 70 - res$l * 10 #95
+res$color <- hcl(res$point,c=palette.HCL.options$chroma, l=palette.HCL.options$luminance)
 
 dat <- cbind(dat, res)
 

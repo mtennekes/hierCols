@@ -11,8 +11,9 @@ source("./R/treeplots.R")
 source("./R/preprocess_SBI.R")
 
 ### create random variable
+set.seed(20130618)
 sbi$x <- rnorm(nrow(sbi), mean=100, sd=20) #rlnorm(1412, sdlog=3)
-# tmPlot(sbi, index=c("SBI1", "SBI2", "SBI3", "SBI4"), vSize="x", type="index", palette=pal)
+
 
 
 palette.HCL.options <- list(hue_start=30, hue_end=390, hue_spread=TRUE,
@@ -27,15 +28,13 @@ sbi$color <- treepalette(sbi[,3:6], palette.HCL.options=palette.HCL.options, pre
 #sbi$color <- treepalette(sbi[,3:6], method="HSV", palette=pal)
 
 pdf("./plots/sbi_all.pdf", width=7, height=7)
-drawtree(sbi[,3:6], color=sbi$color)
+drawtree(sbi[,3:6], color=sbi$color, vertex.size=5)
 dev.off()
-
-tmPlot(sbi, index=c("SBI1", "SBI2", "SBI3", "SBI4"), vSize="x", vColor="color", type="color", palette=pal)
 
 sbi_SBI4 <- sbi[!is.na(sbi$SBI4), ]
 
 pdf("plots/treemap_all.pdf", width=10, height=6)
-    tmPlot(sbi_SBI4, index=c("name1", "name2", "name3"), vSize="x", type="index",title="")
+    treemap(sbi_SBI4, index=c("name1", "name2", "name3"), vSize="x", type="index",title="")
 dev.off()
 
 
@@ -52,16 +51,16 @@ dev.off()
 
 
 pdf("plots/treemap_F.pdf", width=10, height=6)
-    tmPlot(sbiSel2, index=c("name2", "name3", "name4"), vSize="x", type="index",title="", position.legend="none")
+    treemap(sbiSel2, index=c("name2", "name3", "name4"), vSize="x", type="index",title="", position.legend="none")
 dev.off()
 
-data(business)
-tmPlot(business[as.integer(business$NACE1)==6,], index=c("NACE2", "NACE3", "NACE4"), vSize="employees", type="index",title="", position.legend="none")
+# data(business)
+# treemap(business[as.integer(business$NACE1)==6,], index=c("NACE2", "NACE3", "NACE4"), vSize="employees", type="index",title="", position.legend="none")
 
 
 
-library(devtools); load_all("../tableplot/pkg")
-tableplot(sbiSel2)
+# library(devtools); load_all("../tableplot/pkg")
+# tableplot(sbiSel2)
 
 
 
@@ -73,9 +72,11 @@ k <- ncol(dat)
 res <- treeapply(dat, list(lb=0, ub=360), fun="addRange", frc=0.5, prepare.dat=TRUE)
 
 res$point <- with(res, (lb+ub)/2)
-res$C <- 60 - (k-res$l) * 5 #75
-res$L <- 70 - res$l * 10 #95
-res$color <- hcl(res$point,c=palette.HCL.options$chroma, l=palette.HCL.options$luminance)
+# res$C <- 60 - (k-res$l) * 5 #75
+# res$L <- 70 - (res$l-1) * 10 #95
+res$color <- treepalette(dat, palette.HCL.options=palette.HCL.options, prepare.dat=TRUE)
+    
+# hcl(res$point,c=palette.HCL.options$chroma, l=palette.HCL.options$luminance)
 
 dat <- cbind(dat, res)
 

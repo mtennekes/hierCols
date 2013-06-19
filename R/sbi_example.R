@@ -6,66 +6,79 @@ library(grid)
 #source("./R/treefunctions.R")
 source("./R/treeplots.R")
 
-
 ### sbi example
 source("./R/preprocess_SBI.R")
 
-### create random variable
+### create random variables
 set.seed(20130618)
 sbi$x <- rnorm(nrow(sbi), mean=100, sd=20) #rlnorm(1412, sdlog=3)
+# sbi$x2 <- sbi$x * rlnorm(nrow(sbi),sdlog=0.2)
+# sbi$x3 <- sbi$x2 * rlnorm(nrow(sbi),sdlog=0.2)
+# sbi$x4 <- sbi$x3 * rlnorm(nrow(sbi),sdlog=0.2)
+
+vars <- paste0("y", 1:8)
+for (v in vars) sbi[[v]] <- rlnorm(nrow(sbi), sdlog=.5)
+sums <- rowSums(sbi[vars])
+sbi[vars] <- sbi[vars] / sums
 
 
 
 palette.HCL.options <- list(hue_start=30, hue_end=390, hue_spread=TRUE,
-                            hue_fraction=0.5, chroma=60, luminance=70, 
+                            hue_fraction=0.25, chroma=60, luminance=70, 
                             chroma_slope=5, luminance_slope=-10)
 
 sbi$color <- treepalette(sbi[,3:6], palette.HCL.options=palette.HCL.options, prepare.dat=TRUE)
 
-
-
-#pal <- c(brewer.pal(9, "Set1"), brewer.pal(12, "Set3"))
-#sbi$color <- treepalette(sbi[,3:6], method="HSV", palette=pal)
-
-pdf("./plots/sbi_all.pdf", width=7, height=7)
-drawtree(sbi[,3:6], color=sbi$color, vertex.size=5)
-dev.off()
-
+### for treemaps, only select lowest layer records
 sbi_SBI4 <- sbi[!is.na(sbi$SBI4), ]
 
-pdf("plots/treemap_all.pdf", width=10, height=6)
-    treemap(sbi_SBI4, index=c("name1", "name2", "name3"), vSize="x", type="index",title="")
-dev.off()
 
 
 
-### sbi (selection) example
+## tree and treemap for whole sbi range
+
+# pdf("./plots/sbi_all.pdf", width=7, height=7)
+# drawtree(sbi[,3:6], color=sbi$color, vertex.size=5)
+# dev.off()
+# 
+# pdf("plots/treemap_all.pdf", width=10, height=6)
+#     treemap(sbi_SBI4, index=c("name1", "name2", "name3"), vSize="x", type="index",title="")
+# dev.off()
+
+
+
+### sbi selection (F sector)
 sbiSel <- sbi[sbi$SBI1=="F" & !is.na(sbi$SBI2), ]
 sbiSel$color <- treepalette(sbiSel[,4:6], palette.HCL.options=palette.HCL.options, prepare.dat=TRUE)
 sbiSel2 <- sbiSel[sbiSel$SBI.level=="SBI4",]
 sbiSel2 <- sbiSel2[!is.na(sbiSel2$name4),]
 
+## tree and treemap for sbi F sector
+
 pdf("plots/sbi_F.pdf", width=7, height=7)
     drawtree(sbiSel[,4:6], color=sbiSel$color, vertex.size=8, show.labels=TRUE, rootlabel="F", vertex.label.dist=.3, vertex.label.cex=1)
 dev.off()
-
 
 pdf("plots/treemap_F.pdf", width=10, height=6)
     treemap(sbiSel2, index=c("name2", "name3", "name4"), vSize="x", type="index",title="", position.legend="none")
 dev.off()
 
-# data(business)
-# treemap(business[as.integer(business$NACE1)==6,], index=c("NACE2", "NACE3", "NACE4"), vSize="employees", type="index",title="", position.legend="none")
+
+## stacked bar chart
+str(sbiSel2)
+dat <- sbiSel2[, c("name4", "x", "x2", "x3", "x4", "color")]
+
+library(reshape2)
+dat2 <- melt(dat, id = c("name4", "color"))
+levels(dat2$variable) <- letters[1:4]
 
 
+library(ggplot2)
+ggplot(dat2, aes(x=variable, y=value, fill=name4)) + geom_bar(stat="identity") + scale_fill_manual(values=dat2$color) + coord_flip()
 
-# library(devtools); load_all("../tableplot/pkg")
-# tableplot(sbiSel2)
-
-
-
-
+######################################################
 ## method description with SBI2008 F sector
+######################################################
 
 dat <- sbiSel[,4:6]
 k <- ncol(dat)

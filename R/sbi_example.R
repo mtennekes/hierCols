@@ -1,62 +1,92 @@
+#############################################
+######### load libraries and scripts
+#############################################
+
 library(devtools); load_all("../treemap/pkg")
 library(RColorBrewer)
 library(data.table)
 library(colorspace)
 library(grid)
-#source("./R/treefunctions.R")
+library(reshape2)
+library(ggplot2)
 source("./R/treeplots.R")
+
+#############################################
+######### load example data (SBI)
+#############################################
 
 ### sbi example
 source("./R/preprocess_SBI.R")
 
+#############################################
+######### set parameters
+#############################################
+
+palette.HCL.options <- list(hue_start=0, hue_end=360, hue_spread=TRUE,
+                            hue_fraction=0.75, chroma=60, luminance=70, 
+                            chroma_slope=5, luminance_slope=-10)
+
+## note: hue_start=30 and hue_end=390 give slightly better results, but 0 and 360 are easier to use for describing the method
+
+#############################################
+######### determine colors for whole SBI range
+#############################################
+
+sbi$color <- treepalette(sbi[,3:6], palette.HCL.options=palette.HCL.options, prepare.dat=TRUE)
+
+#############################################
+######### add fictive data
+#############################################
+
 ### create random variables
 set.seed(20130618)
 sbi$x <- rnorm(nrow(sbi), mean=100, sd=20) #rlnorm(1412, sdlog=3)
-# sbi$x2 <- sbi$x * rlnorm(nrow(sbi),sdlog=0.2)
-# sbi$x3 <- sbi$x2 * rlnorm(nrow(sbi),sdlog=0.2)
-# sbi$x4 <- sbi$x3 * rlnorm(nrow(sbi),sdlog=0.2)
+sbi$y <- sbi$x * rlnorm(nrow(sbi), mean=0, sdlog=.5)
 
-vars <- paste0("y", 1:8)
-for (v in vars) sbi[[v]] <- rlnorm(nrow(sbi), sdlog=.5)
-sums <- rowSums(sbi[vars])
-sbi[vars] <- sbi[vars] / sums
-
-
-
-palette.HCL.options <- list(hue_start=30, hue_end=390, hue_spread=TRUE,
-                            hue_fraction=0.25, chroma=60, luminance=70, 
-                            chroma_slope=5, luminance_slope=-10)
-
-sbi$color <- treepalette(sbi[,3:6], palette.HCL.options=palette.HCL.options, prepare.dat=TRUE)
+#############################################
+######### preprocess data, make selection (sector F), and prepare for plots
+#############################################
 
 ### for treemaps, only select lowest layer records
 sbi_SBI4 <- sbi[!is.na(sbi$SBI4), ]
 
-
-
-
-## tree and treemap for whole sbi range
-
-# pdf("./plots/sbi_all.pdf", width=7, height=7)
-# drawtree(sbi[,3:6], color=sbi$color, vertex.size=5)
-# dev.off()
-# 
-# pdf("plots/treemap_all.pdf", width=10, height=6)
-#     treemap(sbi_SBI4, index=c("name1", "name2", "name3"), vSize="x", type="index",title="")
-# dev.off()
-
-
-
 ### sbi selection (F sector)
 sbiSel <- sbi[sbi$SBI1=="F" & !is.na(sbi$SBI2), ]
-sbiSel$color <- treepalette(sbiSel[,4:6], palette.HCL.options=palette.HCL.options, prepare.dat=TRUE)
+sbiSel$color <- NULL
+
+res <- treepalette(sbiSel[,4:6], palette.HCL.options=palette.HCL.options, prepare.dat=TRUE, return.parameters=TRUE)
+
+sbiSel <- cbind(sbiSel, res[, 4:9])
+
 sbiSel2 <- sbiSel[sbiSel$SBI.level=="SBI4",]
 sbiSel2 <- sbiSel2[!is.na(sbiSel2$name4),]
 
-## tree and treemap for sbi F sector
+### data for bar chart
+bcdat <- sbiSel2[, c("name4", "y", "color")]
+names(bcdat)[1] <- "sector"
+
+bcdat$sector <- factor(bcdat$sector, levels=rev(unique(bcdat$sector)))
+levels(bcdat$sector) <- substr(levels(bcdat$sector), 1, 6)
+
+#############################################
+######### radial tree graph
+#############################################
+
+pdf("./plots/sbi_all.pdf", width=7, height=7)
+drawtree(sbi[,3:6], color=sbi$color, vertex.size=5)
+dev.off()
 
 pdf("plots/sbi_F.pdf", width=7, height=7)
-    drawtree(sbiSel[,4:6], color=sbiSel$color, vertex.size=8, show.labels=TRUE, rootlabel="F", vertex.label.dist=.3, vertex.label.cex=1)
+drawtree(sbiSel[,4:6], color=sbiSel$color, vertex.size=8, show.labels=TRUE, rootlabel="F", vertex.label.dist=.3, vertex.label.cex=1)
+dev.off()
+
+
+#############################################
+######### treemap
+#############################################
+
+pdf("plots/treemap_all.pdf", width=10, height=6)
+    treemap(sbi_SBI4, index=c("name1", "name2", "name3"), vSize="x", type="index",title="")
 dev.off()
 
 pdf("plots/treemap_F.pdf", width=10, height=6)
@@ -64,64 +94,70 @@ pdf("plots/treemap_F.pdf", width=10, height=6)
 dev.off()
 
 
-## stacked bar chart
-str(sbiSel2)
-dat <- sbiSel2[, c("name4", "x", "x2", "x3", "x4", "color")]
-
-library(reshape2)
-dat2 <- melt(dat, id = c("name4", "color"))
-levels(dat2$variable) <- letters[1:4]
+#############################################
+######### stacked bar chart
+#############################################
 
 
-library(ggplot2)
-ggplot(dat2, aes(x=variable, y=value, fill=name4)) + geom_bar(stat="identity") + scale_fill_manual(values=dat2$color) + coord_flip()
+(g <- ggplot(bcdat, aes(x=sector, y=y, fill=sector)) +
+    geom_bar(stat="identity") + 
+    scale_x_discrete("") +
+     scale_y_continuous("") +
+     scale_fill_manual(values=bcdat$color) + coord_flip() + theme_bw() +
+     theme(legend.position="none")
+#    geom_text(aes(label=sector, y=-.005), hjust=0)
+#     theme(axis.line=element_blank(),axis.text.x=element_blank(),
+#           axis.text.y=element_blank(),axis.ticks=element_blank(),
+#           axis.title.x=element_blank(),
+#           axis.title.y=element_blank(),legend.position="none",
+#           panel.background=element_blank(),
+#           panel.border=element_blank(),panel.grid.major=element_blank(),
+#           panel.grid.minor=element_blank(),plot.background=element_blank())
+ )
 
-######################################################
-## method description with SBI2008 F sector
-######################################################
+ggsave("bar_chart.pdf", path="plots", plot=g, width=6, height=4, scale=1.5)
 
-dat <- sbiSel[,4:6]
-k <- ncol(dat)
-res <- treeapply(dat, list(lb=0, ub=360), fun="addRange", frc=0.5, prepare.dat=TRUE)
 
-res$point <- with(res, (lb+ub)/2)
-# res$C <- 60 - (k-res$l) * 5 #75
-# res$L <- 70 - (res$l-1) * 10 #95
-res$color <- treepalette(dat, palette.HCL.options=palette.HCL.options, prepare.dat=TRUE)
-    
-# hcl(res$point,c=palette.HCL.options$chroma, l=palette.HCL.options$luminance)
 
-dat <- cbind(dat, res)
+#############################################
+######### show permutations
+#############################################
 
+for (i in 2:20) cat(i, ":", spread(i), "\n")
+
+
+#############################################
+######### plot for method description for dividing hue range
+#############################################
+
+dat <- sbiSel
 
 dat$label <- with(dat, paste(as.character(SBI2), as.character(SBI3), as.character(SBI4), sep="."))
-
-
 dat$label <- gsub(".NA", "", dat$label, fixed=TRUE)
 
+dat$l <- as.numeric(dat$SBI.level) - 1
 
-str(dat)
-
-rem1 <- as.list(as.data.frame(apply(dat[dat$l==1, c("lb", "ub")], MARGIN=1,FUN=function(x)x)))
-rem2 <- as.list(as.data.frame(apply(dat[dat$l==2, c("lb", "ub")], MARGIN=1,FUN=function(x)x)))
-rem3 <- as.list(as.data.frame(apply(dat[dat$l==3, c("lb", "ub")], MARGIN=1,FUN=function(x)x)))
+rem1 <- as.list(as.data.frame(apply(dat[dat$l==1, c("hue_lb", "hue_ub")], MARGIN=1,FUN=function(x)x)))
+rem2 <- as.list(as.data.frame(apply(dat[dat$l==2, c("hue_lb", "hue_ub")], MARGIN=1,FUN=function(x)x)))
+rem3 <- as.list(as.data.frame(apply(dat[dat$l==3, c("hue_lb", "hue_ub")], MARGIN=1,FUN=function(x)x)))
 
 inverse <- function(x) {
-    y <- c(0, unlist(x), 360)
+    y <- c(0, sort(unlist(x)), 360)
     split(y, rep(1:(length(y)/2), each=2))
 }
 
 cuts1 <- inverse(rem1)
 cuts2 <- inverse(rem2)
 cuts3 <- inverse(rem3)
-borders1 <- c(dat$lb[dat$l==1], dat$ub[dat$l==1])
-borders2 <- c(dat$lb[dat$l==2], dat$ub[dat$l==2])
-labs1 <- dat$point[dat$l==1]
+borders1 <- c(dat$hue_lb[dat$l==1], dat$hue_ub[dat$l==1])
+borders2 <- c(dat$hue_lb[dat$l==2], dat$hue_ub[dat$l==2])
+labs1 <- dat$H[dat$l==1]
 names(labs1) <- dat$label[dat$l==1]
-labs2 <- dat$point[dat$l==2]
+labs2 <- dat$H[dat$l==2]
 names(labs2) <- dat$label[dat$l==2]
-labs3 <- dat$point[dat$l==3]
+labs3 <- dat$H[dat$l==3]
 names(labs3) <- dat$label[dat$l==3]
+labs3 <- labs3[-c(14:16, 18:20, 12)]  ## to prevent overplotting
 
 gridsize <- 5e2+1
 
@@ -152,7 +188,7 @@ cellplot(2,2, e={
 
 
 cellplot(3,1, e={
-    drawHCL(gridsize=gridsize, marks=c(60, 170, 190, 285, 300, 315, borders1), 
+    drawHCL(gridsize=gridsize, marks=c(60, 157.5, 202.5, 285, 315, borders1), 
         marks.dashed=F, 
         cuts=cuts2, labels=labs2, labels.cex=0.7)
 })
@@ -160,11 +196,10 @@ cellplot(4,1, e={
     grid.text("(c) Recursively divided among second layer nodes", x=0.05, y=unit(0.5, "lines"), just="left")
 })
 
-
 cellplot(3,2, e={
     drawHCL(gridsize=gridsize, 
         marks.dashed=T, 
-        cuts=cuts3, labels=labs2, labels.cex=0.6)
+        cuts=cuts3, labels=labs3, labels.cex=0.6)
 })
 cellplot(4,2, e={
     grid.text("(d) Recursively divided among third layer nodes", x=0.05, y=unit(0.5, "lines"), just="left")

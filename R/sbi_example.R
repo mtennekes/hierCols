@@ -103,7 +103,7 @@ dev.off()
     geom_bar(stat="identity") + 
     scale_x_discrete("") +
      scale_y_continuous("") +
-     scale_fill_manual(values=bcdat$color) + coord_flip() + theme_bw() +
+     scale_fill_manual(values=rev(bcdat$color)) + coord_flip() + theme_bw() +
      theme(legend.position="none")
 #    geom_text(aes(label=sector, y=-.005), hjust=0)
 #     theme(axis.line=element_blank(),axis.text.x=element_blank(),
@@ -116,6 +116,19 @@ dev.off()
  )
 
 ggsave("bar_chart.pdf", path="plots", plot=g, width=6, height=4, scale=1.5)
+
+bcdat <- transform(bcdat, sbi2=factor(paste0("NACE ",substring(sector, 1, 2))))
+
+(g <- ggplot(bcdat, aes(x=sbi2, y=y, fill=sector)) +
+     geom_bar(stat="identity", position="stack", colour="#999999") + 
+     scale_x_discrete("") +
+     scale_y_continuous("") +
+     #geom_text(aes(y=sector, x=0.5)) +
+     scale_fill_manual(values=rev(bcdat$color)) + theme_bw() +
+     theme(legend.position="none")
+)
+
+ggsave("stackedbar_chart.pdf", path="plots", plot=g, width=6, height=4, scale=1.5)
 
 
 

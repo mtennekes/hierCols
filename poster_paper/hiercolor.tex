@@ -37,9 +37,9 @@
 \and Edwin de Jonge\thanks{e-mail:e.dejonge@cbs.nl}\\ %
      \scriptsize Statistics Netherlands}
 
-\abstract{Color is an important attribute to display categorical data in statistical graphics, such as bar charts and mosaic plots. Categorical data are often hierarchically structured, for instance according a classification tree. Qualitative color palettes that represent tree structures would be very useful, both for hierarchically and non-hierarchically structured visualizations.
+\abstract{ Color is an important means to display categorical data in statistical graphics. Categories are often hierarchically structured in a classification tree, but most qualitative color palettes do not take this hierarchy into account.  
 
-We present a method to map colors from the Hue-Chroma-Luminance (HCL) color model to tree structures. The HCL color space, which is a transformation of the CIELUV color space, is known for its well balanced perceptual properties.
+We present a method to map tree structures to colors from the Hue-Chroma-Luminance (HCL) color model. The HCL color space, which is a transformation of the CIELUV color space, is known for its well balanced perceptual properties. Our experiments suggest that hierarchical qualitative color palettes are very useful: not only for improving standard hierarchical visualizations such as trees and tree maps, but also for showing tree structure in non-hierarchical visualizations.
 }
 
 \CCScatlist{ 
@@ -59,12 +59,12 @@ We present a method to map colors from the Hue-Chroma-Luminance (HCL) color mode
 
 \maketitle
 
-Hierarchical data are of crucial importance in daily official statistics. Publications levels are often hierarchically structured, for instance geographic region or economic activity. A recent trend in current data analysis practice, is to follow a top-down approach rather than to analyze input data (from surveys or administrative sources) on record level. Several data visualization methods are useful to explore hierarchical statistical data, for instance treemaps \cite{tennekes2011b}. Color palettes that resemble hierarchical structures would be very useful in this context.
+Hierarchical data are of crucial importance in official statistics. Most official data are published using hierarchically structured categories, for instance geographic regions or economic activities. A recent trend in data analysis practice, is to follow a top-down approach rather than to check  each individual record of a survey or administrative source. Several data visualization methods are useful to explore and analyze hierarchical statistical data, for instance treemaps
+[Shneiderman hier noemen..., plus jezelf...] \cite{,tennekes2011b}. Color palettes reflecting the  hierarchical structure would be very useful in supporting visual analysis.
 
+Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should not suggest non-existent order or proximity and introduce perceptual bias. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
 
-Assigning colors to categorical data points is far from trivial. On the one hand, colors should be easy to distinguish, but on the other hand they should not introduce perceptual bias. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for categorical data with a hierarchical structure, there are no specific guidelines for selecting color palettes, to the best of our knowledge.
-
-Although many tree visualizations are proposed in literature \cite{schulz2011}, most of them use color only to a small extent. A visualization technique that uses color as a major attribute is the InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned to a different hue values. The color of a parent node is derived from averaging the colors of its children, where larger branches have more weight. An implicit effect is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches.
+Although many tree visualizations are proposed in literature \cite{schulz2011}, most of them use color to a small extent. A visualization technique that uses color as a major attribute is the InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned to a different hue values. The color of a parent node is derived from averaging the colors of its children, where larger branches have more weight. An implicit effect is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches.
 
 
 \section{Method}
@@ -72,9 +72,9 @@ Although many tree visualizations are proposed in literature \cite{schulz2011}, 
 
 The Hue-Chroma-Luminance (HCL) space, which is a transformation of the CIELUV color space, is designed with the aim to control human color perception~\cite{ihaka2003}.
 Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) color space~\cite{zeileis2009}. We use the HCL space to select colors for hierarchical structures. The hue $H$ takes values from 0 to 360, and the chroma $C$ and luminance $L$ take values from 0 to 100.
+We will use $H$ for the tree structure, where child nodes resemble the hue of their parent nodes. $C$ and $L$ will be used to show discrimate the different hierarchichal levels.
 
-We describe out method using the European classification system of economic activity NACE. Section F (Construction) is depicted in Figure~\ref{fig:sbiF}. The nodes are colored with the   resulting hierarchical color palette. 
-
+We illustrate our method with the European classification system of economic activity NACE. (reference?). (iets zeggen over de grootte?) Section F (Construction) is depicted in Figure~\ref{fig:sbiF}. The nodes are colored with the resulting hierarchical color palette. 
 
 \begin{figure}[htb]
   \centering
@@ -109,10 +109,6 @@ Ad 2(b) The fraction of each hue range that is kept is by default set to $0.75$.
 
 In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes. We let the $L$ decrease linearly with depth and $C$ increase, analog to ocean water colors at various depths.
 
-
-
-
-
 \begin{figure}[htb]
   \centering
   \includegraphics[width=3.5in]{treemap_F.pdf}
@@ -123,7 +119,8 @@ In order to show depth, we let $C$ and $L$ values only depend on the depth of th
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=3.5in]{bar_chart.pdf}
+  \includegraphics[width=1.75in]{bar_chart.pdf}
+  \includegraphics[width=1.75in]{stackedbar_chart.pdf}
   \caption{Bar chart with hierarchical colors}\label{fig:barchart}
 \end{figure}
 
@@ -133,13 +130,12 @@ In order to show depth, we let $C$ and $L$ values only depend on the depth of th
 
 A treemap of a random variable assigned to the NACE tree of sector F is depicted in Figure~\ref{fig:treemapF}. As a real application in official statistics, this variable could be turnover that is available for each business enterprise in a business register, and aggregated according to the NACE tree. The colored rectangles correspond to the deepest NACE layer, while the color of higher NACE layers is used to for the text label backgrounds. This treemap are created with the free and open source R package treemap \cite{treemap}.
 
-As an example of a non-hierarchically-structured plot, a bar chart of random data is depicted in ~\ref{fig:barchart}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses.
+As an example of a non-hierarchically-structured plot, a bar chart of random data is depicted in ~\ref{fig:barchart}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. The stacked bar shows the internal structure .....
 
 \section{Further research}
 
 We recommend to further investigate the proposed hierarchical color selection method, and to evaluate the obtained color palettes in various statistical graphics.
-
-
+[testen op eindgebruikers etc.]
 
 %\acknowledgements{
 %The authors wish to thank A, B, C. This work was supported in part by

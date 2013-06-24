@@ -86,7 +86,7 @@ For selecting hue values we use the following recursive algorithm. It will assig
 
 We start with the root node, which has by default hue range $[0, 360]$:
 
-{\bf AssignHue($v$, $r$)}
+\smallskip{\bf AssignHue($v$, $r$)}
 \begin{enumerate} \itemsep1pt \parskip0pt 
 \parsep0pt
 \item assign the middle hue value in $r$ to $h$ \footnote{in most cases the root node itself won't be drawn.}
@@ -96,7 +96,7 @@ We start with the root node, which has by default hue range $[0, 360]$:
 \item divide $r$ in $N$ equal parts $r_i$;
 \item permute the $r_i$'s and assign them to the child nodes
 \item reduce each $r_i$ by keeping the middle fraction $f$;
-\item for each child nodes $v_i$ DO AssignHue($v_i$,$r_i$)
+\item for each child node $v_i$ DO AssignHue($v_i$,$r_i$)
 \end{enumerate}
 \end{enumerate}
 
@@ -106,7 +106,7 @@ We start with the root node, which has by default hue range $[0, 360]$:
   \caption{Assignment of hue values.}\label{fig:wheel}
 \end{figure}
 
-This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=70$)  is divided among the three children of the root, in (b) the middle parts are kept, in (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
+This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=70$)  is divided and permuted among the three children of the root, in (b) the middle fractions are kept, in (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
 
 Ad 2(b) In most hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling of the color wheel that shows that the assignment of colors is permuted.
 
@@ -124,23 +124,27 @@ In order to show depth, we let $C$ and $L$ values only depend on the depth of th
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=1.75in]{bar_chart.pdf}
+  \includegraphics[width=2.25in]{bar_chart.pdf}
   \caption{Bar chart with hierarchical colors}\label{fig:barchart}
 \end{figure}
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=1.75in]{stackedbar_chart.pdf}
-  \caption{Stacked bar chart with hierarchical colors}\label{fig:barchart}
+  \includegraphics[width=2.25in]{stackedline_chart.pdf}
+  \caption{Stacked line chart with hierarchical colors}\label{fig:linechart}
 \end{figure}
+%\begin{figure}[htb]
+%  \centering
+%  \includegraphics[width=1.75in]{stackedbar_chart.pdf}
+%  \caption{Stacked bar chart with hierarchical colors}\label{fig:barchart}
+%\end{figure}
 
 
 
 \section{Application}
-The hierarchical colors can be applied to enhance standard tree visualizations, as we saw in . figure~\ref{fig:sbiF}. Strictly speaking this is redundant color usage, but in our opinion
-it can improve many tree visualizations. A second example of improvement is depicted in figure~\ref{fig:treemapF}. It shows a treemap depicting (fictious) turnover in Construction (NACE F). In official statistics, turnover is available for each business enterprise in a business register, and aggregated according to the NACE tree. The colors of the smallest rectangles correspond to the most detailed NACE layer, while the color of higher NACE layers is used to for the text label backgrounds. This treemap is created with the free and open source R package treemap \cite{treemap}.
+The hierarchical colors can be applied to enhance standard tree visualizations, as we saw in Figure~\ref{fig:sbiF}. Strictly speaking this is redundant color usage, but in our opinion it can improve many tree visualizations. A second example of improvement is depicted in Figure~\ref{fig:treemapF}. It shows a treemap depicting (fictious) turnover values in Construction (NACE F). In official statistics, turnover is available for each business enterprise in a business register, and aggregated according to the NACE tree. The colors of the smallest rectangles correspond to the most detailed NACE layer, while the color of higher NACE layers is used to for the text label backgrounds. This treemap is created with the free and open source R package treemap \cite{treemap}.
 
 Hierarchical colors can also improve visualizations without explicit tree structure. The colors hint at the underlying tree structure.
-As an example of a non-hierarchically-structured plot, a bar chart of random data is depicted in ~\ref{fig:barchart}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. ....
+As an example of a non-hierarchically-structured plot, a bar chart and a stacked line chart are depicted in Figures~\ref{fig:barchart} and~\ref{fig:linechart} . Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses.
 
 \section{Further research}
 

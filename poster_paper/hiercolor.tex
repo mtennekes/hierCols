@@ -69,12 +69,12 @@ Although many tree visualizations are proposed in literature \cite{schulz2011}, 
 
 \section{Method}
 
+Our method maps a tree structure on colors in HCL space, such that is reflects it hierarchical properties. The Hue-Chroma-Luminance (HCL) space, which is a transformation of the CIELUV color space, is designed with the aim to control human color perception~\cite{ihaka2003}.
+Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) color space~\cite{zeileis2009}. The hue $H$ takes values from 0 to 360, and the chroma $C$ and luminance $L$ take values from 0 to 100.
 
-The Hue-Chroma-Luminance (HCL) space, which is a transformation of the CIELUV color space, is designed with the aim to control human color perception~\cite{ihaka2003}.
-Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) color space~\cite{zeileis2009}. We use the HCL space to select colors for hierarchical structures. The hue $H$ takes values from 0 to 360, and the chroma $C$ and luminance $L$ take values from 0 to 100.
-We will use $H$ for the tree structure, where child nodes resemble the hue of their parent nodes. $C$ and $L$ will be used to show discrimate the different hierarchichal levels.
+We use $H$ for the tree structure, where the hue of child nodes resemble the hue of their parents. $C$ and $L$ are used to discrimate the different hierarchical levels.
 
-We illustrate our method with the European classification system of economic activity NACE. (reference?). (iets zeggen over de grootte?) Section F (Construction) is depicted in Figure~\ref{fig:sbiF}. The nodes are colored with the resulting hierarchical color palette. 
+In this paper we illustrate our method with the European classification system of economic activity NACE. (reference?). This is a rather large classification system, (iets zeggen over de grootte?). Figure~\ref{fig:sbiF} show a small part of the NACE: section F (Construction). Figure~\ref{fig:sbiF} is a typical tree visualization using a radial layout, but is improved by using nodes with colors from our hierarchical color palette. 
 
 \begin{figure}[htb]
   \centering
@@ -82,16 +82,21 @@ We illustrate our method with the European classification system of economic act
   \caption{Tree structure of economic sector F of NACE.}\label{fig:sbiF}
 \end{figure}
 
-For selecting hue values we use the following breadth-first algorithm. Starting with the root node, which is assigned to a predefined hue range (by default $[0, 360]$), the procedure per node $v$ is: 
+For selecting hue values we use the following recursive algorithm. It will assign to each node $v_i$ of a tree structure a hue value $h_i$ and a hue value range $r_i$.
+
+We start with the root node, which has by default hue range $[0, 360]$:
+
+{\bf AssignHue($v$, $r$)}
 \begin{enumerate} \itemsep1pt \parskip0pt 
 \parsep0pt
-\item assign the middle hue value in the hue range to $v$ (ignore coloring the root node itself);
-\item if $v$ has children:
+\item assign the middle hue value in $r$ to $h$ \footnote{in most cases the root node itself won't be drawn.}
+\item $N$ is number of child nodes of $v_i$, if $N>0$ :
 \begin{enumerate} \itemsep1pt \parskip0pt 
 \parsep0pt
-\item divide the hue range equally among $v$'s children;
-\item keep the middle parts;
-\item visit the $v$'s children.
+\item divide $r$ in $N$ equal parts $r_i$;
+\item permute the $r_i$'s and assign them to the child nodes
+\item reduce each $r_i$ by keeping the middle fraction $f$;
+\item for each child nodes $v_i$ DO AssignHue($v_i$,$r_i$)
 \end{enumerate}
 \end{enumerate}
 
@@ -103,11 +108,11 @@ For selecting hue values we use the following breadth-first algorithm. Starting 
 
 This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=70$)  is divided among the three children of the root, in (b) the middle parts are kept, in (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
 
-Ad 2(a) In most hierarchical structures, there is no ordinal order among siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. 
+Ad 2(b) In most hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling of the color wheel that shows that the assignment of colors is permuted.
 
-Ad 2(b) The fraction of each hue range that is kept is by default set to $0.75$. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. 
+Ad 2(c) The fraction is needed to introduce a `hue gap' between nodes with a different parent. The fraction $f$ is by default set to $0.75$. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. 
 
-In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes. We let the $L$ decrease linearly with depth and $C$ increase, analog to ocean water colors at various depths.
+In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes.
 
 \begin{figure}[htb]
   \centering
@@ -120,22 +125,26 @@ In order to show depth, we let $C$ and $L$ values only depend on the depth of th
 \begin{figure}[htb]
   \centering
   \includegraphics[width=1.75in]{bar_chart.pdf}
-  \includegraphics[width=1.75in]{stackedbar_chart.pdf}
   \caption{Bar chart with hierarchical colors}\label{fig:barchart}
+\end{figure}
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=1.75in]{stackedbar_chart.pdf}
+  \caption{Stacked bar chart with hierarchical colors}\label{fig:barchart}
 \end{figure}
 
 
 
 \section{Application}
+The hierarchical colors can be applied to enhance standard tree visualizations, as we saw in . figure~\ref{fig:sbiF}. Strictly speaking this is redundant color usage, but in our opinion
+it can improve many tree visualizations. A second example of improvement is depicted in figure~\ref{fig:treemapF}. It shows a treemap depicting (fictious) turnover in Construction (NACE F). In official statistics, turnover is available for each business enterprise in a business register, and aggregated according to the NACE tree. The colors of the smallest rectangles correspond to the most detailed NACE layer, while the color of higher NACE layers is used to for the text label backgrounds. This treemap is created with the free and open source R package treemap \cite{treemap}.
 
-A treemap of a random variable assigned to the NACE tree of sector F is depicted in Figure~\ref{fig:treemapF}. As a real application in official statistics, this variable could be turnover that is available for each business enterprise in a business register, and aggregated according to the NACE tree. The colored rectangles correspond to the deepest NACE layer, while the color of higher NACE layers is used to for the text label backgrounds. This treemap are created with the free and open source R package treemap \cite{treemap}.
-
-As an example of a non-hierarchically-structured plot, a bar chart of random data is depicted in ~\ref{fig:barchart}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. The stacked bar shows the internal structure .....
+Hierarchical colors can also improve visualizations without explicit tree structure. The colors hint at the underlying tree structure.
+As an example of a non-hierarchically-structured plot, a bar chart of random data is depicted in ~\ref{fig:barchart}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. ....
 
 \section{Further research}
 
-We recommend to further investigate the proposed hierarchical color selection method, and to evaluate the obtained color palettes in various statistical graphics.
-[testen op eindgebruikers etc.]
+We recommend to further investigate the proposed hierarchical color method, and to evaluate the obtained color palettes in various statistical graphics. This should include a user study in the effectiveness of this hierarchical color palette.
 
 %\acknowledgements{
 %The authors wish to thank A, B, C. This work was supported in part by

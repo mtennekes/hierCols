@@ -124,8 +124,8 @@ bcdat <- transform(bcdat, sbi2=factor(paste0("NACE ",substring(sector, 1, 2))))
 ggsave("stackedbar_chart.pdf", path="plots", plot=g, width=6, height=4, scale=1.5)
 
 # stacked line chart
-set.seed(20130624)
-bcdat <- transform(bcdat, t=10)
+set.seed(20120624)
+bcdat <- transform(bcdat, t=2012)
 
 bcdats <- list(bcdat)
 
@@ -134,18 +134,27 @@ for (i in 2:10) {
     bcdat_temp <- bcdat
     old <- bcdats[[i-1]]$y
     
-    bcdat_temp$y <- old * rlnorm(length(old), sdlog=.5) * rnorm(length(old), mean=.8, sd=.2)
-    bcdat_temp$t <- 11-i
+    bcdat_temp$y <- old * rlnorm(length(old), sdlog=.3) * rlnorm(length(old), meanlog=-.07, sdlog=.2)
+    bcdat_temp$t <- 2013-i
     bcdats[[i]] <- bcdat_temp
 }
 
 bcdat2 <- do.call("rbind", bcdats)
 
-(g <- ggplot(bcdat2, aes(x = t, y = y, fill = sector)) + geom_area(position = 'stack') +
-     geom_text(data = bcdat2[bcdat2$t==10,], aes(label = sector, y=y), hjust = 0.7, vjust = 1.2, position = 'stack') +
+bctext <- bcdat2[bcdat2$t==2012,]
+bctext$t <- 2012.25
+cums <- c(0, cumsum(bctext$y))
+bctext$y <- (cums[-1] + head(cums, -1))/2
+
+(g <- ggplot(bcdat2, aes(x = t, y = y, fill = sector)) + geom_area(position = 'stack', color="#999999") +
+     scale_x_continuous("year", breaks=2003:2012) +
+     scale_y_continuous("value") +
+     geom_text(data = bctext, aes(label = sector, x=t, ymax=y, y=y), hjust = .3, vjust = .5, size=2.8) +
 scale_fill_manual(values=rev(bcdat$color)) + theme_bw() +
     theme(legend.position="none")
 )
+
+ggsave("stackedline_chart.pdf", path="plots", plot=g, width=6, height=4, scale=1.5)
 
 
 #############################################

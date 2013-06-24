@@ -60,7 +60,7 @@ We present a method to map tree structures to colors from the Hue-Chroma-Luminan
 \maketitle
 
 Hierarchical data are of crucial importance in official statistics. Most official data are published using hierarchically structured categories, for instance geographic regions or economic activities. A recent trend in data analysis practice, is to follow a top-down approach rather than to check  each individual record of a survey or administrative source. Several data visualization methods are useful to explore and analyze hierarchical statistical data, for instance treemaps
-[Shneiderman hier noemen..., plus jezelf...] \cite{,tennekes2011b}. Color palettes reflecting the  hierarchical structure would be very useful in supporting visual analysis.
+\cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the  hierarchical structure would be very useful in supporting visual analysis.
 
 Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should not suggest non-existent order or proximity and introduce perceptual bias. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
 
@@ -74,7 +74,7 @@ The Hue-Chroma-Luminance (HCL) space, which is a transformation of the CIELUV co
 Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) color space~\cite{zeileis2009}. We use the HCL space to select colors for hierarchical structures. The hue $H$ takes values from 0 to 360, and the chroma $C$ and luminance $L$ take values from 0 to 100.
 We will use $H$ for the tree structure, where child nodes resemble the hue of their parent nodes. $C$ and $L$ will be used to show discrimate the different hierarchichal levels.
 
-We illustrate our method with the European classification system of economic activity NACE. (reference?). (iets zeggen over de grootte?) Section F (Construction) is depicted in Figure~\ref{fig:sbiF}. The nodes are colored with the resulting hierarchical color palette. 
+We illustrate our method with the European classification system of economic activity NACE \cite{nace}. Section F (Construction) is depicted in Figure~\ref{fig:sbiF}. The nodes are colored with the resulting hierarchical color palette. 
 
 \begin{figure}[htb]
   \centering

@@ -43,6 +43,7 @@ set.seed(20130618)
 sbi$x <- rnorm(nrow(sbi), mean=100, sd=20) #rlnorm(1412, sdlog=3)
 sbi$y <- sbi$x * rlnorm(nrow(sbi), mean=0, sdlog=.5)
 
+
 #############################################
 ######### preprocess data, make selection (sector F), and prepare for plots
 #############################################
@@ -105,14 +106,6 @@ dev.off()
      scale_y_continuous("") +
      scale_fill_manual(values=rev(bcdat$color)) + coord_flip() + theme_bw() +
      theme(legend.position="none")
-#    geom_text(aes(label=sector, y=-.005), hjust=0)
-#     theme(axis.line=element_blank(),axis.text.x=element_blank(),
-#           axis.text.y=element_blank(),axis.ticks=element_blank(),
-#           axis.title.x=element_blank(),
-#           axis.title.y=element_blank(),legend.position="none",
-#           panel.background=element_blank(),
-#           panel.border=element_blank(),panel.grid.major=element_blank(),
-#           panel.grid.minor=element_blank(),plot.background=element_blank())
  )
 
 ggsave("bar_chart.pdf", path="plots", plot=g, width=6, height=4, scale=1.5)
@@ -130,6 +123,29 @@ bcdat <- transform(bcdat, sbi2=factor(paste0("NACE ",substring(sector, 1, 2))))
 
 ggsave("stackedbar_chart.pdf", path="plots", plot=g, width=6, height=4, scale=1.5)
 
+# stacked line chart
+set.seed(20130624)
+bcdat <- transform(bcdat, t=10)
+
+bcdats <- list(bcdat)
+
+
+for (i in 2:10) {
+    bcdat_temp <- bcdat
+    old <- bcdats[[i-1]]$y
+    
+    bcdat_temp$y <- old * rlnorm(length(old), sdlog=.5) * rnorm(length(old), mean=.8, sd=.2)
+    bcdat_temp$t <- 11-i
+    bcdats[[i]] <- bcdat_temp
+}
+
+bcdat2 <- do.call("rbind", bcdats)
+
+(g <- ggplot(bcdat2, aes(x = t, y = y, fill = sector)) + geom_area(position = 'stack') +
+     geom_text(data = bcdat2[bcdat2$t==10,], aes(label = sector, y=y), hjust = 0.7, vjust = 1.2, position = 'stack') +
+scale_fill_manual(values=rev(bcdat$color)) + theme_bw() +
+    theme(legend.position="none")
+)
 
 
 #############################################

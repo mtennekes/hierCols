@@ -74,7 +74,7 @@ Colors with different hue values are perceptually uniform in colorfulness and br
 
 We use $H$ for the tree structure, where the hue of each child node resembles the hue of its parent. $C$ and $L$ are used to discrimate the different hierarchical levels.
 
-In this paper we illustrate our method with the European classification system of economic activity NACE. (reference?). This is a rather large classification system, (iets zeggen over de grootte?). Figure~\ref{fig:sbiF} show a small part of the NACE: section F (Construction). Figure~\ref{fig:sbiF} is a typical tree visualization using a radial layout, but is improved by using nodes with colors from our hierarchical color palette. 
+In this paper we illustrate our method with the European classification system of economic activity NACE~\cite{nace}. Figure~\ref{fig:sbiF} show a small part of the NACE: section F (Construction). Figure~\ref{fig:sbiF} is a typical tree visualization using a radial layout, but is improved by using nodes with colors from our hierarchical color palette. 
 
 \begin{figure}[htb]
   \centering
@@ -82,7 +82,7 @@ In this paper we illustrate our method with the European classification system o
   \caption{Tree structure of economic sector F of NACE.}\label{fig:sbiF}
 \end{figure}
 
-For selecting hue values we use the following recursive algorithm. It will assign to each node $v_i$ of a tree structure a hue value $h_i$ and a hue value range $r_i$.
+For selecting hue values we use the following recursive algorithm. It will assign to each node $v$ of a tree structure a hue value $h$ and a hue value range $r$.
 
 We start with the root node, which has by default hue range $[0, 360]$:
 
@@ -90,7 +90,7 @@ We start with the root node, which has by default hue range $[0, 360]$:
 \begin{enumerate} \itemsep1pt \parskip0pt 
 \parsep0pt
 \item assign the middle hue value in $r$ to $h$ \footnote{In most cases the root node itself will not be drawn.}
-\item $N$ is number of child nodes of $v_i$, if $N>0$ :
+\item $N$ is number of child nodes of $v$, if $N>0$ :
 \begin{enumerate}[i] \itemsep1pt \parskip0pt 
 \parsep0pt
 \item divide $r$ in $N$ equal parts $r_i$;
@@ -106,14 +106,14 @@ We start with the root node, which has by default hue range $[0, 360]$:
   \caption{Assignment of hue values.}\label{fig:wheel}
 \end{figure}
 
-This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=70$)  is divided and permuted among the three children of the root
+This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=80$)  is divided and permuted among the three children of the root
 \footnote{In this figure, the node labels are permuted rather than the hue ranges themselves.} , in (b) the middle fractions are kept, in (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
 
 Ad 2ii) In most hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling of the color wheel that shows that the assignment of colors is permuted.
 
 Ad 2iii) The fraction is needed to introduce a `hue gap' between nodes with a different parent. The fraction $f$ is by default set to $0.75$. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. 
 
-In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes.
+In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes in the tree structure. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes.
 
 \begin{figure}[htb]
   \centering
@@ -125,8 +125,8 @@ In order to show depth, we let $C$ and $L$ values only depend on the depth of th
 
 \begin{figure}[htb]
   \centering
-  \includegraphics[width=1.65in]{bar_chart.pdf}
-  \includegraphics[width=1.65in]{stackedline_chart.pdf}
+  \includegraphics[width=1.235in]{bar_chart.pdf}
+  \includegraphics[width=2.065in]{stackedarea_chart.pdf}
   \caption{Bar chart and stacked area chart with hierarchical colors}\label{fig:charts}
 \end{figure}
 

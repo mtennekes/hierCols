@@ -23,7 +23,7 @@ source("./R/preprocess_SBI.R")
 #############################################
 
 palette.HCL.options <- list(hue_start=0, hue_end=360, hue_spread=TRUE,
-                            hue_fraction=0.75, chroma=60, luminance=70, 
+                            hue_fraction=0.75, chroma=60, luminance=80, 
                             chroma_slope=5, luminance_slope=-10)
 
 ## note: hue_start=30 and hue_end=390 give slightly better results, but 0 and 360 are easier to use for describing the method
@@ -87,11 +87,11 @@ dev.off()
 #############################################
 
 pdf("plots/treemap_all.pdf", width=10, height=6)
-    treemap(sbi_SBI4, index=c("name1", "name2", "name3"), vSize="x", type="index",title="")
+    treemap(sbi_SBI4, index=c("name1", "name2", "name3"), vSize="x", type="index",title="", palette.HCL.options=palette.HCL.options)
 dev.off()
 
 pdf("plots/treemap_F.pdf", width=10, height=6)
-    treemap(sbiSel2, index=c("name2", "name3", "name4"), vSize="x", type="index",title="", position.legend="none")
+    treemap(sbiSel2, index=c("name2", "name3", "name4"), vSize="x", type="index",title="", position.legend="none", palette.HCL.options=palette.HCL.options)
 dev.off()
 
 
@@ -108,7 +108,7 @@ dev.off()
      theme(legend.position="none")
  )
 
-ggsave("bar_chart.pdf", path="plots", plot=g, width=6, height=4, scale=1.5)
+ggsave("bar_chart.pdf", path="plots", plot=g, width=3, height=4, scale=1.5)
 
 bcdat <- transform(bcdat, sbi2=factor(paste0("NACE ",substring(sector, 1, 2))))
 
@@ -123,7 +123,7 @@ bcdat <- transform(bcdat, sbi2=factor(paste0("NACE ",substring(sector, 1, 2))))
 
 ggsave("stackedbar_chart.pdf", path="plots", plot=g, width=6, height=4, scale=1.5)
 
-# stacked line chart
+# stacked area chart
 set.seed(20120624)
 bcdat <- transform(bcdat, t=2012)
 
@@ -154,7 +154,7 @@ scale_fill_manual(values=rev(bcdat$color)) + theme_bw() +
     theme(legend.position="none")
 )
 
-ggsave("stackedline_chart.pdf", path="plots", plot=g, width=6, height=4, scale=1.5)
+ggsave("stackedarea_chart.pdf", path="plots", plot=g, width=5, height=4, scale=1.5)
 
 
 #############################################

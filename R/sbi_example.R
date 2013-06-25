@@ -212,7 +212,7 @@ cellplot(1,1, e={
 })
 
 cellplot(2,1, e={
-    grid.text("(a) Hue range split in three", x=0.05, y=unit(0.5, "lines"), just="left")
+    grid.text("(a) Hue range equally split in three", x=0.05, y=unit(0.5, "lines"), just="left")
 })
 
 cellplot(1,2, e={
@@ -221,7 +221,7 @@ cellplot(1,2, e={
         cuts=cuts1, labels=labs1)
 })
 cellplot(2,2, e={
-    grid.text("(b) Middle parts assigned to first layer nodes", x=0.05, y=unit(0.5, "lines"), just="left")
+    grid.text("(b) Middle fractions assigned to first layer nodes", x=0.05, y=unit(0.5, "lines"), just="left")
 })
 
 
@@ -231,7 +231,7 @@ cellplot(3,1, e={
         cuts=cuts2, labels=labs2, labels.cex=0.7)
 })
 cellplot(4,1, e={
-    grid.text("(c) Recursively divided among second layer nodes", x=0.05, y=unit(0.5, "lines"), just="left")
+    grid.text("(c) Recursively applied to second layer nodes", x=0.05, y=unit(0.5, "lines"), just="left")
 })
 
 cellplot(3,2, e={
@@ -240,7 +240,7 @@ cellplot(3,2, e={
         cuts=cuts3, labels=labs3, labels.cex=0.6)
 })
 cellplot(4,2, e={
-    grid.text("(d) Recursively divided among third layer nodes", x=0.05, y=unit(0.5, "lines"), just="left")
+    grid.text("(d) Recursively applied to third layer nodes", x=0.05, y=unit(0.5, "lines"), just="left")
 })
 
 dev.off()

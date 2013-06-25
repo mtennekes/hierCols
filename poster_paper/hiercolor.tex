@@ -69,10 +69,10 @@ Although many tree visualizations are proposed in literature \cite{schulz2011}, 
 
 \section{Method}
 
-Our method maps a tree structure on colors in HCL space, such that is reflects it hierarchical properties. The Hue-Chroma-Luminance (HCL) space, which is a transformation of the CIELUV color space, is designed with the aim to control human color perception~\cite{ihaka2003}.
+Our method maps a tree structure on colors in HCL space, such that it reflects the hierarchical properties of the tree. The Hue-Chroma-Luminance (HCL) space, which is a transformation of the CIELUV color space, is designed with the aim to control human color perception~\cite{ihaka2003}.
 Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) color space~\cite{zeileis2009}. The hue $H$ takes values from 0 to 360, and the chroma $C$ and luminance $L$ take values from 0 to 100.
 
-We use $H$ for the tree structure, where the hue of child nodes resemble the hue of their parents. $C$ and $L$ are used to discrimate the different hierarchical levels.
+We use $H$ for the tree structure, where the hue of each child node resembles the hue of its parent. $C$ and $L$ are used to discrimate the different hierarchical levels.
 
 In this paper we illustrate our method with the European classification system of economic activity NACE. (reference?). This is a rather large classification system, (iets zeggen over de grootte?). Figure~\ref{fig:sbiF} show a small part of the NACE: section F (Construction). Figure~\ref{fig:sbiF} is a typical tree visualization using a radial layout, but is improved by using nodes with colors from our hierarchical color palette. 
 
@@ -127,7 +127,7 @@ In order to show depth, we let $C$ and $L$ values only depend on the depth of th
   \centering
   \includegraphics[width=1.65in]{bar_chart.pdf}
   \includegraphics[width=1.65in]{stackedline_chart.pdf}
-  \caption{Bar chart and stacked line chart with hierarchical colors}\label{fig:charts}
+  \caption{Bar chart and stacked area chart with hierarchical colors}\label{fig:charts}
 \end{figure}
 
 %\begin{figure}[htb]
@@ -147,7 +147,7 @@ In order to show depth, we let $C$ and $L$ values only depend on the depth of th
 The hierarchical colors can be applied to enhance standard tree visualizations, as we saw in Figure~\ref{fig:sbiF}. Strictly speaking this is redundant color usage, but in our opinion it can improve many tree visualizations. A second example of improvement is depicted in Figure~\ref{fig:treemapF}. It shows a treemap depicting (fictious) turnover values in Construction (NACE F). In official statistics, turnover is available for each business enterprise in a business register, and aggregated according to the NACE tree. The colors of the smallest rectangles correspond to the most detailed NACE layer, while the color of higher NACE layers is used to for the text label backgrounds. This treemap is created with the free and open source R package treemap \cite{treemap}.
 
 Hierarchical colors can also improve visualizations without explicit tree structure. The colors hint at the underlying tree structure.
-As an example of a non-hierarchically-structured plot, a bar chart and a stacked line chart are depicted in Figure~\ref{fig:charts}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses.
+As an example of a non-hierarchically-structured plot, a bar chart and a stacked area chart are depicted in Figure~\ref{fig:charts}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses.
 
 \section{Further research}
 

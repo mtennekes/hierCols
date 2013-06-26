@@ -72,7 +72,7 @@ Although many tree visualizations are proposed in literature \cite{schulz2011}, 
 Our method maps a tree structure on colors in HCL space, such that it reflects the hierarchical properties of the tree. The Hue-Chroma-Luminance (HCL) space, which is a transformation of the CIELUV color space, is designed with the aim to control human color perception~\cite{ihaka2003}.
 Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) color space~\cite{zeileis2009}. The hue $H$ takes values from 0 to 360, and the chroma $C$ and luminance $L$ take values from 0 to 100.
 
-We use $H$ for the tree structure, where the hue of each child node resembles the hue of its parent. $C$ and $L$ are used to discrimate the different hierarchical levels.
+We use $H$ for the tree structure, where the hue of each child node resembles the hue of its parent. $C$ and $L$ are used to discriminate the different hierarchical levels.
 
 In this paper we illustrate our method with the European classification system of economic activity NACE~\cite{nace}. Figure~\ref{fig:sbiF} show a small part of the NACE: section F (Construction). Figure~\ref{fig:sbiF} is a typical tree visualization using a radial layout, but is improved by using nodes with colors from our hierarchical color palette. 
 
@@ -152,7 +152,7 @@ Hierarchical colors can also improve visualizations without explicit tree struct
 To illustrate this, a bar chart and a stacked area chart of fictive turnover data are depicted in Figure~\ref{fig:charts}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. The bar chart can be used to compare turnover values of all leaf node sectors in Construction (NACE F), and the stacked area plot to analyse turnover values in time.
 
 \section{Concluding remarks}
-In our opioin, the proposed method to create hierarchical color palettes improves statistical visualizations, both hierarchically and non-hierarchically structured. The pre-condition that colors in the same hierarchical layer should be similar in terms of colorfulness and brightness it safisfied. This property is especially important in statistical visualizations, since they aim to visualize data as objectively as possible. The downside of the proposed method is that some leaf node colors will still be hard to distinguish.
+In our opinion, the proposed method to create hierarchical color palettes improves statistical visualizations, both hierarchically and non-hierarchically structured. The pre-condition that colors in the same hierarchical layer should be similar in terms of colorfulness and brightness it satisfied. This property is especially important in statistical visualizations, since they aim to visualize data as objectively as possible. The downside of the proposed method is that some leaf node colors will still be hard to distinguish.
 
 We recommend a user study to evaluate the obtained hierarchical color palettes when applied in various statistical visualizations. The main aim of this user study would be to find out whether hierarchical palettes are useful in statistical analysis.
 

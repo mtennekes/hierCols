@@ -39,7 +39,7 @@
 
 \abstract{ Color is an important means to display categorical data in statistical graphics. Categories are often hierarchically structured in a classification tree, but most qualitative color palettes do not take this hierarchy into account.  
 
-We present a method to map tree structures to colors from the Hue-Chroma-Luminance (HCL) color model. The HCL color space, which is a transformation of the CIELUV color space, is known for its well balanced perceptual properties. Our experiments suggest that hierarchical qualitative color palettes are very useful: not only for improving standard hierarchical visualizations such as trees and tree maps, but also for showing tree structure in non-hierarchical visualizations.
+We present a method to map tree structures to colors from the Hue-Chroma-Luminance (HCL) color model. The HCL color space is known for its well balanced perceptual properties. Our study suggest that hierarchical qualitative color palettes are very useful: not only for improving standard hierarchical visualizations such as trees and treemaps, but also for showing tree structure in non-hierarchical visualizations.
 }
 
 \CCScatlist{ 
@@ -59,7 +59,7 @@ We present a method to map tree structures to colors from the Hue-Chroma-Luminan
 
 \maketitle
 
-Hierarchical data are of crucial importance in official statistics. Most official data are published using hierarchically structured categories, for instance geographic regions or economic activities. A recent trend in data analysis practice, is to follow a top-down approach rather than to check  each individual record of a survey or administrative source. Several data visualization methods are useful to explore and analyze hierarchical statistical data, for instance treemaps
+Hierarchical data are of crucial importance in official statistics. Most official data are published using hierarchically structured categories, for instance geographic regions or economic activities. Several data visualization methods are useful to explore and analyze hierarchical statistical data, for instance treemaps
 \cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the  hierarchical structure would be very useful in supporting visual analysis.
 
 Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should not suggest non-existent order or proximity and introduce perceptual bias. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
@@ -144,14 +144,18 @@ In order to show depth, we let $C$ and $L$ values only depend on the depth of th
 
 
 \section{Application}
-The hierarchical colors can be applied to enhance standard tree visualizations, as we saw in Figure~\ref{fig:sbiF}. Strictly speaking this is redundant color usage, but in our opinion it can improve many tree visualizations. A second example of improvement is depicted in Figure~\ref{fig:treemapF}. It shows a treemap depicting (fictious) turnover values in Construction (NACE F). In official statistics, turnover is available for each business enterprise in a business register, and aggregated according to the NACE tree. The colors of the smallest rectangles correspond to the most detailed NACE layer, while the color of higher NACE layers is used to for the text label backgrounds. This treemap is created with the free and open source R package treemap \cite{treemap}.
+The hierarchical colors can be applied to enhance standard tree visualizations, as we saw in Figure~\ref{fig:sbiF}. Strictly speaking this is redundant color usage, but in our opinion it can improve many tree visualizations, because branches can be distinguished more easily. 
+
+A second example of improvement is depicted in Figure~\ref{fig:treemapF}. It shows a treemap depicting (fictious) turnover values in Construction (NACE F). In official statistics, turnover is available for each business enterprise in a business register, and aggregated according to the NACE tree. The hierarchical color palette is used to differentiate between different aggregated groups, that makes it possible to compare turnover values at different hierarchical layers. Although the colors of higher NACE layers are only used for the text label backgrounds, they are also resembled by the colors of the lowest NACE layers. This treemap is created with the free and open source R package treemap \cite{treemap}.
 
 Hierarchical colors can also improve visualizations without explicit tree structure. The colors hint at the underlying tree structure.
-As an example of a non-hierarchically-structured plot, a bar chart and a stacked area chart are depicted in Figure~\ref{fig:charts}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses.
+To illustrate this, a bar chart and a stacked area chart of fictive turnover data are depicted in Figure~\ref{fig:charts}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. The bar chart can be used to compare turnover values of all leaf node sectors in Construction (NACE F), and the stacked area plot to analyse turnover values in time.
 
-\section{Further research}
+\section{Concluding remarks}
+In our opioin, the proposed method to create hierarchical color palettes improves statistical visualizations, both hierarchically and non-hierarchically structured. The pre-condition that colors in the same hierarchical layer should be similar in terms of colorfulness and brightness it safisfied. This property is especially important in statistical visualizations, since they aim to visualize data as objectively as possible. The downside of the proposed method is that some leaf node colors will still be hard to distinguish.
 
-We recommend to further investigate the proposed hierarchical color method, and to evaluate the obtained color palettes in various statistical graphics. This should include a user study in the effectiveness of this hierarchical color palette.
+We recommend a user study to evaluate the obtained hierarchical color palettes when applied in various statistical visualizations. The main aim of this user study would be to find out whether hierarchical palettes are useful in statistical analysis.
+
 
 %\acknowledgements{
 %The authors wish to thank A, B, C. This work was supported in part by

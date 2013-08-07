@@ -78,6 +78,7 @@ drawtree(sbi[,3:6], color=sbi$color, vertex.size=5)
 dev.off()
 
 pdf("plots/sbi_F.pdf", width=7, height=7)
+png("plots/sbi_F.png", width=2100, height=2100, res=265)
 drawtree(sbiSel[,4:6], color=sbiSel$color, vertex.size=8, show.labels=TRUE, rootlabel="F", vertex.label.dist=.3, vertex.label.cex=1)
 dev.off()
 
@@ -199,7 +200,8 @@ labs3 <- labs3[-c(14:16, 18:20, 12)]  ## to prevent overplotting
 
 gridsize <- 5e2+1
 
-pdf("plots/hcl_method.pdf", width=8, height=8.4)
+#pdf("plots/hcl_method.pdf", width=8, height=8.4)
+png("plots/hcl_method.png", width=2000, height=2100, res=265)
 
 grid.newpage()
 pushViewport(viewport(layout=grid.layout(nrow=4, ncol=2, heights = unit(rep(1,4), c("null", "lines", "null", "lines")))))

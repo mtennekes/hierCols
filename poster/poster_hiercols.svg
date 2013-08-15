@@ -47,9 +47,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.1767767"
-     inkscape:cx="378.35801"
-     inkscape:cy="2138.443"
+     inkscape:zoom="0.3535534"
+     inkscape:cx="493.80324"
+     inkscape:cy="915.80983"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -3090,7 +3090,7 @@
            height="424.26407"
            x="1575.838"
            y="2608.8699" /></flowRegion><flowPara
-         id="flowPara7642">- Assigned hue ranges of siblings are permuted to prevent percentual order.</flowPara><flowPara
+         id="flowPara7642">- Assigned hue ranges of siblings are permuted to prevent perceptual order.</flowPara><flowPara
          id="flowPara4528">  Permutation order is based on [1, 3, 5, 2, 4] permutation.</flowPara><flowPara
          id="flowPara7644">- Middle fractions <flowSpan
    style="font-style:italic"

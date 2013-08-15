@@ -1,7 +1,7 @@
 % $Id: template.tex 11 2007-04-03 22:25:53Z jpeltier $
 
-%\documentclass{vgtc}                          % final (conference style)
-\documentclass[review]{vgtc}                 % review
+\documentclass{vgtc}                          % final (conference style)
+%\documentclass[review]{vgtc}                 % review
 %\documentclass[widereview]{vgtc}             % wide-spaced review
 %\documentclass[preprint]{vgtc}               % preprint
 %\documentclass[electronic]{vgtc}             % electronic version
@@ -16,6 +16,7 @@
 \usepackage{mathptmx}
 \usepackage{graphicx}
 \usepackage{times}
+\usepackage{lmodern}
 
 \onlineid{0}
 
@@ -42,6 +43,10 @@
 We present a method to map tree structures to colors from the Hue-Chroma-Luminance (HCL) color model. The HCL color space is known for its well balanced perceptual properties. Our study suggest that hierarchical qualitative color palettes are very useful: not only for improving standard hierarchical visualizations such as trees and treemaps, but also for showing tree structure in non-hierarchical visualizations.
 }
 
+\keywords{
+Color palettes, statistical graphics, hierarchical data.
+}
+
 \CCScatlist{ 
  \CCScat{H.5.2}{ Information Interfaces and Presentation}%
 {User Interfaces}{User-centered design}
@@ -55,8 +60,8 @@ We present a method to map tree structures to colors from the Hue-Chroma-Luminan
 
 \begin{document}
 
-\firstsection{Introduction}
-
+ \firstsection{Introduction}
+ 
 \maketitle
 
 Hierarchical data are of crucial importance in official statistics. Most official data are published using hierarchically structured categories, for instance geographic regions or economic activities. Several data visualization methods are useful to explore and analyze hierarchical statistical data, for instance treemaps
@@ -68,18 +73,22 @@ Although many tree visualizations are proposed in literature \cite{schulz2011}, 
 
 
 \section{Method}
-
 Our method maps a tree structure on colors in HCL space, such that it reflects the hierarchical properties of the tree. The Hue-Chroma-Luminance (HCL) space, which is a transformation of the CIELUV color space, is designed with the aim to control human color perception~\cite{ihaka2003}.
-Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) color space~\cite{zeileis2009}. The hue $H$ takes values from 0 to 360, and the chroma $C$ and luminance $L$ take values from 0 to 100.
+Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) color space~\cite{zeileis2009}. 
+%The hue $H$ takes values from 0 to 360, and the chroma $C$ and luminance $L$ take values from 0 to 100.
 
-We use $H$ for the tree structure, where the hue of each child node resembles the hue of its parent. $C$ and $L$ are used to discriminate the different hierarchical levels.
+
+We use $H$, with range [0, 360], for the tree structure, where the hue of each child node resembles the hue of its parent. $C$ and $L$, both with range [0, 100], are used to discriminate the different hierarchical levels.
 
 In this paper we illustrate our method with the European classification system of economic activity NACE. Figure~\ref{fig:sbiF} show a small part of the NACE: section F (Construction). Figure~\ref{fig:sbiF} is a typical tree visualization using a radial layout, but is improved by using nodes with colors from our hierarchical color palette. 
 
 \begin{figure}[htb]
+  \vspace{-3ex}
   \centering
-  \includegraphics[width=3.5in]{sbi_F.pdf}
+  \includegraphics[width=3.2in]{sbi_F.pdf}
+  \vspace{-5ex}
   \caption{Tree structure of economic sector F of NACE.}\label{fig:sbiF}
+  \vspace{-2ex}
 \end{figure}
 
 For selecting hue values we use the following recursive algorithm. It will assign to each node $v$ of a tree structure a hue value $h$ and a hue value range $r$.
@@ -102,8 +111,9 @@ We start with the root node, which has by default hue range $[0, 360]$:
 \begin{figure}[htb]
   \centering
   \includegraphics[width=3.5in]{hcl_method.pdf}
+  \vspace{-5ex}
   \caption{Assignment of hue values.}\label{fig:wheel}
-  \vspace{-3ex}
+  \vspace{-4ex}
 \end{figure}
 
 This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=80$)  is divided and permuted among the three children of the root, in (b) the middle fractions are kept, in (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
@@ -115,11 +125,12 @@ Ad 2iii) The fraction is needed to introduce a `hue gap' between nodes with a di
 In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes in the tree structure. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes.
 
 \begin{figure}[htb]
-  \vspace{-2ex}
+  \vspace{-4ex}
   \centering
   \includegraphics[width=3.5in]{treemap_F.pdf}
+  \vspace{-4ex}
   \caption{Treemap with hierarchical colors}\label{fig:treemapF}
-  \vspace{-3ex}
+  \vspace{-4ex}
 \end{figure}
 
 
@@ -128,8 +139,9 @@ In order to show depth, we let $C$ and $L$ values only depend on the depth of th
   \centering
   \includegraphics[width=1.235in]{bar_chart.pdf}
   \includegraphics[width=2.065in]{stackedarea_chart.pdf}
+  \vspace{-5ex}
   \caption{Bar chart and stacked area chart with hierarchical colors}\label{fig:charts}
-  \vspace{-2ex}
+  \vspace{-4ex}
 \end{figure}
 
 %\begin{figure}[htb]

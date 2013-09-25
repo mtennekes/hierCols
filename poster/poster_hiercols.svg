@@ -14,7 +14,7 @@
    height="4212.9922"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.4 r9939"
+   inkscape:version="0.48.2 r9819"
    sodipodi:docname="poster_hiercols.svg">
   <defs
      id="defs4">
@@ -47,14 +47,14 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.25000001"
-     inkscape:cx="1717.3704"
-     inkscape:cy="1347.6795"
+     inkscape:zoom="0.1767767"
+     inkscape:cx="518.35662"
+     inkscape:cy="2208.4258"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1027"
+     inkscape:window-width="1680"
+     inkscape:window-height="998"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
@@ -3042,7 +3042,7 @@
          id="tspan6129-1-8-8"
          x="1575.838"
          y="-1226.1617"
-         style="font-size:56px;fill:#008080;font-weight:bold">Application</tspan></text>
+         style="font-size:56px;font-weight:bold;fill:#008080">Applications</tspan></text>
     <rect
        style="fill:#fdf5ef;fill-opacity:1;stroke:none"
        id="rect3687-1-71"
@@ -3099,7 +3099,7 @@
          id="flowPara3693" /><flowPara
          id="flowPara7644">- Middle fractions <flowSpan
    style="font-style:italic"
-   id="flowSpan4518">f</flowSpan> are kept to discriminate difference branches. </flowPara><flowPara
+   id="flowSpan4518">f</flowSpan> are kept to discriminate different branches. </flowPara><flowPara
          id="flowPara7646">  Choice of <flowSpan
    style="font-style:oblique;-inkscape-font-specification:Sans Oblique"
    id="flowSpan3683">f</flowSpan> trade-off between:</flowPara><flowPara

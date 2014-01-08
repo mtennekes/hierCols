@@ -1,0 +1,62 @@
+Hierarchische kleurschalen
+========================================================
+
+We willen graag het gebruik van kleuren om classificatiestructuren
+te verduidelijken onderzoeken.
+
+We hebben zo meteen een aantal vragen voor je. We verwachten dat het niet meer
+dan 5 minuten van je kostbare tijd kost.
+
+Alle gebruikte __classificaties__ en voorbeelden zijn __fictief__! 
+
+Alvast hartelijk dank voor je medewerking!
+
+```{r initializatie, echo=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+#library(treemap)
+library(igraph)
+
+#source("R/sbi_example.R")
+# load the data
+
+# groepnummer (we hebben twee verschillende groepen)
+group <- 1
+
+set.seed(42)
+g <- graph.tree(26, children=4)
+V(g)$label <- sample(letters)
+#V(g)$color <- "red"
+
+```
+
+Hieronder zie je een zogenaamde treemap die de omzet per branch weergeeft.
+Om het gebruik van voorkennis uit te sluiten coderen we de branches met kleine 
+letters. Let op deze codes zijn lukraak gekozen en hebbben niets te maken met
+SBI codes.
+
+```{r treemap1}
+plot(g)
+```
+
+Welke branch is meer verwant met a?
+
+- b
+- c
+
+```{r treemap2}
+plot(1:10)
+```
+
+Welke categorie is meer verwant met E?
+
+- F
+- G
+
+```{r graph1}
+```
+
+```{r graph2}
+plot(1:10)
+```
+
+

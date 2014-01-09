@@ -1,3 +1,10 @@
+---
+title: Hierarchische kleurenpaletten
+author: 
+ - Martijn Tennekes
+ - Edwin de Jonge
+---
+
 Hierarchische kleurschalen
 ========================================================
 
@@ -27,7 +34,7 @@ set.seed(42)
 generate_tree <- function(N = 21, children=4){
     g <- graph.tree(N, children=children)
     labels <- sample(letters, size=N)
-    values <- runif(N)
+    values <- runif(N)+0.5
     
     V(g)$label <- labels
     V(g)$value <- values
@@ -37,6 +44,8 @@ generate_tree <- function(N = 21, children=4){
 tree2df <- function(g, labels=V(g)$label, values=V(g)$value){
     A <- get.adjacency(g)    
     dimnames(A) <- list(parent=labels, node=labels)
+    
+    N <- length(V(g))
     
     # get parents
     nbh <- neighborhood(g, order=3, mode="in")[6:21]

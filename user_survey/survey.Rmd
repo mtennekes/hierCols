@@ -5,56 +5,83 @@ author:
  - Edwin de Jonge
 ---
 
-Hierarchische kleurschalen
+Hierarchische kleurpaletten
 ========================================================
 
 We willen graag het gebruik van kleuren om classificatiestructuren
-te verduidelijken onderzoeken.
-
-We hebben zo meteen een aantal vragen voor je. We verwachten dat het niet meer
-dan 5 minuten van je kostbare tijd kost.
+te verduidelijken onderzoeken. We hebben zo meteen een aantal vragen voor je. We verwachten dat het niet meer dan 5 minuten van je kostbare tijd kost.
 
 Alle gebruikte __classificaties__ en voorbeelden zijn __fictief__! 
 
 Alvast hartelijk dank voor je medewerking!
 
-```{r initializatie, echo=FALSE}
+```{r initializatie, echo=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
 library(treemap)
 library(igraph)
+library(grid)
 
 source("../R/survey_data.R")
-# load the data
+group <- 2
 
-#V(g)$color <- "red"
+tmids <- list(c("HZ", "AF", "SD", "KL", "SX"),
+              c("JM", "HD", "ND", "EN", "PQ"))
 ```
 
-Hieronder zie je een zogenaamde treemap die de omzet per branch weergeeft.
-Om het gebruik van voorkennis uit te sluiten coderen we de branches met kleine 
-letters. Let op deze codes zijn lukraak gekozen en hebbben niets te maken met
+### Vraag 1
+
+Ben je (gedeeltelijk) kleurenblind?
+
+### Vraag 2
+
+Hieronder zie je een zogenaamde treemap die de omzet per branch weergeeft. De Hoe groter de rechthoek, hoe groter de omzet.
+Om het gebruik van voorkennis uit te sluiten coderen we de branches met letters. Let op: deze codes zijn __willekeurig__ gekozen en hebbben niets te maken met
 SBI codes.
 
 ```{r treemap1}
-treemap(dat, index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255)  
+tm <- treemap(dats[[group]], index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255)  
 
-#treemap(df1, names(df1)[1:3], vSize="value", vColor=names(df1)[2], type="categorical", position.legend="none")
+addSymbols(tm, tmids[[group]], symbols=c("+", "*", "*", "*", "*"))
 ```
 
-Welke branch is meer verwant met a?
+#### a)
 
-- b
-- c
+Selecteer de branch/branches die het meest verwant is/zijn met `r tmids[[group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
+
+```{r choices, comment=NA}
+for (i in tmids[[group]][-1]) {
+    cat("[]", i, "\n")
+}
+```
 
 ```{r treemap2}
-treemap(dat, index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1")  
+tm <- treemap(dats[[3-group]], index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1")  
 
-#treemap(df2, names(df2)[1:3], vSize="value", position.legend="none")
+addSymbols(tm, tmids[[3-group]], symbols=c("+", "*", "*", "*", "*"))
+
 ```
 
-Welke categorie is meer verwant met E?
+#### b)
 
-- F
-- G
+Selecteer de branch/branches die het meest verwant is/zijn met `r tmids[[3-group]][1]`:
+
+```{r choices2, comment=NA}
+for (i in tmids[[3-group]][-1]) {
+    cat("[]", i, "\n")
+}
+```
+
+#### c)
+
+Welke treemap vind je esthetisch gezien mooier?
+
+#### d)
+
+Welke treemap vind je beter voor analysedoeleinden?
+
+
+### Vraag 3
+
 
 ```{r graph1}
 plot(g3)

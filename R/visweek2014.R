@@ -12,8 +12,15 @@ treegraph(business, index=c("NACE1", "NACE2", "NACE3"), show.labels=FALSE, verte
 source("./R/survey_data.R")
 
 #pdf(file="../plots/tm1hcp.pdf", width=9, height=7)
-treemap(dat, index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255)  
+tm <- treemap(dat, index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255)  
 #dev.off()
+
+
+str(tm)
+
+
+
+
 
 
 #pdf(file="../plots/tm1ref.pdf", width=9, height=7)

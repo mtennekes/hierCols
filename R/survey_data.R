@@ -1,5 +1,5 @@
-# groepnummer (we hebben twee verschillende groepen)
-group <- 1
+require(igraph)
+
 set.seed(42)
 
 
@@ -50,13 +50,17 @@ df6 <- tree2df(g6)
 
 
 
-set.seed(20140111)
-levs <- c(6, 20, 74) # number of hierarchical categories
-levs <- c(4, 16, 40)
+#levs <- c(6, 20, 74) # number of hierarchical categories
 
+
+dats <- list()
+
+### group 1
+levs <- c(5, 20, 60)
+
+set.seed(20140114)
 l <- sample(paste0(rep(LETTERS[1:26], each=26), 
                    rep(LETTERS[1:26], times=26)), sum(levs))
-
 
 h1 <- sample(l, levs[1])
 h2 <- sample(setdiff(l, h1), levs[2])
@@ -65,12 +69,49 @@ h3 <- setdiff(l, c(h1,h2))
 h1 <- paste("Hoofdcategorie", h1)
 h2 <- paste("Subcategorie", h2)
 
-dat <- data.frame(h1=factor(NA, levels=h1),
-                  h2=factor(sample(h2, length(h3), replace=TRUE), levels=h2),
-                  h3=factor(h3, levels=h3),
-                  value = rnorm(length(h3), mean=100, sd=30))
+dats[[1]] <- data.frame(h1=factor(NA, levels=h1),
+                        h2=factor(sample(h2, length(h3), replace=TRUE), levels=h2),
+                        h3=factor(h3, levels=h3),
+                        value = rnorm(length(h3), mean=100, sd=30))
 
 h2parents <- sample(h1, length(h2), replace=TRUE)
-dat$h1 <- h2parents[match(dat$h2, h2)]
+dats[[1]]$h1 <- h2parents[match(dats[[1]]$h2, h2)]
 
+### group 2
+set.seed(20140115)
+l <- sample(paste0(rep(LETTERS[1:26], each=26), 
+                   rep(LETTERS[1:26], times=26)), sum(levs))
+
+h1 <- sample(l, levs[1])
+h2 <- sample(setdiff(l, h1), levs[2])
+h3 <- setdiff(l, c(h1,h2))
+
+h1 <- paste("Hoofdcategorie", h1)
+h2 <- paste("Subcategorie", h2)
+
+dats[[2]] <- data.frame(h1=factor(NA, levels=h1),
+                   h2=factor(sample(h2, length(h3), replace=TRUE), levels=h2),
+                   h3=factor(h3, levels=h3),
+                   value = rnorm(length(h3), mean=100, sd=30))
+
+h2parents <- sample(h1, length(h2), replace=TRUE)
+dats[[2]]$h1 <- h2parents[match(dats[[2]]$h2, h2)]
+
+
+
+
+addSymbols <- function(tm, rect.id, symbols="*") {
+    require(grid)
+    
+    symbols <- rep(symbols, length.out=length(rect.id))
+    
+    row_ids <- match(rect.id, as.character(tm$tm$h3)) 
+    
+    x <- tm$tm$x0[row_ids]
+    y <- tm$tm$y0[row_ids]
+    w <- tm$tm$w[row_ids]
+    h <- tm$tm$h[row_ids]
+    
+    grid.text(symbols, x=x+.35*w, y=y+.65*h, gp=gpar(col="blue", cex=2))
+}
 

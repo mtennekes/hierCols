@@ -139,6 +139,11 @@ generateGraph <- function(dat, method="HCP") {
 plotGraph <- function(dat, method="HCP", seed) {
     g <- generateGraph(dat, method=method)
     set.seed(seed)
-    plot(g, layout= layout.fruchterman.reingold(g), edge.arrow.size=.6, vertex.label.cex=.8, vertex.label.family="sans")
+    cols <- col2rgb(V(g)$color)
+    
+    light <- apply(cols * c(.299, .587, .114), MARGIN=2, sum) >= 128
+    fontcolors <- ifelse(light, "black", "white")
+    
+    plot(g, layout= layout.kamada.kawai(g), edge.arrow.size=.6, vertex.label.cex=.8, vertex.label.family="sans", vertex.label.color=fontcolors)
 }
 

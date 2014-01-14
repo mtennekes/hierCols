@@ -24,12 +24,22 @@ library(grid)
 source("../R/survey_data.R")
 dats_tm <- generateRandomHierData(2, seeds=c(20140114, 20140115))
 dats_gr <- generateRandomHierData(2, seeds=c(20140116, 20140117), levs=c(3,6,17), addText=FALSE)
+#dats_gr <- generateRandomHierData(2, seeds=c(20140116, 20140117), levs=c(5, 13, 30), addText=FALSE)
 
 
-group <- 1
+group <- 2
 
-tmids <- list(c("HZ", "AF", "SD", "KL", "SX"),
-              c("JM", "HD", "ND", "EN", "PQ"))
+branches_tm1 <- list(c("HZ", "AF", "SD", "KL", "SX"),
+                    c("JM", "HD", "ND", "EN", "PQ"))
+
+branches_tm2 <- c("Hoofdcategorie AJ", "Hoofdcategorie SA")
+
+branches_gr1 <- list(c("K", "J", "A", "L"),
+                     c("J", "K", "S", "Q"))
+branches_gr2 <- c("B", "G")
+
+seeds_gr <- c(20140101, 20140102)
+
 ```
 
 ### Vraag 1
@@ -45,62 +55,124 @@ SBI codes.
 ```{r treemap1}
 tm <- treemap(dats_tm[[group]], index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255)  
 
-addSymbols(tm, tmids[[group]], symbols=c("+", "*", "*", "*", "*"))
+addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"))
 ```
 
 #### a)
 
-Selecteer de branch/branches die het meest verwant is/zijn met `r tmids[[group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
+Selecteer de branch/branches die het meest verwant is/zijn met `r branches_tm1[[group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
 
 ```{r choices, comment=NA}
-for (i in tmids[[group]][-1]) {
+for (i in branches_tm1[[group]][-1]) {
     cat("[]", i, "\n")
 }
 ```
+
+#### b) 
+
+Hoeveel subcategoriën bevat `r branches_tm2[[group]]`?
+
+#### c)
+
+Wat vind je van de volgende stelling:
+
+_De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen a en b._
+
+1. Helemaal mee oneens
+2. Mee oneens
+3. Neutraal
+4. Mee eens
+5. Helemaal mee eens
+
 
 ```{r treemap2}
 tm <- treemap(dats_tm[[3-group]], index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1")  
 
-addSymbols(tm, tmids[[3-group]], symbols=c("+", "*", "*", "*", "*"))
+addSymbols(tm, branches_tm1[[3-group]], symbols=c("+", "*", "*", "*", "*"))
 
 ```
 
-#### b)
+#### d)
 
-Selecteer de branch/branches die het meest verwant is/zijn met `r tmids[[3-group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
+Selecteer de branch/branches die het meest verwant is/zijn met `r branches_tm1[[3-group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
 
 ```{r choices2, comment=NA}
-for (i in tmids[[3-group]][-1]) {
+for (i in branches_tm1[[3-group]][-1]) {
     cat("[]", i, "\n")
 }
 ```
 
-#### c)
+#### e) 
+
+Hoeveel subcategoriën bevat `r branches_tm2[[3-group]]`?
+
+
+
+
+#### f)
+
+Wat vind je van de volgende stelling:
+
+_De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen d en e._
+
+1. Helemaal mee oneens
+2. Mee oneens
+3. Neutraal
+4. Mee eens
+5. Helemaal mee eens
+
+
+
+#### g)
 
 Welke treemap vind je esthetisch gezien mooier?
 
-#### d)
+#### h)
 
-Welke treemap vind je beter voor analysedoeleinden?
+Welke treemap vind je geschikter voor analysedoeleinden?
 
 
 ### Vraag 3
 Hieronder zie je twee gerichte grafen die de structuur tussen de branches weergeven. Wederom zijn de gebruikte classificaties fictief en zijn de letters willekeurig gekozen.
 
 ```{r graph1}
-plotGraph(dats_gr[[group]], method="firstcat", seed=20140101)
+plotGraph(dats_gr[[group]], method="firstcat", seed=seeds_gr[[group]])
+#plotGraph(dats_gr[[group]], method="HCP", seed=20140101)
+
+
 ```
 
 #### a)
 
-Welke branch is het meest verwant met I?
+Welke branch is het meest verwant met `r branches_gr1[[group]][1]`?
+
+```{r choices3, comment=NA}
+for (i in branches_gr1[[group]][-1]) {
+    cat("[]", i, "\n")
+}
+```
 
 #### b)
 
-Selecteer de branch/branches die afstammmen van Y:
+Welke branches stammen af van `r branches_gr2[group]`?
+
+
 
 ```{r graph2}
-plotGraph(dats_gr[[3-group]], method="HCP", seed=20140102)
+#plotGraph(dats_gr[[3-group]], method="firstcat", seed=20140102)
+plotGraph(dats_gr[[3-group]], method="HCP", seed=seeds_gr[[3-group]])
 ```
 
+#### c)
 
+Welke branch is het meest verwant met `r branches_gr1[[3-group]][1]`:
+
+```{r choices4, comment=NA}
+for (i in branches_gr1[[3-group]][-1]) {
+    cat("[]", i, "\n")
+}
+```
+
+#### d)
+
+Welke branches stammen af van `r branches_gr2[3-group]`?

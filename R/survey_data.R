@@ -49,55 +49,38 @@ df6 <- tree2df(g6)
 
 
 
-
-#levs <- c(6, 20, 74) # number of hierarchical categories
-
-
-dats <- list()
-
-### group 1
-levs <- c(5, 20, 60)
-
-set.seed(20140114)
-l <- sample(paste0(rep(LETTERS[1:26], each=26), 
-                   rep(LETTERS[1:26], times=26)), sum(levs))
-
-h1 <- sample(l, levs[1])
-h2 <- sample(setdiff(l, h1), levs[2])
-h3 <- setdiff(l, c(h1,h2))
-
-h1 <- paste("Hoofdcategorie", h1)
-h2 <- paste("Subcategorie", h2)
-
-dats[[1]] <- data.frame(h1=factor(NA, levels=h1),
-                        h2=factor(sample(h2, length(h3), replace=TRUE), levels=h2),
-                        h3=factor(h3, levels=h3),
-                        value = rnorm(length(h3), mean=100, sd=30))
-
-h2parents <- sample(h1, length(h2), replace=TRUE)
-dats[[1]]$h1 <- h2parents[match(dats[[1]]$h2, h2)]
-
-### group 2
-set.seed(20140115)
-l <- sample(paste0(rep(LETTERS[1:26], each=26), 
-                   rep(LETTERS[1:26], times=26)), sum(levs))
-
-h1 <- sample(l, levs[1])
-h2 <- sample(setdiff(l, h1), levs[2])
-h3 <- setdiff(l, c(h1,h2))
-
-h1 <- paste("Hoofdcategorie", h1)
-h2 <- paste("Subcategorie", h2)
-
-dats[[2]] <- data.frame(h1=factor(NA, levels=h1),
-                   h2=factor(sample(h2, length(h3), replace=TRUE), levels=h2),
-                   h3=factor(h3, levels=h3),
-                   value = rnorm(length(h3), mean=100, sd=30))
-
-h2parents <- sample(h1, length(h2), replace=TRUE)
-dats[[2]]$h1 <- h2parents[match(dats[[2]]$h2, h2)]
-
-
+#' @param k number of datasets
+#' @param seeds seeds for k layouts
+#' @param levs number of nodes per hierarchical layer. Each node is randomly assigned to a node in the parent layer. Therefore, the number of nodes in higher layers can be lower.
+generateRandomHierData <- function(k, seeds, levs=c(5, 20, 60), addText=TRUE) {
+    dats <- list() # to be filled with k random datasets
+    n <- sum(levs)
+    for (i in 1:k) {
+        set.seed(seeds[i])
+        if (n > 26) {
+            l <- sample(paste0(rep(LETTERS[1:26], each=26), 
+                               rep(LETTERS[1:26], times=26)), n)
+        } else {
+            l <- sample(LETTERS[1:26], n)
+        }        
+        h1 <- sample(l, levs[1])
+        h2 <- sample(setdiff(l, h1), levs[2])
+        h3 <- setdiff(l, c(h1,h2))
+        
+        if (addText) {
+            h1 <- paste("Hoofdcategorie", h1)
+            h2 <- paste("Subcategorie", h2)
+        }
+        
+        dats[[i]] <- data.frame(h1=factor(NA, levels=h1),
+                                h2=factor(sample(h2, length(h3), replace=TRUE), levels=h2),
+                                h3=factor(h3, levels=h3),
+                                value = rnorm(length(h3), mean=100, sd=30))
+        h2parents <- sample(h1, length(h2), replace=TRUE)
+        dats[[i]]$h1 <- factor(h2parents[match(dats[[i]]$h2, h2)], h1)
+    }
+    dats
+}
 
 
 addSymbols <- function(tm, rect.id, symbols="*") {
@@ -113,5 +96,49 @@ addSymbols <- function(tm, rect.id, symbols="*") {
     h <- tm$tm$h[row_ids]
     
     grid.text(symbols, x=x+.35*w, y=y+.65*h, gp=gpar(col="blue", cex=2))
+}
+
+
+
+generateGraph <- function(dat, method="HCP") {
+    require(treemap)
+    require(RColorBrewer)
+    
+    datcolors <- treepalette(dat, index=c("h1", "h2", "h3"))
+    set1 <- brewer.pal(8, "Set2")
+    datcolors$firstcat.color <- set1[as.integer(datcolors$h1)]
+    colorname <- ifelse(method=="HCP", "HCL.color", "firstcat.color")
+    
+    ## create vertex data.frame
+    vertices1 <- datcolors[is.na(datcolors$h2), c("h1", colorname)]
+    vertices2 <- datcolors[is.na(datcolors$h3) & !is.na(datcolors$h2), c("h2", colorname)]
+    vertices3 <- datcolors[!is.na(datcolors$h3), c("h3", colorname)]
+    
+    names(vertices1)[1] <- "node"
+    names(vertices2)[1] <- "node"
+    names(vertices3)[1] <- "node"
+
+    vertices <- do.call(rbind, list(vertices1, vertices2, vertices3))
+    vertices$node <- as.character(vertices$node)
+    names(vertices)[2] <- "color"
+    vertices <- rbind(vertices, 
+                      data.frame(node="  ", color="#DDDDDD"))
+    
+    ## create edges data.frame
+    edges <- rbind(unique(data.frame(from="  ", to=as.character(dat$h1))),
+                   unique(data.frame(from=as.character(dat$h1), 
+                                     to=as.character(dat$h2))),
+                   unique(data.frame(from=as.character(dat$h2), 
+                                     to=as.character(dat$h3))))
+    g <- graph.data.frame(edges, vertices=vertices)
+    g
+}
+
+
+
+plotGraph <- function(dat, method="HCP", seed) {
+    g <- generateGraph(dat, method=method)
+    set.seed(seed)
+    plot(g, layout= layout.fruchterman.reingold(g), edge.arrow.size=.6, vertex.label.cex=.8, vertex.label.family="sans")
 }
 

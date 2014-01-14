@@ -22,7 +22,11 @@ library(igraph)
 library(grid)
 
 source("../R/survey_data.R")
-group <- 2
+dats_tm <- generateRandomHierData(2, seeds=c(20140114, 20140115))
+dats_gr <- generateRandomHierData(2, seeds=c(20140116, 20140117), levs=c(3,6,17), addText=FALSE)
+
+
+group <- 1
 
 tmids <- list(c("HZ", "AF", "SD", "KL", "SX"),
               c("JM", "HD", "ND", "EN", "PQ"))
@@ -39,7 +43,7 @@ Om het gebruik van voorkennis uit te sluiten coderen we de branches met letters.
 SBI codes.
 
 ```{r treemap1}
-tm <- treemap(dats[[group]], index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255)  
+tm <- treemap(dats_tm[[group]], index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255)  
 
 addSymbols(tm, tmids[[group]], symbols=c("+", "*", "*", "*", "*"))
 ```
@@ -55,7 +59,7 @@ for (i in tmids[[group]][-1]) {
 ```
 
 ```{r treemap2}
-tm <- treemap(dats[[3-group]], index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1")  
+tm <- treemap(dats_tm[[3-group]], index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1")  
 
 addSymbols(tm, tmids[[3-group]], symbols=c("+", "*", "*", "*", "*"))
 
@@ -63,7 +67,7 @@ addSymbols(tm, tmids[[3-group]], symbols=c("+", "*", "*", "*", "*"))
 
 #### b)
 
-Selecteer de branch/branches die het meest verwant is/zijn met `r tmids[[3-group]][1]`:
+Selecteer de branch/branches die het meest verwant is/zijn met `r tmids[[3-group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
 
 ```{r choices2, comment=NA}
 for (i in tmids[[3-group]][-1]) {
@@ -81,14 +85,22 @@ Welke treemap vind je beter voor analysedoeleinden?
 
 
 ### Vraag 3
-
+Hieronder zie je twee gerichte grafen die de structuur tussen de branches weergeven. Wederom zijn de gebruikte classificaties fictief en zijn de letters willekeurig gekozen.
 
 ```{r graph1}
-plot(g3)
+plotGraph(dats_gr[[group]], method="firstcat", seed=20140101)
 ```
 
+#### a)
+
+Welke branch is het meest verwant met I?
+
+#### b)
+
+Selecteer de branch/branches die afstammmen van Y:
+
 ```{r graph2}
-plot(g4)
+plotGraph(dats_gr[[3-group]], method="HCP", seed=20140102)
 ```
 
 

@@ -30,13 +30,13 @@ dats_gr <- generateRandomHierData(2, seeds=c(20140116, 20140117), levs=c(3,6,17)
 group <- 2
 
 branches_tm1 <- list(c("HZ", "AF", "SD", "KL", "SX"),
-                    c("JM", "HD", "ND", "EN", "PQ"))
+                    c("JM", "HD", "EP", "EN", "PQ"))
 
 branches_tm2 <- c("Hoofdcategorie AJ", "Hoofdcategorie SA")
 
-branches_gr1 <- list(c("K", "J", "A", "L"),
-                     c("J", "K", "S", "Q"))
-branches_gr2 <- c("B", "G")
+branches_gr1 <- list(c("J", "K", "S", "C"),
+                     c("K", "J", "A", "L"))
+branches_gr2 <- c("G", "B")
 
 seeds_gr <- c(20140101, 20140102)
 
@@ -74,9 +74,9 @@ Hoeveel subcategoriën bevat `r branches_tm2[[group]]`?
 
 #### c)
 
-Wat vind je van de volgende stelling:
+Wat vind je van de volgende stelling?
 
-_De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen a en b._
+_"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
 
 1. Helemaal mee oneens
 2. Mee oneens
@@ -111,9 +111,9 @@ Hoeveel subcategoriën bevat `r branches_tm2[[3-group]]`?
 
 #### f)
 
-Wat vind je van de volgende stelling:
+Wat vind je van de volgende stelling?
 
-_De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen d en e._
+_"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
 
 1. Helemaal mee oneens
 2. Mee oneens
@@ -144,7 +144,7 @@ plotGraph(dats_gr[[group]], method="firstcat", seed=seeds_gr[[group]])
 
 #### a)
 
-Welke branch is het meest verwant met `r branches_gr1[[group]][1]`?
+Selecteer de branch/branches die het meest verwant is/zijn met `r branches_gr1[[group]][1]`:
 
 ```{r choices3, comment=NA}
 for (i in branches_gr1[[group]][-1]) {
@@ -156,6 +156,17 @@ for (i in branches_gr1[[group]][-1]) {
 
 Welke branches stammen af van `r branches_gr2[group]`?
 
+#### c)
+
+Wat vind je van de volgende stelling?
+
+_"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
+
+1. Helemaal mee oneens
+2. Mee oneens
+3. Neutraal
+4. Mee eens
+5. Helemaal mee eens
 
 
 ```{r graph2}
@@ -163,9 +174,9 @@ Welke branches stammen af van `r branches_gr2[group]`?
 plotGraph(dats_gr[[3-group]], method="HCP", seed=seeds_gr[[3-group]])
 ```
 
-#### c)
+#### d)
 
-Welke branch is het meest verwant met `r branches_gr1[[3-group]][1]`:
+Selecteer de branch/branches die het meest verwant is/zijn met `r branches_gr1[[3-group]][1]`:
 
 ```{r choices4, comment=NA}
 for (i in branches_gr1[[3-group]][-1]) {
@@ -173,6 +184,28 @@ for (i in branches_gr1[[3-group]][-1]) {
 }
 ```
 
-#### d)
+#### e)
 
 Welke branches stammen af van `r branches_gr2[3-group]`?
+
+#### f)
+
+Wat vind je van de volgende stelling?
+
+_"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
+
+1. Helemaal mee oneens
+2. Mee oneens
+3. Neutraal
+4. Mee eens
+5. Helemaal mee eens
+
+
+#### g)
+
+Welke graaf vind je esthetisch gezien mooier?
+
+#### h)
+
+Welke graaf vind je geschikter voor analysedoeleinden?
+

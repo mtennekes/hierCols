@@ -9,7 +9,12 @@ Hierarchische kleurpaletten
 ========================================================
 
 We willen graag het gebruik van kleuren om classificatiestructuren
-te verduidelijken onderzoeken. We hebben zo meteen een aantal vragen voor je. We verwachten dat het niet meer dan 5 minuten van je kostbare tijd kost.
+te verduidelijken onderzoeken. We hebben zo meteen een aantal vragen voor je. We verwachten dat het niet meer dan 5 minuten van je kostbare tijd kost. 
+
+(Of moet dit in een begeleidend mailtje?)
+Je kunt je antwoorden in dit document invullen en terugsturen naar m.tennekes@cbs.nl
+of het document printen en het ingevulde document sturen naar Martijn Tennekes, kamer
+2A42 (Heerlen).
 
 Alle gebruikte __classificaties__ en voorbeelden zijn __fictief__! 
 
@@ -46,13 +51,16 @@ seeds_gr <- c(20140101, 20140102)
 
 Ben je (gedeeltelijk) kleurenblind?
 
+```
+Antwoord: 
+```
 ### Vraag 2
 
-Hieronder zie je een zogenaamde treemap die de omzet per branch weergeeft. De Hoe groter de rechthoek, hoe groter de omzet.
+Hieronder in figuur 1 zie je een zogenaamde treemap die de omzet per branch weergeeft. De Hoe groter de rechthoek, hoe groter de omzet.
 Om het gebruik van voorkennis uit te sluiten coderen we de branches met letters. Let op: deze codes zijn __willekeurig__ gekozen en hebbben niets te maken met
 SBI codes.
 
-```{r treemap1}
+```{r treemap1, fig.cap="_Treemap_ 1"}
 tm <- treemap(dats_tm[[group]], index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255)  
 
 addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"))
@@ -60,7 +68,9 @@ addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"))
 
 #### a)
 
-Selecteer de branch/branches die het meest verwant is/zijn met `r branches_tm1[[group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
+Kruis de branch/branches aan die het meest verwant is/zijn met 
+`r branches_tm1[[group]][1]` (het blauwe plusje) uit onderstaande keuzes
+(die zijn aangegeven met blauwe sterretjes):
 
 ```{r choices, comment=NA}
 for (i in branches_tm1[[group]][-1]) {
@@ -72,11 +82,14 @@ for (i in branches_tm1[[group]][-1]) {
 
 Hoeveel subcategoriën bevat `r branches_tm2[[group]]`?
 
+```
+Antwoord: 
+```
 #### c)
 
 Wat vind je van de volgende stelling?
 
-_"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
+_"De kleuren in Treemap 1 hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
 
 1. Helemaal mee oneens
 2. Mee oneens
@@ -84,8 +97,11 @@ _"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovensta
 4. Mee eens
 5. Helemaal mee eens
 
+```
+Antwoord: 
+```
 
-```{r treemap2}
+```{r treemap2, fig.cap="Treemap 2"}
 tm <- treemap(dats_tm[[3-group]], index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1")  
 
 addSymbols(tm, branches_tm1[[3-group]], symbols=c("+", "*", "*", "*", "*"))
@@ -106,14 +122,15 @@ for (i in branches_tm1[[3-group]][-1]) {
 
 Hoeveel subcategoriën bevat `r branches_tm2[[3-group]]`?
 
-
-
+```
+Antwoord: 
+```
 
 #### f)
 
 Wat vind je van de volgende stelling?
 
-_"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
+_"De kleuren in Treemap 2 hebben mij geholpen met het beantwoorden van bovenstaande vragen 2d en 2e."_
 
 1. Helemaal mee oneens
 2. Mee oneens
@@ -121,25 +138,36 @@ _"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovensta
 4. Mee eens
 5. Helemaal mee eens
 
-
+```
+Antwoord: 
+```
 
 #### g)
 
-Welke treemap vind je esthetisch gezien mooier?
+Welke treemap vind je mooier?
+
+```
+[] Treemap 1
+[] Treemap 2
+[] Maakt niet uit
+```
 
 #### h)
 
-Welke treemap vind je geschikter voor analysedoeleinden?
+Welke kleuren vind je geschikter voor analysedoeleinden?
 
+```
+[] Kleuren van treemap 1
+[] Kleuren van treemap 2
+[] Maakt niet uit
+```
 
 ### Vraag 3
 Hieronder zie je twee gerichte grafen die de structuur tussen de branches weergeven. Wederom zijn de gebruikte classificaties fictief en zijn de letters willekeurig gekozen.
 
-```{r graph1}
+```{r graph1, fig.cap="Graaf 1"}
 plotGraph(dats_gr[[group]], method="firstcat", seed=seeds_gr[[group]])
 #plotGraph(dats_gr[[group]], method="HCP", seed=20140101)
-
-
 ```
 
 #### a)
@@ -156,11 +184,16 @@ for (i in branches_gr1[[group]][-1]) {
 
 Welke branches stammen af van `r branches_gr2[group]`?
 
+```
+Antwoord: 
+```
+
+
 #### c)
 
 Wat vind je van de volgende stelling?
 
-_"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
+_"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 3a en 3b."_
 
 1. Helemaal mee oneens
 2. Mee oneens
@@ -168,8 +201,11 @@ _"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovensta
 4. Mee eens
 5. Helemaal mee eens
 
+```
+Antwoord: 
+```
 
-```{r graph2}
+```{r graph2, fig.cap="Graaf 2"}
 #plotGraph(dats_gr[[3-group]], method="firstcat", seed=20140102)
 plotGraph(dats_gr[[3-group]], method="HCP", seed=seeds_gr[[3-group]])
 ```
@@ -188,11 +224,15 @@ for (i in branches_gr1[[3-group]][-1]) {
 
 Welke branches stammen af van `r branches_gr2[3-group]`?
 
+```
+Antwoord: 
+```
+
 #### f)
 
 Wat vind je van de volgende stelling?
 
-_"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
+_"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 3d en 3e."_
 
 1. Helemaal mee oneens
 2. Mee oneens
@@ -200,12 +240,28 @@ _"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovensta
 4. Mee eens
 5. Helemaal mee eens
 
+```
+Antwoord: 
+```
 
 #### g)
 
-Welke graaf vind je esthetisch gezien mooier?
+Welke graaf vind je mooier?
+
+```
+[] Graaf 1
+[] Graaf 2
+[] Maak niet uit
+```
 
 #### h)
 
-Welke graaf vind je geschikter voor analysedoeleinden?
+Welke kleuren vind je geschikter voor analysedoeleinden?
 
+```
+[] Kleuren van graaf 1
+[] Kleuren van graaf 2
+[] Maak niet uit
+```
+
+Dank je wel voor je medewerking!

@@ -60,7 +60,7 @@ Hieronder in figuur 1 zie je een zogenaamde treemap die de omzet per branch weer
 Om het gebruik van voorkennis uit te sluiten coderen we de branches met letters. Let op: deze codes zijn __willekeurig__ gekozen en hebbben niets te maken met
 SBI codes.
 
-```{r treemap1, fig.cap="_Treemap_ 1"}
+```{r treemap1, fig.cap="Treemap 1"}
 tm <- treemap(dats_tm[[group]], index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255)  
 
 addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"))
@@ -234,6 +234,7 @@ Wat vind je van de volgende stelling?
 
 _"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 3d en 3e."_
 
+
 1. Helemaal mee oneens
 2. Mee oneens
 3. Neutraal
@@ -255,7 +256,7 @@ Welke graaf vind je mooier?
 ```
 
 #### h)
-
+   
 Welke kleuren vind je geschikter voor analysedoeleinden?
 
 ```

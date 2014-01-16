@@ -104,13 +104,13 @@ generateGraph <- function(dat, method="HCP") {
     require(treemap)
     require(RColorBrewer)
     
-    datcolors <- treepalette(dat, index=c("h1", "h2", "h3"))
+    datcolors <- treepalette(dat, index=c("h1", "h2", "h3"), palette.HCL.options=list(hue_fraction=0.90))
     set1 <- brewer.pal(8, "Set2")
     datcolors$firstcat.color <- set1[as.integer(datcolors$h1)]
     colorname <- ifelse(method=="HCP", "HCL.color", "firstcat.color")
     
     ## create vertex data.frame
-    vertices1 <- datcolors[is.na(datcolors$h2), c("h1", colorname)]
+    vertices1 <- datcolors[is.na(datcolors$h2), c("h1", colorname)] 
     vertices2 <- datcolors[is.na(datcolors$h3) & !is.na(datcolors$h2), c("h2", colorname)]
     vertices3 <- datcolors[!is.na(datcolors$h3), c("h3", colorname)]
     
@@ -141,8 +141,19 @@ plotGraph <- function(dat, method="HCP", seed) {
     set.seed(seed)
     cols <- col2rgb(V(g)$color)
     
-    light <- apply(cols * c(.299, .587, .114), MARGIN=2, sum) >= 128
-    fontcolors <- ifelse(light, "black", "white")
+    # constrasting labels.
+#     light <- apply(cols * c(.299, .587, .114), MARGIN=2, sum) >= 128
+#     fontcolors <- ifelse(light, "black", "white")
+#     
+    require(colorspace)
+    cols_hcl <- as(hex2RGB(V(g)$color), "polarLUV")
+    
+    luminence <- cols_hcl@coords[,1]
+    fontcolors <- ifelse(luminence >=65, "black", "white")
+
+#     luminence <- cut(cols_hcl@coords[,1],4)
+#     greys <- rev(sequential_hcl(n=4, c.=0, l=c(0,100)))
+#     fontcolors <- greys[luminence]
     
     plot(g, layout= layout.kamada.kawai(g), edge.arrow.size=.6, vertex.label.cex=.8, vertex.label.family="sans", vertex.label.color=fontcolors)
 }

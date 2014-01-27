@@ -12,7 +12,6 @@ We willen graag het gebruik van kleuren om classificatiestructuren
 te verduidelijken onderzoeken. We hebben zo meteen een aantal vragen voor je. 
 We verwachten dat het niet meer dan 5 minuten van je kostbare tijd kost. 
 
-(Of moet dit in een begeleidend mailtje?)
 Je kunt je antwoorden in dit document invullen en terugsturen naar m.tennekes@cbs.nl
 of het document printen en het ingevulde document sturen naar Martijn Tennekes, kamer
 2A42 (Heerlen).
@@ -30,6 +29,7 @@ library(grid)
 source("../R/survey_data.R")
 dats_tm <- generateRandomHierData(2, seeds=c(20140114, 20140115))
 dats_gr <- generateRandomHierData(2, seeds=c(20140116, 20140117), levs=c(3,6,17), addText=FALSE)
+dats_bar <- generateRandomHierData(2, seeds=c(20140127, 20140128), levs=c(3, 9, 22))
 #dats_gr <- generateRandomHierData(2, seeds=c(20140116, 20140117), levs=c(5, 13, 30), addText=FALSE)
 
 
@@ -55,133 +55,27 @@ Ben je (gedeeltelijk) kleurenblind?
 ```
 Antwoord: 
 ```
+
 ### Vraag 2
-
-Hieronder in figuur 1 zie je een zogenaamde treemap die de omzet per branch weergeeft. De Hoe groter de rechthoek, hoe groter de omzet.
-Om het gebruik van voorkennis uit te sluiten coderen we de branches met letters. Let op: deze codes zijn __willekeurig__ gekozen en hebbben niets te maken met
+Hieronder zie je twee gerichte grafen die de structuur tussen de branches weergeven. Om het gebruik van voorkennis uit te sluiten coderen we de branches met letters. Let op: deze codes zijn __willekeurig__ gekozen en hebbben niets te maken met
 SBI codes.
-
-```{r treemap1, fig.cap="Treemap 1"}
-tm <- treemap(dats_tm[[group]], index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255)  
-
-addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"))
-```
-
-#### a)
-
-Kruis de branch/branches aan die het meest verwant is/zijn met 
-`r branches_tm1[[group]][1]` (het blauwe plusje) uit onderstaande keuzes
-(die zijn aangegeven met blauwe sterretjes):
-
-```{r choices, comment=NA}
-for (i in branches_tm1[[group]][-1]) {
-    cat("[]", i, "\n")
-}
-```
-
-#### b) 
-
-Hoeveel subcategoriën bevat `r branches_tm2[[group]]`?
-
-```
-Antwoord: 
-```
-#### c)
-
-Wat vind je van de volgende stelling?
-
-_"De kleuren in Treemap 1 hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
-
-1. Helemaal mee oneens
-2. Mee oneens
-3. Neutraal
-4. Mee eens
-5. Helemaal mee eens
-
-```
-Antwoord: 
-```
-
-```{r treemap2, fig.cap="Treemap 2"}
-tm <- treemap(dats_tm[[3-group]], index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1")  
-
-addSymbols(tm, branches_tm1[[3-group]], symbols=c("+", "*", "*", "*", "*"))
-
-```
-
-#### d)
-
-Selecteer de branch/branches die het meest verwant is/zijn met `r branches_tm1[[3-group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
-
-```{r choices2, comment=NA}
-for (i in branches_tm1[[3-group]][-1]) {
-    cat("[]", i, "\n")
-}
-```
-
-#### e) 
-
-Hoeveel subcategoriën bevat `r branches_tm2[[3-group]]`?
-
-```
-Antwoord: 
-```
-
-#### f)
-
-Wat vind je van de volgende stelling?
-
-_"De kleuren in Treemap 2 hebben mij geholpen met het beantwoorden van bovenstaande vragen 2d en 2e."_
-
-1. Helemaal mee oneens
-2. Mee oneens
-3. Neutraal
-4. Mee eens
-5. Helemaal mee eens
-
-```
-Antwoord: 
-```
-
-#### g)
-
-Welke treemap vind je mooier?
-
-```
-[] Treemap 1
-[] Treemap 2
-[] Maakt niet uit
-```
-
-#### h)
-
-Welke kleuren vind je geschikter voor analysedoeleinden?
-
-```
-[] Kleuren van treemap 1
-[] Kleuren van treemap 2
-[] Maakt niet uit
-```
-
-### Vraag 3
-Hieronder zie je twee gerichte grafen die de structuur tussen de branches weergeven. Wederom zijn de gebruikte classificaties fictief en zijn de letters willekeurig gekozen.
 
 ```{r graph1, fig.cap="Graaf 1"}
 plotGraph(dats_gr[[group]], method="firstcat", seed=seeds_gr[[group]])
 #plotGraph(dats_gr[[group]], method="HCP", seed=20140101)
 ```
 
-#### a)
+#### 2a)
 
 Selecteer de branch/branches die het meest verwant is/zijn met `r branches_gr1[[group]][1]`:
 
-```{r choices3, comment=NA}
+```{r choices_g1, comment=NA}
 for (i in branches_gr1[[group]][-1]) {
     cat("[]", i, "\n")
 }
 ```
 
-#### b)
+#### 2b)
 
 Welke branches stammen af van `r branches_gr2[group]`?
 
@@ -190,11 +84,11 @@ Antwoord:
 ```
 
 
-#### c)
+#### 2c)
 
 Wat vind je van de volgende stelling?
 
-_"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 3a en 3b."_
+_"De kleuren in graaf 1 hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
 
 1. Helemaal mee oneens
 2. Mee oneens
@@ -211,17 +105,17 @@ Antwoord:
 plotGraph(dats_gr[[3-group]], method="HCP", seed=seeds_gr[[3-group]])
 ```
 
-#### d)
+#### 2d)
 
 Selecteer de branch/branches die het meest verwant is/zijn met `r branches_gr1[[3-group]][1]`:
 
-```{r choices4, comment=NA}
+```{r choices_g2, comment=NA}
 for (i in branches_gr1[[3-group]][-1]) {
     cat("[]", i, "\n")
 }
 ```
 
-#### e)
+#### 2e)
 
 Welke branches stammen af van `r branches_gr2[3-group]`?
 
@@ -229,11 +123,11 @@ Welke branches stammen af van `r branches_gr2[3-group]`?
 Antwoord: 
 ```
 
-#### f)
+#### 2f)
 
 Wat vind je van de volgende stelling?
 
-_"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovenstaande vragen 3d en 3e."_
+_"De kleuren in graaf 2 hebben mij geholpen met het beantwoorden van bovenstaande vragen 2d en 2e."_
 
 
 1. Helemaal mee oneens
@@ -246,7 +140,7 @@ _"De kleuren in de treemap hebben mij geholpen met het beantwoorden van bovensta
 Antwoord: 
 ```
 
-#### g)
+#### 2g)
 
 Welke graaf vind je mooier?
 
@@ -256,7 +150,7 @@ Welke graaf vind je mooier?
 [] Maak niet uit
 ```
 
-#### h)
+#### 2h)
    
 Welke kleuren vind je geschikter voor analysedoeleinden?
 
@@ -265,5 +159,232 @@ Welke kleuren vind je geschikter voor analysedoeleinden?
 [] Kleuren van graaf 2
 [] Maak niet uit
 ```
+
+
+
+### Vraag 3
+
+Hieronder zie je een zogenaamde treemap die de omzet per branch weergeeft. Hoe groter de rechthoek, hoe groter de omzet. Wederom zijn de gebruikte classificaties fictief en zijn de letters willekeurig gekozen.
+
+
+```{r treemap1, fig.cap="Treemap 1"}
+tm <- treemap(dats_tm[[group]], index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255, overlap.labels=0.1)  
+
+addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"))
+```
+
+#### 3a)
+
+Kruis de branch/branches aan die het meest verwant is/zijn met 
+`r branches_tm1[[group]][1]` (het blauwe plusje) uit onderstaande keuzes
+(die zijn aangegeven met blauwe sterretjes):
+
+```{r choices_t1, comment=NA}
+for (i in branches_tm1[[group]][-1]) {
+    cat("[]", i, "\n")
+}
+```
+
+#### 3b) 
+
+Hoeveel subcategoriën bevat `r branches_tm2[[group]]`?
+
+```
+Antwoord: 
+```
+#### 3c)
+
+Wat vind je van de volgende stelling?
+
+_"De kleuren in Treemap 1 hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
+
+1. Helemaal mee oneens
+2. Mee oneens
+3. Neutraal
+4. Mee eens
+5. Helemaal mee eens
+
+```
+Antwoord: 
+```
+
+```{r treemap2, fig.cap="Treemap 2"}
+tm <- treemap(dats_tm[[3-group]], index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1", overlap.labels=0.1)  
+
+addSymbols(tm, branches_tm1[[3-group]], symbols=c("+", "*", "*", "*", "*"))
+
+```
+
+#### 3d)
+
+Selecteer de branch/branches die het meest verwant is/zijn met `r branches_tm1[[3-group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
+
+```{r choices_t2, comment=NA}
+for (i in branches_tm1[[3-group]][-1]) {
+    cat("[]", i, "\n")
+}
+```
+
+#### 3e) 
+
+Hoeveel subcategoriën bevat `r branches_tm2[[3-group]]`?
+
+```
+Antwoord: 
+```
+
+#### 3f)
+
+Wat vind je van de volgende stelling?
+
+_"De kleuren in Treemap 2 hebben mij geholpen met het beantwoorden van bovenstaande vragen 2d en 2e."_
+
+1. Helemaal mee oneens
+2. Mee oneens
+3. Neutraal
+4. Mee eens
+5. Helemaal mee eens
+
+```
+Antwoord: 
+```
+
+#### 3g)
+
+Welke treemap vind je mooier?
+
+```
+[] Treemap 1
+[] Treemap 2
+[] Maakt niet uit
+```
+
+#### 3h)
+
+Welke kleuren vind je geschikter voor analysedoeleinden?
+
+```
+[] Kleuren van treemap 1
+[] Kleuren van treemap 2
+[] Maakt niet uit
+```
+
+
+
+
+
+
+
+
+
+
+
+### Vraag 4
+
+Hieronder zie je een staafdiagram die de omzet per branch weergeeft. Wederom zijn de gebruikte classificaties fictief en zijn de letters willekeurig gekozen.
+
+
+```{r bar1, fig.cap="Staafdiagram 1"}
+plotBar(dats_bar[[group]], method="firstcat")
+
+```
+
+#### 4a)
+
+Kruis de branch/branches aan die het meest verwant is/zijn met 
+`r branches_tm1[[group]][1]` (het blauwe plusje) uit onderstaande keuzes
+(die zijn aangegeven met blauwe sterretjes):
+
+```{r choices_b1, comment=NA}
+for (i in branches_tm1[[group]][-1]) {
+    cat("[]", i, "\n")
+}
+```
+
+#### 4b) 
+
+Hoeveel subcategoriën bevat `r branches_tm2[[group]]`?
+
+```
+Antwoord: 
+```
+#### 4c)
+
+Wat vind je van de volgende stelling?
+
+_"De kleuren in Staafdiagram 1 hebben mij geholpen met het beantwoorden van bovenstaande vragen 4a en 4b."_
+
+1. Helemaal mee oneens
+2. Mee oneens
+3. Neutraal
+4. Mee eens
+5. Helemaal mee eens
+
+```
+Antwoord: 
+```
+
+```{r bar2, fig.cap="Staafdiagram 2"}
+plotBar(dats_bar[[3-group]], method="HCP")
+
+```
+
+
+#### 4d)
+
+Selecteer de branch/branches die het meest verwant is/zijn met `r branches_tm1[[3-group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
+
+```{r choices_b2, comment=NA}
+for (i in branches_tm1[[3-group]][-1]) {
+    cat("[]", i, "\n")
+}
+```
+
+#### 4e) 
+
+Hoeveel subcategoriën bevat `r branches_tm2[[3-group]]`?
+
+```
+Antwoord: 
+```
+
+#### 4f)
+
+Wat vind je van de volgende stelling?
+
+_"De kleuren in Treemap 4 hebben mij geholpen met het beantwoorden van bovenstaande vragen 4d en 4e."_
+
+1. Helemaal mee oneens
+2. Mee oneens
+3. Neutraal
+4. Mee eens
+5. Helemaal mee eens
+
+```
+Antwoord: 
+```
+
+#### 4g)
+
+Welke staafdiagram vind je mooier?
+
+```
+[] Staafdiagram 1
+[] Staafdiagram 2
+[] Maakt niet uit
+```
+
+#### 4h)
+
+Welke kleuren vind je geschikter voor analysedoeleinden?
+
+```
+[] Kleuren van staafdiagram 1
+[] Kleuren van staafdiagram 2
+[] Maakt niet uit
+```
+
+
+
 
 Dank je wel voor je medewerking!

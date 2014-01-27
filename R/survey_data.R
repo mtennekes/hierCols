@@ -104,7 +104,7 @@ generateGraph <- function(dat, method="HCP") {
     require(treemap)
     require(RColorBrewer)
     
-    datcolors <- treepalette(dat, index=c("h1", "h2", "h3"), palette.HCL.options=list(hue_fraction=0.90))
+    datcolors <- treepalette(dat, index=c("h1", "h2", "h3"), palette.HCL.options=list(hue_fraction=0.75))
     set1 <- brewer.pal(8, "Set2")
     datcolors$firstcat.color <- set1[as.integer(datcolors$h1)]
     colorname <- ifelse(method=="HCP", "HCL.color", "firstcat.color")
@@ -156,5 +156,42 @@ plotGraph <- function(dat, method="HCP", seed) {
 #     fontcolors <- greys[luminence]
     
     plot(g, layout= layout.kamada.kawai(g), edge.arrow.size=.6, vertex.label.cex=.8, vertex.label.family="sans", vertex.label.color=fontcolors)
+}
+
+plotBar <- function(dat, method="HCP") {
+    require(ggplot2)
+    require(RColorBrewer)
+    
+    dat <- dat[order(dat$h1, dat$h2, decreasing=TRUE), ]
+    dat$h1 <- factor(as.character(dat$h1), levels=rev(unique(as.character(dat$h1))))
+    dat$h2 <- factor(as.character(dat$h2), levels=rev(unique(as.character(dat$h2))))
+    dat$h3 <- factor(as.character(dat$h3), levels=rev(unique(as.character(dat$h3))))
+    
+    datcolors <- treepalette(dat, index=c("h1", "h2", "h3"), palette.HCL.options=list(hue_fraction=0.75))
+    
+    dark2 <- brewer.pal(8, "Dark2")
+    datcolors$firstcat.color <- dark2[as.integer(datcolors$h1)]
+    colorname <- ifelse(method=="HCP", "HCL.color", "firstcat.color")
+    
+    dat$color <- datcolors[[colorname]][match(dat$h3, datcolors$h3)]
+    
+    dat$x <- addSpace(dat[, c("h1", "h2", "h3")])
+    dat$x <- max(dat$x) - dat$x
+    
+    ggplot(dat, aes(x=x, y=value, fill=h3)) +
+        geom_bar(stat="identity") + 
+        scale_x_continuous("", breaks=dat$x, labels=dat$h3) +
+        scale_y_continuous("") +
+        scale_fill_manual(values=rev(dat$color)) + coord_flip() + theme_bw() +
+        theme(legend.position="none")
+}
+
+
+addSpace <- function(dat, fact=1.10) {
+    dat <- lapply(dat, as.integer) 
+    diff <- lapply(dat, function(x)x[-1]!=x[-(length(x))])
+    diff <- matrix(unlist(diff), ncol=3)
+    steps <- floor(log10(apply(diff, MARGIN=1,FUN=function(x)sum(1, as.numeric(x)*(10^(length(x):1))))))
+    cumsum(c(0, fact^steps))
 }
 

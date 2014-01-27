@@ -29,6 +29,16 @@ str(tm)
 treemap(dat, index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1")  
 #dev.off()
 
+## bar chart
+source("./R/survey_data.R")
+dats_bar <- generateRandomHierData(2, seeds=c(20140127, 20140128), levs=c(3, 9, 22))
 
+
+plotBar(dats_bar[[2]], method="")
+
+
+
+
+#ggsave("bar_chart.pdf", path="plots", plot=g, width=3, height=4, scale=1.5)
 
 

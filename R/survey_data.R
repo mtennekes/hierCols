@@ -158,7 +158,7 @@ plotGraph <- function(dat, method="HCP", seed) {
     plot(g, layout= layout.kamada.kawai(g), edge.arrow.size=.6, vertex.label.cex=.8, vertex.label.family="sans", vertex.label.color=fontcolors)
 }
 
-plotBar <- function(dat, method="HCP") {
+plotBar <- function(dat, method="HCP", hue_fraction=0.75) {
     require(ggplot2)
     require(RColorBrewer)
     
@@ -167,7 +167,8 @@ plotBar <- function(dat, method="HCP") {
     dat$h2 <- factor(as.character(dat$h2), levels=rev(unique(as.character(dat$h2))))
     dat$h3 <- factor(as.character(dat$h3), levels=rev(unique(as.character(dat$h3))))
     
-    datcolors <- treepalette(dat, index=c("h1", "h2", "h3"), palette.HCL.options=list(hue_fraction=0.75))
+    datcolors <- treepalette( dat, index=c("h1", "h2", "h3"), 
+                              palette.HCL.options = list(hue_fraction=hue_fraction))
     
     dark2 <- brewer.pal(8, "Dark2")
     datcolors$firstcat.color <- dark2[as.integer(datcolors$h1)]

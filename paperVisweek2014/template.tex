@@ -25,8 +25,6 @@
 %% typefaces, ``graphicx'' for inclusion of EPS figures. and ``times''
 %% for proper handling of the times font family.
 
-\usepackage{enumerate}
-
 \usepackage{mathptmx}
 \usepackage{graphicx}
 \usepackage{times}
@@ -67,50 +65,61 @@
 
 %% Paper title.
 
-\title{Hierarchical Color Palettes}
+\title{Global Illumination for Fun and Profit}
 
 %% This is how authors are specified in the journal style
 
 %% indicate IEEE Member or Student Member in form indicated below
-\author{Martijn Tennekes and Edwin de Jonge}
-
-
+\author{Roy G. Biv, Ed Grimley, \textit{Member, IEEE}, and Martha Stewart}
 \authorfooter{
 %% insert punctuation at end of each item
 \item
-Martijn Tennekes, Statistics Netherlands. E-mail: m.tennekes@cbs.nl.
+ Roy G. Biv is with Starbucks Research. E-mail: roy.g.biv@aol.com.
 \item
-Edwin de Jonge, Statistics Netherlands. E-mail: e.dejonge@cbs.nl.
+ Ed Grimley is with Grimley Widgets, Inc.. E-mail: ed.grimley@aol.com.
+\item
+ Martha Stewart is with Martha Stewart Enterprises at Microsoft
+ Research. E-mail: martha.stewart@marthastewart.com.
 }
 
 %other entries to be set up for journal
-\shortauthortitle{Biv \MakeLowercase{\textit{et al.}}: Hierarchical color palettes}
+\shortauthortitle{Biv \MakeLowercase{\textit{et al.}}: Global Illumination for Fun and Profit}
 %\shortauthortitle{Firstauthor \MakeLowercase{\textit{et al.}}: Paper Title}
 
 %% Abstract section.
-\abstract{
-Color is an important means to display categorical data in statistical graphics. Categories are often hierarchically structured in a classification tree, but most color palettes do not take this hierarchy into account. We present a method to map tree structures to colors from the Hue-Chroma-Luminance (HCL) color model. The HCL color space is known for its well balanced perceptual properties. Our study suggest that hierarchical qualitative color palettes are very useful: not only for improving standard hierarchical visualizations such as trees and treemaps, but also for showing tree structure in non-hierarchical visualizations.
+\abstract{Duis autem vel eum iriure dolor in hendrerit in vulputate
+velit esse molestie consequat, vel illum dolore eu feugiat nulla
+facilisis at vero eros et accumsan et iusto odio dignissim qui blandit
+praesent luptatum zzril delenit augue duis dolore te feugait nulla
+facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem
+vel eum iriure dolor in hendrerit in vulputate velit esse molestie
+consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
+accumsan et iusto odio dignissim qui blandit praesent luptatum zzril
+delenit augue duis dolore te feugait nulla facilisi.
 } % end of abstract
 
 %% Keywords that describe your work. Will show as 'Index Terms' in journal
 %% please capitalize first letter and insert punctuation after last keyword
-\keywords{Color palettes, statistical graphics, hierarchical data.}
+\keywords{Radiosity, global illumination, constant time}
 
 %% ACM Computing Classification System (CCS). 
 %% See <http://www.acm.org/class/1998/> for details.
 %% The ``\CCScat'' command takes four arguments.
 
-\CCScatlist{ 
- \CCScat{H.5.2}{ Information Interfaces and Presentation}%
-{User Interfaces}{User-centered design}
+\CCScatlist{ % not used in journal version
+ \CCScat{K.6.1}{Management of Computing and Information Systems}%
+{Project and People Management}{Life Cycle};
+ \CCScat{K.7.m}{The Computing Profession}{Miscellaneous}{Ethics}
 }
-
 
 %% Uncomment below to include a teaser figure.
   \teaser{
   \centering
-  \includegraphics[width=16cm]{treemap_F.pdf}
-  \caption{Treemap with hierarchical colors.}
+  \includegraphics[width=16cm]{CypressView}
+  \caption{In the Clouds: Vancouver from Cypress Mountain.}
   }
 
 %% Uncomment below to disable the manuscript note
@@ -124,10 +133,6 @@ Color is an important means to display categorical data in statistical graphics.
 %%%%%%%%%%%%%%%%%%%%%% START OF THE PAPER %%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-\graphicspath{{../plots/}}
-
-
 \begin{document}
 
 %% The ``\maketitle'' command must be the first command after the
@@ -138,120 +143,262 @@ Color is an important means to display categorical data in statistical graphics.
 
 \maketitle
 
-Hierarchical data are of crucial importance in official statistics. Most official data are published using hierarchically structured categories, for instance geographic regions or economic activities. Several data visualization methods are useful to explore and analyze hierarchical statistical data, for instance treemaps
-\cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the  hierarchical structure would be very useful in supporting visual analysis.
+%% \section{Introduction} %for journal use above \firstsection{..} instead
 
-Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should not suggest non-existent order or proximity and introduce perceptual bias. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam
+voluptua~\cite{kitware2003,Max:1995:OMF}. At vero eos et accusam et
+justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+invidunt ut labore et dolore magna aliquyam erat, sed diam
+voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet.
 
-Although many tree visualizations are proposed in literature \cite{schulz2011}, most of them use color to a small extent. A visualization technique that uses color as a major attribute is the InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned to a different hue values. The color of a parent node is derived from averaging the colors of its children, where larger branches have more weight. An implicit effect is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches.
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+molestie consequat, vel illum dolore eu feugiat nulla facilisis at
+vero eros et accumsan et iusto odio dignissim qui blandit praesent
+luptatum zzril delenit augue duis dolore te feugait nulla
+facilisi~\cite{notes2002}. Lorem ipsum dolor sit amet, consectetuer
+adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet
+dolore magna aliquam erat volutpat.
 
-We present a method to map tree structures to color palettes, which will be refered to as Hierarchical Color Palettes (HCP's). The used color space is the Hue-Chroma-Luminance (HCL) space, which is a transformation of the CIELUV color space, is designed with the aim to control human color perception~\cite{ihaka2003}. Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) color space~\cite{zeileis2009}.
+Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem
+vel eum iriure dolor in hendrerit in vulputate velit esse molestie
+consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
+accumsan et iusto odio dignissim qui blandit praesent luptatum zzril
+delenit augue duis dolore te feugait nulla facilisi.
 
-This paper is outlined as follows. In Section~\ref{secmethod} we describe the proposed method. We provide several applications of statistical graphics that use HCP's in Section~\ref{secapplication}. The conducted user survey to evaluate the method is described in Section~\ref{secuser}. We conclude with a discusssion in Section~\ref{secdisc}
+\section{Exposition}
 
-\section{Method}\label{secmethod}
-Our method maps a tree structure on colors in HCL space, such that it reflects the hierarchical properties of the tree. We use $H$, with range [0, 360], for the tree structure, where the hue of each child node resembles the hue of its parent. $C$ and $L$, both with range [0, 100], are used to discriminate the different hierarchical levels.
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+invidunt ut labore et dolore magna aliquyam erat, sed diam
+voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum~\cite{ware:2004:IVP}. Stet clita kasd gubergren, no sea takimata
+sanctus est Lorem ipsum dolor sit amet.
 
-In this paper we illustrate our method with the European classification system of economic activity NACE. Figure~\ref{fig:sbiF} show a small part of the NACE: section F (Construction). Figure~\ref{fig:sbiF} is a typical tree visualization using a radial layout, but is improved by using nodes with colors from our hierarchical color palette. 
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse
+molestie consequat, vel illum dolore eu feugiat nulla facilisis at
+vero eros et accumsan et iusto odio dignissim qui blandit praesent
+luptatum zzril delenit augue duis dolore te feugait nulla
+facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
+sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
+aliquam erat volutpat~\cite{kindlmann:1999:SAG}.
+
+Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+suscipit lobortis nisl ut aliquip ex ea commodo
+consequat~\cite{levoy:1989:DSV}. Duis autem vel eum iriure dolor in
+hendrerit in vulputate velit esse molestie consequat, vel illum dolore
+eu feugiat nulla facilisis at vero eros et accumsan et iusto odio
+dignissim qui blandit praesent luptatum zzril delenit augue duis
+dolore te feugait nulla facilisi.
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+invidunt ut labore et dolore magna aliquyam erat, sed diam
+voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet.
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+invidunt ut labore et dolore magna aliquyam erat, sed diam
+voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet.
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam voluptua.
+
+\begin{equation}
+\sum_{j=1}^{z} j = \frac{z(z+1)}{2}
+\end{equation}
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+invidunt ut labore et dolore magna aliquyam erat, sed diam
+voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet.
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+invidunt ut labore et dolore magna aliquyam erat, sed diam
+voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet.
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+takimata sanctus est Lorem ipsum dolor sit amet. 
+
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+invidunt ut labore et dolore magna aliquyam erat, sed diam
+voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet.
+
+\begin{table}
+%% Table captions on top in journal version
+ \caption{SciVis Paper Acceptance Rate: 1994-2006}
+ \label{vis_accept}
+ \scriptsize
+ \begin{center}
+   \begin{tabular}{cccc}
+     Year & Submitted & Accepted & Accepted (\%)\\
+   \hline
+     1994 &  91 & 41 & 45.1\\
+     1995 & 102 & 41 & 40.2\\
+     1996 & 101 & 43 & 42.6\\
+     1997 & 117 & 44 & 37.6\\
+     1998 & 118 & 50 & 42.4\\
+     1999 & 129 & 47 & 36.4\\
+     2000 & 151 & 52 & 34.4\\
+     2001 & 152 & 51 & 33.6\\
+     2002 & 172 & 58 & 33.7\\
+     2003 & 192 & 63 & 32.8\\
+     2004 & 167 & 46 & 27.6\\
+     2005 & 268 & 88 & 32.8\\
+     2006 & 228 & 63 & 27.6
+   \end{tabular}
+ \end{center}
+\end{table}
 
 \begin{figure}[htb]
-  \vspace{-3ex}
-  \centering
-  \includegraphics[width=3.2in]{sbi_F.pdf}
-  \vspace{-5ex}
-  \caption{Tree structure of economic sector F of NACE.}\label{fig:sbiF}
-  \vspace{-2ex}
+ \centering
+ \includegraphics[width=1.5in]{sample}
+ \caption{Sample illustration.}
 \end{figure}
 
-For selecting hue values we use the following recursive algorithm. It will assign to each node $v$ of a tree structure a hue value $h$ and a hue value range $r$.
-We start with the root node, which has by default hue range $[0, 360]$:
+\subsection{Mezcal Head}
 
-\smallskip{\bf AssignHue($v$, $r$)}
-\vspace{-1mm}\begin{enumerate} \itemsep1pt \parskip0pt 
-\parsep0pt
-\item assign the middle hue value in $r$ to $h$ \footnote{In most cases the root node itself will not be drawn.}
-\item $N$ is number of child nodes of $v$, if $N>0$ :
-\begin{enumerate}[i] \itemsep1pt \parskip0pt 
-\parsep0pt
-\item divide $r$ in $N$ equal parts $r_i$;
-\item permute the $r_i$'s and assign them to the child nodes
-\item reduce each $r_i$ by keeping the middle fraction $f$;
-\item for each child node $v_i$ DO AssignHue($v_i$,$r_i$)
-\end{enumerate}
-\end{enumerate}
-
-\begin{figure}[htb]
-  \centering
-  \includegraphics[width=3.5in]{hcl_method.pdf}
-  \vspace{-5ex}
-  \caption{Assignment of hue values.}\label{fig:wheel}
-  \vspace{-4ex}
-\end{figure}
-
-This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=80$)  is divided and permuted among the three children of the root, in (b) the middle fractions are kept, in (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
-
-Ad 2ii) In most hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling of the color wheel that shows that the assignment of colors is permuted.
-
-Ad 2iii) The fraction is needed to introduce a `hue gap' between nodes with a different parent. The fraction $f$ is by default set to $0.75$. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. 
-
-In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes in the tree structure. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes.
-
-\begin{figure}[htb]
-  \vspace{-4ex}
-  \centering
-  \includegraphics[width=3.5in]{treemap_F.pdf}
-  \vspace{-4ex}
-  \caption{Treemap with hierarchical colors}\label{fig:treemapF}
-  \vspace{-4ex}
-\end{figure}
+Duis autem~\cite{Lorensen:1987:MCA} vel eum iriure dolor in hendrerit
+in vulputate velit esse molestie consequat, vel illum dolore eu
+feugiat nulla facilisis at vero eros et accumsan et iusto odio
+dignissim qui blandit praesent luptatum zzril delenit augue duis
+dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet,
+consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt
+ut laoreet dolore magna aliquam erat volutpat%
+\footnote{Footnotes appear at the bottom of the column}.
 
 
+\subsubsection{Ejector Seat Reservation}
 
-\begin{figure}[htb]
-  \centering
-  \includegraphics[width=1.235in]{bar_chart.pdf}
-  \includegraphics[width=2.065in]{stackedarea_chart.pdf}
-  \vspace{-5ex}
-  \caption{Bar chart and stacked area chart with hierarchical colors}\label{fig:charts}
-  \vspace{-4ex}
-\end{figure}
+Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+suscipit lobortis nisl ut aliquip ex ea commodo
+consequat~\cite{Nielson:1991:TAD}. Duis autem vel eum iriure dolor in
+hendrerit in vulputate velit esse molestie consequat, vel illum dolore
+eu feugiat nulla facilisis at vero eros et accumsan et iusto odio
+dignissim qui blandit praesent luptatum zzril delenit augue duis
+dolore te feugait nulla facilisi.
 
-%\begin{figure}[htb]
-%  \centering
-%  \includegraphics[width=0.25in]{stackedline_chart.pdf}
-%  \caption{Stacked line chart with hierarchical colors}\label{fig:linechart}
-%\end{figure}
-%\begin{figure}[htb]
-%  \centering
-%  \includegraphics[width=1.75in]{stackedbar_chart.pdf}
-%  \caption{Stacked bar chart with hierarchical colors}\label{fig:barchart}
-%\end{figure}
+\paragraph{Rejected Ejector Seat Reservation}
 
+Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper
+suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem
+vel eum iriure dolor in hendrerit in vulputate velit esse molestie
 
+\section{Conclusion}
 
-\section{Application}\label{secapplication}
-The hierarchical colors can be applied to enhance standard tree visualizations, as we saw in Figure~\ref{fig:sbiF}. Strictly speaking this is redundant color usage, but in our opinion it can improve many tree visualizations, because branches can be distinguished more easily. 
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+invidunt ut labore et dolore magna aliquyam erat, sed diam
+voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet.
 
-A second example of improvement is depicted in Figure~\ref{fig:treemapF}. It shows a treemap depicting (fictious) turnover values in Construction (NACE F). In official statistics, turnover is available for each business enterprise in a business register, and aggregated according to the NACE tree. The hierarchical color palette is used to differentiate between different aggregated groups, that makes it possible to compare turnover values at different hierarchical layers. Although the colors of higher NACE layers are only used for the text label backgrounds, they are also resembled by the colors of the lowest NACE layers. This treemap is created with the free and open source R package treemap \cite{treemap}.
-
-Hierarchical colors can also improve visualizations without explicit tree structure. The colors hint at the underlying tree structure.
-To illustrate this, a bar chart and a stacked area chart of fictive turnover data are depicted in Figure~\ref{fig:charts}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. The bar chart can be used to compare turnover values of all leaf node sectors in Construction (NACE F), and the stacked area plot to analyse turnover values in time.
-
-\section{User study}~\label{secuser}
-
-
-\section{Discussion}~\label{secdisc}
-In our opinion, the proposed method to create hierarchical color palettes improves statistical visualizations, both hierarchically and non-hierarchically structured. The pre-condition that colors in the same hierarchical layer should be similar in terms of colorfulness and brightness it satisfied. This property is especially important in statistical visualizations, since they aim to visualize data as objectively as possible. The downside of the proposed method is that some leaf node colors will still be hard to distinguish.
-
-We recommend a user study to evaluate the obtained hierarchical color palettes when applied in various statistical visualizations. The main aim of this user study would be to find out whether hierarchical palettes are useful in statistical analysis.
-
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
+nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
+rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. 
 
 %% if specified like this the section will be committed in review mode
 \acknowledgments{
-The authors wish to thank their collegues at Statistics Netherlands who participated in the user survey.}
+The authors wish to thank A, B, C. This work was supported in part by
+a grant from XYZ.}
 
 \bibliographystyle{abbrv}
 %%use following if all content of bibtex file should be shown
 %\nocite{*}
-\bibliography{hcp}
+\bibliography{template}
 \end{document}

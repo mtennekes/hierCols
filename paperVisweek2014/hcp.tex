@@ -139,15 +139,15 @@ Color is an important means to display categorical data in statistical graphics.
 \maketitle
 
 Hierarchical data are of crucial importance in official statistics. Most official data are published using hierarchically structured categories, for instance geographic regions or economic activities. Several data visualization methods are useful to explore and analyze hierarchical statistical data, for instance treemaps
-\cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the  hierarchical structure would be very useful in supporting visual analysis.
+\cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the hierarchical structure would be very useful in supporting visual analysis.
 
 Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should not suggest non-existent order or proximity and introduce perceptual bias. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
 
 Although many tree visualizations are proposed in literature \cite{schulz2011}, most of them use color to a small extent. A visualization technique that uses color as a major attribute is the InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned to a different hue values. The color of a parent node is derived from averaging the colors of its children, where larger branches have more weight. An implicit effect is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches.
 
-We present a method to map tree structures to color palettes, which will be refered to as Hierarchical Color Palettes (HCP's). The used color space is the Hue-Chroma-Luminance (HCL) space, which is a transformation of the CIELUV color space, is designed with the aim to control human color perception~\cite{ihaka2003}. Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) color space~\cite{zeileis2009}.
+We present a method to map tree structures to color palettes, which we refer to as Hierarchical Color Palettes (HCP's) throughout this paper. The used color space is the Hue-Chroma-Luminance (HCL) space, a transformation of the CIELUV color space, that is designed with the aim to control human color perception~\cite{ihaka2003}. Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) color space~\cite{zeileis2009}.
 
-This paper is outlined as follows. In Section~\ref{secmethod} we describe the proposed method. We provide several applications of statistical graphics that use HCP's in Section~\ref{secapplication}. The conducted user survey to evaluate the method is described in Section~\ref{secuser}. We conclude with a discusssion in Section~\ref{secdisc}
+This paper is outlined as follows. In Section~\ref{secmethod} we describe the proposed method. We provide several applications of statistical graphics that use HCP's in Section~\ref{secapplication}. The conducted user survey to evaluate the method is described in Section~\ref{secuser}. We conclude with a discusssion in Section~\ref{secdisc}.
 
 \section{Method}\label{secmethod}
 Our method maps a tree structure on colors in HCL space, such that it reflects the hierarchical properties of the tree. We use $H$, with range [0, 360], for the tree structure, where the hue of each child node resembles the hue of its parent. $C$ and $L$, both with range [0, 100], are used to discriminate the different hierarchical levels.
@@ -194,7 +194,19 @@ Ad 2ii) In most hierarchical structures, there is no order between siblings. Whe
 
 Ad 2iii) The fraction is needed to introduce a `hue gap' between nodes with a different parent. The fraction $f$ is by default set to $0.75$. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. 
 
-In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes in the tree structure. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes.
+In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes in the tree structure. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes. For each hierarchical level $i \in \{0, 1, \ldots, k\}$, where 0 is the root, the chroma and luminance values are given by
+\begin{equation}
+C_i=i\beta^C + C_0
+\end{equation}
+and
+\begin{equation}
+L_i=i\beta^L + L_0.
+\end{equation}
+
+By default, the parameters are set as follows: $\beta^C=5$, $\beta^L=-10$, $C_0=65$ and $L_0=80$. Since the root node itself does not have a suitable hue value, its color is specified by $[H=0, C=0, L=L_0]$.
+
+% LITTLE CONFLICT WITH TREEMAPs palette.HCL.options: they start with the level=1, while the formulation above is more elegant.
+
 
 \begin{figure}[htb]
   \vspace{-4ex}
@@ -228,7 +240,6 @@ In order to show depth, we let $C$ and $L$ values only depend on the depth of th
 %\end{figure}
 
 
-
 \section{Application}\label{secapplication}
 The hierarchical colors can be applied to enhance standard tree visualizations, as we saw in Figure~\ref{fig:sbiF}. Strictly speaking this is redundant color usage, but in our opinion it can improve many tree visualizations, because branches can be distinguished more easily. 
 
@@ -236,6 +247,10 @@ A second example of improvement is depicted in Figure~\ref{fig:treemapF}. It sho
 
 Hierarchical colors can also improve visualizations without explicit tree structure. The colors hint at the underlying tree structure.
 To illustrate this, a bar chart and a stacked area chart of fictive turnover data are depicted in Figure~\ref{fig:charts}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. The bar chart can be used to compare turnover values of all leaf node sectors in Construction (NACE F), and the stacked area plot to analyse turnover values in time.
+
+
+
+
 
 \section{User study}~\label{secuser}
 

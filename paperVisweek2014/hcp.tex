@@ -188,7 +188,7 @@ We start with the root node, which has by default hue range $[0, 360]$:
 %  \vspace{-4ex}
 \end{figure}
 
-This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=80$)  is divided and permuted among the three children of the root, in (b) the middle fractions are kept, in (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
+This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=70$)  is divided and permuted among the three children of the root, in (b) the middle fractions are kept, in (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
 
 Ad 2ii) In most hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling of the color wheel that shows that the assignment of colors is permuted.
 
@@ -203,7 +203,7 @@ and
 L_i=(i-1)\beta^L + L_1.
 \end{equation}
 
-By default, the parameters are set as follows: $\beta^C=5$, $\beta^L=-10$, $C_1=60$ and $L_1=70$. Since the root node itself does not have a suitable hue value, its color is specified by $[H_0=0, C_0=0, L_0=L_1-\beta^L]$.
+By default, the parameters are set as follows: $\beta^C=5$, $\beta^L=-10$, $C_1=60$ and $L_1=70$. Since the root node itself does not have a suitable hue value, its color is specified by $<H_0=0, C_0=0, L_0=L_1-\beta^L>$.
 
 
 \begin{figure}[htb]

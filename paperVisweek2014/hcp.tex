@@ -181,11 +181,11 @@ We start with the root node, which has by default hue range $[0, 360]$:
 \end{enumerate}
 
 \begin{figure}[htb]
-  \centering
-  \includegraphics[width=3.5in]{hcl_method.pdf}
-  \vspace{-5ex}
-  \caption{Assignment of hue values.}\label{fig:wheel}
-  \vspace{-4ex}
+%  \centering
+%  \includegraphics[width=3.5in]{hcl_method.pdf}
+%  \vspace{-5ex}
+%  \caption{Assignment of hue values.}\label{fig:wheel}
+%  \vspace{-4ex}
 \end{figure}
 
 This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=80$)  is divided and permuted among the three children of the root, in (b) the middle fractions are kept, in (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
@@ -194,18 +194,16 @@ Ad 2ii) In most hierarchical structures, there is no order between siblings. Whe
 
 Ad 2iii) The fraction is needed to introduce a `hue gap' between nodes with a different parent. The fraction $f$ is by default set to $0.75$. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. 
 
-In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes in the tree structure. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes. For each hierarchical level $i \in \{0, 1, \ldots, k\}$, where 0 is the root, the chroma and luminance values are given by
+In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes in the tree structure. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes. The parameters for the chroma and luminance for the first hierarchical level below the root are given by $C_1$ and $L_1$. For each other hierarchical level $i \in \{2, \ldots, k\}$, the chroma and luminance values are given by
 \begin{equation}
-C_i=i\beta^C + C_0
+C_i=(i-1)\beta^C + C_1
 \end{equation}
 and
 \begin{equation}
-L_i=i\beta^L + L_0.
+L_i=(i-1)\beta^L + L_1.
 \end{equation}
 
-By default, the parameters are set as follows: $\beta^C=5$, $\beta^L=-10$, $C_0=65$ and $L_0=80$. Since the root node itself does not have a suitable hue value, its color is specified by $[H=0, C=0, L=L_0]$.
-
-% LITTLE CONFLICT WITH TREEMAPs palette.HCL.options: they start with the level=1, while the formulation above is more elegant.
+By default, the parameters are set as follows: $\beta^C=5$, $\beta^L=-10$, $C_1=60$ and $L_1=70$. Since the root node itself does not have a suitable hue value, its color is specified by $[H_0=0, C_0=0, L_0=L_1-\beta^L]$.
 
 
 \begin{figure}[htb]

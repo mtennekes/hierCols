@@ -23,8 +23,6 @@ str(tm)
 
 
 
-
-
 #pdf(file="../plots/tm1ref.pdf", width=9, height=7)
 treemap(dat, index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1")  
 #dev.off()
@@ -37,8 +35,14 @@ dats_bar <- generateRandomHierData(2, seeds=c(20140127, 20140128), levs=c(3, 9, 
 plotBar(dats_bar[[2]], method="")
 
 
+############################### for paper ########################
+
+## use business sector F as example for dissociated category names
+hd <- business[as.integer(business$NACE1)==6, c("NACE2", "NACE3", "NACE4", "turnover")]
+names(hd) <- c("L1", "L2", "L3")
+hd$L1 <- factor(as.integer(hd$L1), labels=LETTERS[1:3])
+hd$L2 <- factor(paste(hd$L1, as.vector(unlist(tapply(hd$L2, INDEX=list(hd$L1), function(x)as.character(factor(as.character(x), labels=1:length(unique(x))))))), sep="."))
+hd$L3 <- factor(paste(hd$L2, as.vector(unlist(tapply(hd$L3, INDEX=list(hd$L2), function(x)as.character(factor(as.character(x), labels=letters[1:length(unique(x))]))))), sep="."))
 
 
-#ggsave("bar_chart.pdf", path="plots", plot=g, width=3, height=4, scale=1.5)
-
-
+## use Statline data for real world application

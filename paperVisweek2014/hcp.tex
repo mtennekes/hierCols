@@ -152,24 +152,24 @@ This paper is outlined as follows. In Section~\ref{secmethod} we describe the pr
 \section{Method}\label{secmethod}
 Our method maps a tree structure on colors in HCL space, such that it reflects the hierarchical properties of the tree. We use $H$, with range [0, 360], for the tree structure, where the hue of each child node resembles the hue of its parent. $C$ and $L$, both with range [0, 100], are used to discriminate the different hierarchical levels.
 
-In this paper we illustrate our method with the European classification system of economic activity NACE. Figure~\ref{fig:sbiF} show a small part of the NACE: section F (Construction). Figure~\ref{fig:sbiF} is a typical tree visualization using a radial layout, but is improved by using nodes with colors from our hierarchical color palette. 
+We illustrate our method with a tree structure that is depicted in Figure~\ref{fig:graph}. The layout of the graph already highlights the tree structure, but the HCP colors of the nodes extra emphasize the tree structure in our opinion.
 
 \begin{figure}[htb]
   \vspace{-3ex}
   \centering
-  \includegraphics[width=3.2in]{sbi_F.pdf}
+  \includegraphics[width=3.2in]{HCPgraph.pdf}
   \vspace{-5ex}
-  \caption{Tree structure of economic sector F of NACE.}\label{fig:sbiF}
+  \caption{Tree with HCP colors.}\label{fig:graph}
   \vspace{-2ex}
 \end{figure}
 
-For selecting hue values we use the following recursive algorithm. It will assign to each node $v$ of a tree structure a hue value $h$ and a hue value range $r$.
+For selecting hue values we use the following recursive algorithm. It will assign to each node $v$ of a tree structure a hue value $H$ and a hue value range $r$.
 We start with the root node, which has by default hue range $[0, 360]$:
 
 \smallskip{\bf AssignHue($v$, $r$)}
 \vspace{-1mm}\begin{enumerate} \itemsep1pt \parskip0pt 
 \parsep0pt
-\item assign the middle hue value in $r$ to $h$ \footnote{In most cases the root node itself will not be drawn.}
+\item assign the middle hue value in $r$ to $H$ \footnote{The root node itself is colored grey, so its hue is irrelevant.}
 \item $N$ is number of child nodes of $v$, if $N>0$ :
 \begin{enumerate}[i] \itemsep1pt \parskip0pt 
 \parsep0pt
@@ -181,20 +181,22 @@ We start with the root node, which has by default hue range $[0, 360]$:
 \end{enumerate}
 
 \begin{figure}[htb]
-%  \centering
-%  \includegraphics[width=3.5in]{hcl_method.pdf}
-%  \vspace{-5ex}
-%  \caption{Assignment of hue values.}\label{fig:wheel}
-%  \vspace{-4ex}
+  \centering
+  \includegraphics[width=3.5in]{hcl_method2.pdf}
+  \vspace{-5ex}
+  \caption{Assignment of hue values.}\label{fig:wheel}
+  \vspace{-4ex}
 \end{figure}
 
 This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=70$)  is divided and permuted among the three children of the root, in (b) the middle fractions are kept, in (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
 
-Ad 2ii) In most hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling of the color wheel that shows that the assignment of colors is permuted.
+Ad 2ii) In most hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. In this way, 
+
+Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling of the color wheel that shows that the assignment of colors is permuted.
 
 Ad 2iii) The fraction is needed to introduce a `hue gap' between nodes with a different parent. The fraction $f$ is by default set to $0.75$. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. 
 
-In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes in the tree structure. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes. The parameters for the chroma and luminance for the first hierarchical level below the root are given by $C_1$ and $L_1$. For each other hierarchical level $i \in \{2, \ldots, k\}$, the chroma and luminance values are given by
+In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes in the tree structure. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes. The parameters for the chroma and luminance for the first hierarchical level below the root are by default set as $C_1=60$ and $L_1-70$. For each other hierarchical level $i \in \{2, \ldots, k\}$, the chroma and luminance values are given by
 \begin{equation}
 C_i=(i-1)\beta^C + C_1
 \end{equation}
@@ -203,7 +205,7 @@ and
 L_i=(i-1)\beta^L + L_1.
 \end{equation}
 
-By default, the parameters are set as follows: $\beta^C=5$, $\beta^L=-10$, $C_1=60$ and $L_1=70$. Since the root node itself does not have a suitable hue value, its color is specified by $<H_0=0, C_0=0, L_0=L_1-\beta^L>$.
+By default, the slope parameters are set as follows: $\beta^C=5$ and $\beta^L=-10$. Since the root node itself does not have a suitable hue value, its color is specified by $<H_0=0, C_0=0, L_0=L_1-\beta^L>$.
 
 
 \begin{figure}[htb]

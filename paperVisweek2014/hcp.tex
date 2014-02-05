@@ -31,6 +31,9 @@
 \usepackage{graphicx}
 \usepackage{times}
 
+\usepackage{booktabs}
+
+
 %% We encourage the use of mathptmx for consistent usage of times font
 %% throughout the proceedings. However, if you encounter conflicts
 %% with other math-related packages, you may want to disable it.
@@ -163,6 +166,8 @@ We illustrate our method with a tree structure that is depicted in Figure~\ref{f
   \vspace{-2ex}
 \end{figure}
 
+\subsection{Hue values}
+
 For selecting hue values we use the following recursive algorithm. It will assign to each node $v$ of a tree structure a hue value $H$ and a hue value range $r$.
 We start with the root node, which has by default hue range $[0, 360]$:
 
@@ -174,7 +179,7 @@ We start with the root node, which has by default hue range $[0, 360]$:
 \begin{enumerate}[i] \itemsep1pt \parskip0pt 
 \parsep0pt
 \item divide $r$ in $N$ equal parts $r_i$;
-\item permute the $r_i$'s and assign them to the child nodes
+\item permute the $r_i$'s and assign them to the child nodes;
 \item reduce each $r_i$ by keeping the middle fraction $f$;
 \item for each child node $v_i$ DO AssignHue($v_i$,$r_i$)
 \end{enumerate}
@@ -188,13 +193,40 @@ We start with the root node, which has by default hue range $[0, 360]$:
   \vspace{-4ex}
 \end{figure}
 
+
+
+
+
 This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=70$)  is divided and permuted among the three children of the root, in (b) the middle fractions are kept, in (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
 
-Ad 2ii) In most hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. In this way, 
+\paragraph{Permutations}
 
-Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling of the color wheel that shows that the assignment of colors is permuted.
+\textbf{Ad 2ii)} In most hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$, where the distance between any two adjacent items in the original order is 2/5 of the full range in the permuted order. For the 3 and 4 siblings case we use the permutations $[1, 3, 2]$ and $[1, 3, 2, 4]$ respectively. Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling of the color wheel that shows that the assignment of colors is permuted.
 
-Ad 2iii) The fraction is needed to introduce a `hue gap' between nodes with a different parent. The fraction $f$ is by default set to $0.75$. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. 
+
+\textbf{Ad 2iii)} The fraction is needed to introduce a `hue gap' between nodes with a different parent. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. If $f=0$, the hue ranges are diminished to single hue points, which implies that each main branch is assinged a constant hue. On the other end of the extreme, if $f=1$, the full hue range is available at each hierarchical layer, which makes leaf nodes easier to distinguish, but harder to take apart from leaf nodes of different branches.
+The choice of $f$ therefore depends on the application, on the used visualization method, and on the dimensions of the hierarchical data. 
+We propose the following guidelines.
+
+\begin{tabular}{llll} 
+\toprule 
+Representation \ Children per node & 3 & 4 & 5 or more\\ 
+\midrule 
+Implicit & $0.75$ & $0.60$ & $0.50$ \\ 
+Explicit & $0.75$ & $0.95$ & $1$ \\ 
+\bottomrule 
+\end{tabular}
+
+% see http://vcg.informatik.uni-rostock.de/~hs162/treeposter/poster.html
+
+
+
+
+
+In the color wheel of Figure~\ref{fig:wheel}, the fraction $f$ is set to $0.75$.
+
+
+
 
 In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes in the tree structure. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes. The parameters for the chroma and luminance for the first hierarchical level below the root are by default set as $C_1=60$ and $L_1-70$. For each other hierarchical level $i \in \{2, \ldots, k\}$, the chroma and luminance values are given by
 \begin{equation}

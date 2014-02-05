@@ -56,7 +56,7 @@ generateRandomHierData <- function(k, seeds, levs=c(5, 20, 60), addText=TRUE) {
     dats <- list() # to be filled with k random datasets
     n <- sum(levs)
     for (i in 1:k) {
-        set.seed(seeds[i])
+        if (!missing(seeds)) set.seed(seeds[i])
         if (n > 26) {
             l <- sample(paste0(rep(LETTERS[1:26], each=26), 
                                rep(LETTERS[1:26], times=26)), n)
@@ -80,6 +80,64 @@ generateRandomHierData <- function(k, seeds, levs=c(5, 20, 60), addText=TRUE) {
         dats[[i]]$h1 <- factor(h2parents[match(dats[[i]]$h2, h2)], h1)
     }
     dats
+}
+
+## function to create fancy levels, e.g. A3b
+fancyLevels <- function(dat, index, symbols=c("LETTERS", "numbers", "letters"), sep=".") {
+    k <- length(index)
+    
+    ## assign temporarily numbers to levels
+    tempsymb <- 1:1000
+    for (i in 1:k) {
+        nm <- index[i]
+        nl <- length(unique(as.character(dat[[nm]])))
+        
+        if (i==1) {
+            dat[[nm]] <- factor(as.integer(dat[[nm]]), labels=tempsymb[1:nl]) 
+        } else{
+            dat[[nm]] <- factor(paste(dat[[index[i-1]]], as.vector(unlist(tapply(dat[[nm]], INDEX=list(dat[[index[i-1]]]), function(x)as.character(factor(as.character(x), labels=1:length(unique(x))))))), sep=sep))
+        }
+    }
+    # replace numbers by symbols
+    for (i in 1:k) {
+        x <- levels(dat[[index[i]]])
+        sx <- strsplit(x, split="\\.")
+        sx <- lapply(1:i, function(ii) sapply(sx, function(iii)iii[ii]))
+        
+        sxu <- lapply(sx, unique)
+        
+        nx <- sapply(sxu, length)
+        sxu2 <- mapply(getSymbols, symbols[1:i], nx, SIMPLIFY=FALSE)
+        sx2 <- lapply(1:i, function(ii) {
+            y <- sxu2[[ii]][match(sx[[ii]], sxu[[ii]])]        
+        })
+        
+        lvls <- do.call("mapply", args=c(sx2, list(FUN="paste", MoreArgs=list(sep=sep))))
+        dat[[index[i]]] <- factor(as.integer(dat[[index[i]]]), labels=unique(lvls))
+    }
+    dat
+}
+    
+#' Function to return vector of sorted symbols
+#' 
+#' @param s one of "letters", "LETTERS", "numbers1", "numbers0", "numbers". The symbol set for numbers1 is 1:9, and for numbers0 it is 0:9. Numbers is equal to numbers0, except that is starts from 1.
+#' @param n number of levels needed
+getSymbols <- function(s, n) {
+    sn <- switch(s, "letters"=26, "LETTERS"=29, "numbers1"=9, "numbers0"=10, "numbers"=10)
+    symb <- switch(s, "letters"=letters, "LETTERS"=LETTERS, "numbers1"=1:9, "numbers0"=0:9, "numbers"=0:9)
+    
+    if (s=="numbers") {
+        ndigit <- which(n <= (sn^(1:4)-1))[1]
+        lvls <- c(symb[-1], rep(symb, length.out=n))[1:n]
+    } else {
+        ndigit <- which(n <= sn^(1:4))[1]
+        lvls <- rep(symb, length.out=n)
+    }
+    
+    if (ndigit > 1) for (i in 2:ndigit) {
+        lvls <- paste(rep(symb, each=sn^(i-1), length.out=n+1)[-1], lvls, sep="")
+    }
+    lvls
 }
 
 

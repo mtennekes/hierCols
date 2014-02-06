@@ -133,38 +133,37 @@ dev.off()
 
 
 ## use Statline data for real world application
+data(business)
 source("./R/statline_business_data.R")
 
-data(business)
 str(business)
 
-library(treemap)
 treemap(d, index=c("n1", "n2", "n3", "n4"), vSize="emp2010")
 treemap(d[as.integer(d$n1)==7,], index=c("n2", "n3", "n4"), vSize="emp2010", overlap.labels=.1)
 treemap(d[as.integer(d$n1)==7,], index=c("n2", "n3", "n4"), vSize="turn2011", overlap.labels=.1)
 
 
 ###### experiment with hue fraction
-dat <- generateRandomHierData(1, levs=c(3,9,27), addText=FALSE)[[1]]
-dat <- generateRandomHierData(1, levs=c(4,16,64), addText=FALSE)[[1]]
-dat <- generateRandomHierData(1, levs=c(5,25,125), addText=FALSE)[[1]]
-dat <- generateRandomHierData(1, levs=6^(1:3), addText=FALSE)[[1]]
+set.seed(20140207)
+dat <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(4,16,64), value.generator=rnorm, value.generator.args=list(mean=10, sd=2),labels.prefix=c("Main", "Sub", ""))
 
+dat2 <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(3,9,27), value.generator=rnorm, value.generator.args=list(mean=10, sd=2))
 
-dat$value[dat$value<0] <- 0
-
-dat <- fancyLevels(dat, index=names(dat)[1:3])
 
 palette.HCL.options <- list(hue_start=0, hue_end=360, hue_spread=TRUE,
                             hue_fraction=.75, chroma=60, luminance=70, 
                             chroma_slope=5, luminance_slope=-10)
 
 
-treegraph(dat, index=c("h1", "h2", "h3"), show.labels=FALSE, vertex.layout=igraph::layout.auto,vertex.size=4, palette.HCL.options=palette.HCL.options)
+
 
 fs <- c(0.25, .5, .75, 1)#seq(0, 1, length.out=11)
-nr <- 1
-nc <- 4
+fs_format <- format(fs)
+
+nr <- 2
+nc <- 2
+
+pdf("plots/Treemaps_hue.pdf", width=10, height=10)
 
 grid.newpage()
 vplayout <- function(x, y) viewport(layout.pos.row = x, layout.pos.col = y)
@@ -173,12 +172,23 @@ pushViewport(viewport(layout=grid.layout(nr,nc)))
 ir <- ic <- 1
 
 for (i in 1:length(fs)) {
-    treemap(dat, index=names(dat)[1:(ncol(dat)-1)], vSize="value", palette.HCL.options=list(hue_fraction=fs[i]), vp=vplayout(ir,ic), title=paste("f", fs[i]))
+    treemap(dat, index=names(dat)[1:(ncol(dat)-1)], vSize="x", palette.HCL.options=list(hue_fraction=fs[i]), vp=vplayout(ir,ic), title=paste("Fraction =", fs_format[i]), overlap=0.1, bg.labels=255)
     ic <- ic + 1
     if (ic > nc) {
         ic <- 1
         ir <- ir + 1
     }
 }
+dev.off()
 
+
+pdf("plots/Graph_hue.pdf", width=8, height=8)
+
+par(mfrow=c(2,2))
+for (i in 1:length(fs)) {
+    set.seed(20140212)
+    treegraph(dat2, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=8, vertex.label.dist=0.6,palette.HCL.options=list(hue_fraction=fs[i]), mai=c(.2,.2,.2,.2))
+    title(paste("\n                               Fraction =", fs_format[i]), font.main=1)
+}
+dev.off()
 

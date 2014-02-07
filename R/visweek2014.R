@@ -23,12 +23,10 @@ for (i in 2:20) cat(i, ":", spread(i), "\n")
 
 
 ## use business sector F as example for dissociated category names
-hd <- business[as.integer(business$NACE1)==6, c("NACE2", "NACE3", "NACE4", "turnover")]
+# hd <- business[as.integer(business$NACE1)==6, c("NACE2", "NACE3", "NACE4", "turnover")]
+# hd <- fancyLevels(hd, index=names(hd)[1:3])
 
-
-hd <- fancyLevels(hd, index=names(hd)[1:3])
-
-
+hd <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(3, 12, 25))
 
 
 
@@ -43,9 +41,9 @@ dat <- treepalette(hd[,1:3], palette.HCL.options=palette.HCL.options, prepare.da
 #dat$label <- with(dat, paste(as.character(L1), as.character(L2), as.character(L3), sep="."))
 #dat$label <- gsub(".NA", "", dat$label, fixed=TRUE)
 
-dat$l <- ifelse(!is.na(dat$L3), 3, ifelse(!is.na(dat$L2), 2, 1))
+dat$l <- ifelse(!is.na(dat$index3), 3, ifelse(!is.na(dat$index2), 2, 1))
 
-dat$label <- ifelse(dat$l==1, as.character(dat$L1), ifelse(dat$l==2, as.character(dat$L2), as.character(dat$L3)))
+dat$label <- ifelse(dat$l==1, as.character(dat$index1), ifelse(dat$l==2, as.character(dat$index2), as.character(dat$index3)))
     
 
 rem1 <- as.list(as.data.frame(apply(dat[dat$l==1, c("HCL.hue_lb", "HCL.hue_ub")], MARGIN=1,FUN=function(x)x)))
@@ -124,7 +122,8 @@ dev.off()
 ## 
 pdf("plots/HCPgraph.pdf", width=6, height=6)
 set.seed(20140203)
-treegraph(dat, index=c("L1", "L2", "L3"), show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=4, palette.HCL.options=palette.HCL.options)
+#treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=4, palette.HCL.options=palette.HCL.options)
+treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=4, palette.HCL.options=palette.HCL.options)
 dev.off()
 
 
@@ -139,8 +138,13 @@ source("./R/statline_business_data.R")
 str(business)
 
 treemap(d, index=c("n1", "n2", "n3", "n4"), vSize="emp2010")
-treemap(d[as.integer(d$n1)==7,], index=c("n2", "n3", "n4"), vSize="emp2010", overlap.labels=.1)
-treemap(d[as.integer(d$n1)==7,], index=c("n2", "n3", "n4"), vSize="turn2011", overlap.labels=.1)
+treemap(d[as.integer(d$n1)==3,], index=c("n2", "n3", "n4"), vSize="emp2010", overlap.labels=.1)
+
+pdf("plots/TMbusiness.pdf", width=9, height=7)
+treemap(d[as.integer(d$n1)==7,], index=c("n2", "n3", "n4"), vSize="turn2011", overlap.labels=.1, bg.labels=255, title="")
+dev.off()
+
+treegraph(d, index=c("n1", "n2", "n3", "n4"))
 
 
 ###### experiment with hue fraction

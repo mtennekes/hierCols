@@ -32,7 +32,7 @@
 \usepackage{times}
 
 \usepackage{booktabs}
-
+\usepackage{subfigure}
 
 %% We encourage the use of mathptmx for consistent usage of times font
 %% throughout the proceedings. However, if you encounter conflicts
@@ -112,7 +112,8 @@ Color is an important means to display categorical data in statistical graphics.
 %% Uncomment below to include a teaser figure.
   \teaser{
   \centering
-  \includegraphics[width=16cm]{treemap_F.pdf}
+ \mbox{\subfigure{\includegraphics[width=6cm]{HCPgraph.pdf}}\quad
+  \subfigure{\includegraphics[width=10cm]{treemap_F.pdf}}}
   \caption{Treemap with hierarchical colors.}
   }
 
@@ -146,9 +147,11 @@ Hierarchical data are of crucial importance in official statistics. Most officia
 
 Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should not suggest non-existent order or proximity and introduce perceptual bias. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
 
-Although many tree visualizations are proposed in literature \cite{schulz2011}, most of them use color to a small extent. A visualization technique that uses color as a major attribute is the InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned to a different hue values. The color of a parent node is derived from averaging the colors of its children, where larger branches have more weight. An implicit effect is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches.
+Although many tree visualizations are proposed in literature \cite{schulz2011}, most of them use color to a small extent. A visualization technique that uses color as a major attribute is the InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned to a different hue values. The color of a parent node is derived from averaging the colors of its children, where larger branches have more weight. An implicit effect is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches. Hierarchical color schemes are also applied to the Hyperbolic Wheel \cite{lam2012}, an exploration tool for hierchical data.  These color schemes are abstracted from the Hue-Saturation-Lightness (HSL) space, where brightness decreases proportional from root to leaf nodes, and where child nodes inherit the hue values from their parent nodes and add small hue values to distinct them from their siblings. However, hue values of nodes in the same hierarchical layer may be overlapping.
 
-We present a method to map tree structures to color palettes, which we refer to as Hierarchical Color Palettes (HCP's) throughout this paper. The used color space is the Hue-Chroma-Luminance (HCL) space, a transformation of the CIELUV color space, that is designed with the aim to control human color perception~\cite{ihaka2003}. Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) color space~\cite{zeileis2009}.
+Our purpose is to map tree structures to color palettes with the following properties. First, the hierarchical depth of a node should be perceived with color. The second property is that branches should be clearly distinguishable in all parts of the tree. In family trees, there is a specific order among siblings, namely by age. However, in the many hierarchical structures there is no such order apart from labeling purposes. Therefore, the third property is that the colors of sibling nodes should not introduce a perceptial order. Last, each node should have a theoratical unique color, that is also perceived that as unique as much as possible.
+
+The color palettes that are obtained by our proposed method are called Tree Colors. As a starting point, we the Hue-Chroma-Luminance (HCL) space, a transformation of the CIELUV color space, that is designed with the aim to control human color perception~\cite{ihaka2003}. Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) and HSL color spaces~\cite{zeileis2009}.
 
 This paper is outlined as follows. In Section~\ref{secmethod} we describe the proposed method. We provide several applications of statistical graphics that use HCP's in Section~\ref{secapplication}. The conducted user survey to evaluate the method is described in Section~\ref{secuser}. We conclude with a discusssion in Section~\ref{secdisc}.
 
@@ -199,12 +202,10 @@ We start with the root node, which has by default hue range $[0, 360]$:
 
 This division of the hue range is illustrated in Figure~\ref{fig:wheel}: in (a) the full hue range (for a constant $C=60$ and $L=70$)  is divided and permuted among the three children of the root, in (b) the middle fractions are kept, in (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
 
-\paragraph{Permutations}
-
-\textbf{Ad 2ii)} In most hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$, where the distance between any two adjacent items in the original order is 2/5 of the full range in the permuted order. For the 3 and 4 siblings case we use the permutations $[1, 3, 2]$ and $[1, 3, 2, 4]$ respectively. Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling of the color wheel that shows that the assignment of colors is permuted.
+\textbf{Permutations} In most hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$, where the distance between any two adjacent items in the original order is 2/5 of the full range in the permuted order. For the 3 and 4 siblings case we use the permutations $[1, 3, 2]$ and $[1, 3, 2, 4]$ respectively. Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling of the color wheel that shows that the assignment of colors is permuted.
 
 
-\textbf{Ad 2iii)} The fraction is needed to introduce a `hue gap' between nodes with a different parent. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. If $f=0$, the hue ranges are diminished to single hue points, which implies that each main branch is assinged a constant hue. On the other end of the extreme, if $f=1$, the full hue range is available at each hierarchical layer, which makes leaf nodes easier to distinguish, but harder to take apart from leaf nodes of different branches.
+\textbf{Hue fraction} The fraction is needed to introduce a `hue gap' between nodes with a different parent. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. If $f=0$, the hue ranges are diminished to single hue points, which implies that each main branch is assinged a constant hue. On the other end of the extreme, if $f=1$, the full hue range is available at each hierarchical layer, which makes leaf nodes easier to distinguish, but harder to take apart from leaf nodes of different branches.
 The choice of $f$ therefore depends on the application, on the used visualization method, and on the dimensions of the hierarchical data. 
 We propose the following guidelines.
 
@@ -258,9 +259,9 @@ By default, the slope parameters are set as follows: $\beta^C=5$ and $\beta^L=-1
 \begin{figure}[htb]
   \vspace{-4ex}
   \centering
-  \includegraphics[width=3.5in]{treemap_F.pdf}
+  \includegraphics[width=3.5in]{TMbusiness.pdf}
   \vspace{-4ex}
-  \caption{Treemap with hierarchical colors}\label{fig:treemapF}
+  \caption{Turnover among Dutch manufacturing enterprises in 2011}\label{fig:treemapApp}
   \vspace{-4ex}
 \end{figure}
 

@@ -130,7 +130,6 @@ dev.off()
 
 
 
-
 ## use Statline data for real world application
 data(business)
 source("./R/statline_business_data.R")
@@ -195,4 +194,20 @@ for (i in 1:length(fs)) {
     title(paste("\n                               Fraction =", fs_format[i]), font.main=1)
 }
 dev.off()
+
+
+## teaser
+set.seed(20140216)
+#dat2 <- random.hierarchical.data(method="random", number.children=3, value.generator=rnorm, value.generator.args=list(mean=3), labels.prefix=c("Main", "Sub", ""))
+dat2 <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(5,20, 40), value.generator=rnorm, value.generator.args=list(mean=3), labels.prefix=c("Main", "Sub", ""))
+
+pdf("plots/Treemap_teaser.pdf", width=8, height=8)
+treemap(dat2, index=c("index1", "index2", "index3"), vSize="x", palette.HCL.options=list(hue_fraction=.5), title="", overlap=.1, fontsize.labels=14, bg.labels=255)
+dev.off()
+
+pdf("plots/Graph_teaser.pdf", width=8, height=8)
+set.seed(20140213)
+p <- treegraph(dat2, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=6, vertex.layout=igraph::layout.fruchterman.reingold, palette.HCL.options=list(hue_fraction=.95), edge.arrow.size=1)
+dev.off()
+
 

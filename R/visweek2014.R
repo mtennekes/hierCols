@@ -26,6 +26,7 @@ for (i in 2:20) cat(i, ":", spread(i), "\n")
 # hd <- business[as.integer(business$NACE1)==6, c("NACE2", "NACE3", "NACE4", "turnover")]
 # hd <- fancyLevels(hd, index=names(hd)[1:3])
 
+set.seed(20140217)
 hd <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(3, 12, 25))
 
 
@@ -66,7 +67,7 @@ labs2 <- dat$HCL.H[dat$l==2]
 names(labs2) <- dat$label[dat$l==2]
 labs3 <- dat$HCL.H[dat$l==3]
 names(labs3) <- dat$label[dat$l==3]
-labs3 <- labs3[-c(14:16, 18:20, 12)]  ## to prevent overplotting
+labs3 <- labs3[-c(17:19,20:22)]  ## to prevent overplotting
 
 gridsize <- 401#5e2+1
 
@@ -98,7 +99,7 @@ cellplot(2,2, e={
 
 
 cellplot(3,1, e={
-    drawHCL(gridsize=gridsize, marks=c(60, 157.5, 202.5, 285, 315, borders1), 
+    drawHCL(gridsize=gridsize, marks=c(37.5, 60, 82.5, 135+(18*(0:4)), 285, 315, borders1), 
             marks.dashed=F, 
             cuts=cuts2, labels=labs2, labels.cex=0.7)
 })
@@ -123,7 +124,7 @@ dev.off()
 pdf("plots/HCPgraph.pdf", width=6, height=6)
 set.seed(20140203)
 #treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=4, palette.HCL.options=palette.HCL.options)
-treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=4, palette.HCL.options=palette.HCL.options)
+treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=4, palette.HCL.options=palette.HCL.options, directed=FALSE)
 dev.off()
 
 

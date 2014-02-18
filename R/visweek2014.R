@@ -212,3 +212,67 @@ p <- treegraph(dat2, index=c("index1", "index2", "index3"), show.labels=TRUE, ve
 dev.off()
 
 
+## permutation order
+n <- 3:12
+nr <- 5
+nc <- 18
+
+palette.HCL.options2 <- list(hue_start=120, hue_end=240, hue_spread=TRUE,
+                            hue_fraction=0.75, chroma=60, luminance=70, 
+                            chroma_slope=5, luminance_slope=-10)
+
+colorlist <- list()
+for (i in 1:length(n)) {
+    dat3 <- data.frame(index1=factor(1:n[i]))
+    dat3 <- treepalette(dat3, "index1", prepare.dat=FALSE, palette.HCL.options=palette.HCL.options2)
+    colorlist[[i]] <- dat3$HCL.color
+}
+    
+colors <- matrix(NA, nrow=nr, ncol=nc)
+colors[1, 2:4] <- colorlist[[1]]
+colors[2, 2:5] <- colorlist[[2]]
+colors[3, 2:6] <- colorlist[[3]]
+colors[4, 2:7] <- colorlist[[4]]
+colors[5, 2:8] <- colorlist[[5]]
+
+colors[1, 6:17] <- colorlist[[10]]
+colors[2, 7:17] <- colorlist[[9]]
+colors[3, 8:17] <- colorlist[[8]]
+colors[4, 9:17] <- colorlist[[7]]
+colors[5, 10:17] <- colorlist[[6]]
+
+texts <- matrix("", nrow=nr, ncol=nc)
+texts[1, 2:4] <- LETTERS[order(spread(3))]
+texts[2, 2:5] <- LETTERS[order(spread(4))]
+texts[3, 2:6] <- LETTERS[order(spread(5))]
+texts[4, 2:7] <- LETTERS[order(spread(6))]
+texts[5, 2:8] <- LETTERS[order(spread(7))]
+
+texts[1, 6:17] <- LETTERS[order(spread(12))]
+texts[2, 7:17] <- LETTERS[order(spread(11))]
+texts[3, 8:17] <- LETTERS[order(spread(10))]
+texts[4, 9:17] <- LETTERS[order(spread(9))]
+texts[5, 10:17] <- LETTERS[order(spread(8))]
+
+texts[1:5,1] <- 3:7
+texts[1:5,18] <- 12:8
+
+pdf("plots/Permutations.pdf", width=6, height=2.5)
+
+grid.newpage()
+pushViewport(viewport(layout=grid.layout(nr, nc)))
+
+ir <- ic <- 1
+for (i in 1:(nr*nc)) {
+    cellplot(ir, ic, e={
+        grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=colors[ir, ic]))        
+        grid.text(texts[ir, ic])        
+    })
+    ic <- ic + 1
+    if (ic > nc) {
+        ic <- 1
+        ir <- ir + 1
+    }
+}
+
+dev.off()

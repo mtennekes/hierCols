@@ -149,9 +149,11 @@ treegraph(d, index=c("n1", "n2", "n3", "n4"))
 
 ###### experiment with hue fraction
 set.seed(20140207)
-dat <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(4,16,64), value.generator=rnorm, value.generator.args=list(mean=10, sd=2),labels.prefix=c("Main", "Sub", ""))
+dat4childs <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(4,16,64), value.generator=rnorm, value.generator.args=list(mean=10, sd=2),labels.prefix=c("Main", "Sub", ""))
 
-dat2 <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(3,9,27), value.generator=rnorm, value.generator.args=list(mean=10, sd=2))
+dat3childs <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(3,9,27), value.generator=rnorm, value.generator.args=list(mean=10, sd=2))
+
+dat5childs <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(5,25,125), value.generator=rnorm, value.generator.args=list(mean=10, sd=2))
 
 
 palette.HCL.options <- list(hue_start=0, hue_end=360, hue_spread=TRUE,
@@ -168,13 +170,13 @@ nr <- 2
 nc <- 2
 
 pdf("plots/Treemaps_hue.pdf", width=10, height=10)
+dat <- dat4childs
 
 grid.newpage()
 vplayout <- function(x, y) viewport(layout.pos.row = x, layout.pos.col = y)
 pushViewport(viewport(layout=grid.layout(nr,nc)))
 
 ir <- ic <- 1
-
 for (i in 1:length(fs)) {
     treemap(dat, index=names(dat)[1:(ncol(dat)-1)], vSize="x", palette.HCL.options=list(hue_fraction=fs[i]), vp=vplayout(ir,ic), title=paste("Fraction =", fs_format[i]), overlap=0.1, bg.labels=255)
     ic <- ic + 1
@@ -187,11 +189,12 @@ dev.off()
 
 
 pdf("plots/Graph_hue.pdf", width=8, height=8)
+dat2 <- dat3childs
 
 par(mfrow=c(2,2))
 for (i in 1:length(fs)) {
     set.seed(20140212)
-    treegraph(dat2, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=8, vertex.label.dist=0.6,palette.HCL.options=list(hue_fraction=fs[i]), mai=c(.2,.2,.2,.2))
+    treegraph(dat2, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=8, vertex.label.dist=0.6,palette.HCL.options=list(hue_fraction=fs[i]), mai=c(.2,.2,.2,.2))
     title(paste("\n                               Fraction =", fs_format[i]), font.main=1)
 }
 dev.off()
@@ -208,7 +211,7 @@ dev.off()
 
 pdf("plots/Graph_teaser.pdf", width=8, height=8)
 set.seed(20140213)
-p <- treegraph(dat2, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=6, vertex.layout=igraph::layout.fruchterman.reingold, palette.HCL.options=list(hue_fraction=.95), edge.arrow.size=1)
+p <- treegraph(dat2, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.size=6, vertex.layout=igraph::layout.fruchterman.reingold, palette.HCL.options=list(hue_fraction=.95), edge.arrow.size=1)
 dev.off()
 
 
@@ -218,7 +221,7 @@ nr <- 5
 nc <- 18
 
 palette.HCL.options2 <- list(hue_start=120, hue_end=240, hue_spread=TRUE,
-                            hue_fraction=0.75, chroma=60, luminance=70, 
+                            hue_fraction=1, chroma=60, luminance=70, 
                             chroma_slope=5, luminance_slope=-10)
 
 colorlist <- list()
@@ -274,5 +277,56 @@ for (i in 1:(nr*nc)) {
         ir <- ir + 1
     }
 }
+
+dev.off()
+
+
+## tree depth
+
+
+
+depthColors <- matrix(hcl(l=rep(seq(20, 80, by=10), each=7), 
+                        c=rep(seq(55, 85, by=5), times=7), 
+                        h=rep(300, 36)), ncol=7)
+depthColors <- rbind(NA, depthColors)
+depthColors <- rbind(NA, depthColors)
+depthColors <- cbind(NA, depthColors)
+depthColors <- cbind(NA, depthColors)
+depthText <- matrix("", ncol=9, nrow=9)
+depthText[3:9,2] <- seq(55, 85, by=5)
+depthText[2, 3:9] <- seq(20, 80, by=10)
+
+depthSel <- matrix(FALSE, ncol=9, nrow=9)
+for (i in 8:4) depthSel[12-i, i] <- TRUE
+
+
+pdf("plots/LC.pdf", width=6, height=2.5)
+
+
+grid.newpage()
+nr <- nc <- 9
+pushViewport(viewport(layout=grid.layout(nr, nc)))
+cellplot(3:9, 3:9, e={
+    grid.lines(x=c(.105,.895), y=c(.1,.9), gp=gpar(col="grey", lwd=5))
+})
+ir <- ic <- 1
+for (i in 1:(nr*nc)) {
+    cellplot(ir, ic, e={
+        grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=depthColors[ir, ic]))        
+        grid.text(depthText[ir, ic])
+        #if (depthSel[ir, ic]) grid.rect(width=.9, height=.7, gp=gpar(col="black", lwd=3, fill=NA))
+    })
+    ic <- ic + 1
+    if (ic > nc) {
+        ic <- 1
+        ir <- ir + 1
+    }
+}
+cellplot(6, 1, e={
+    grid.text("Chroma")
+})
+cellplot(1, 5, e={
+    grid.text("Luminance")
+})
 
 dev.off()

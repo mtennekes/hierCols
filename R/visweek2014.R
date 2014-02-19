@@ -367,7 +367,8 @@ for (i in 1:(nr*nc)) {
 
 cellplot(8, 1, e={
     grid.text("Chroma\nLuminance", just="left", x=.1)
-
+})
+	
 cellplot(1, 5, e={
     grid.text("Hue")
 })

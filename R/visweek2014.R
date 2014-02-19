@@ -345,7 +345,9 @@ pdf("plots/LC2.pdf", width=6, height=3.5)
 
 grid.newpage()
 nr <- 12; nc <- 9
+
 pushViewport(viewport(layout=grid.layout(nr, nc, widths=unit(c(.15, .2, rep(1,nc-2)), c("npc", "npc", rep("null", nc-2))))))
+
 # cellplot(3:9, 3:9, e={
 #     grid.lines(x=c(.105,.895), y=c(.1,.9), gp=gpar(col="grey", lwd=5))
 # })
@@ -362,9 +364,10 @@ for (i in 1:(nr*nc)) {
         ir <- ir + 1
     }
 }
+
 cellplot(8, 1, e={
     grid.text("Chroma\nLuminance", just="left", x=.1)
-})
+
 cellplot(1, 5, e={
     grid.text("Hue")
 })

@@ -285,36 +285,30 @@ dev.off()
 
 
 
-depthColors <- matrix(hcl(l=rep(seq(20, 80, by=10), each=7), 
-                        c=rep(seq(55, 85, by=5), times=7), 
+depthColors <- matrix(hcl(l=rep(seq(20, 80, by=10), each=9), 
+                        c=rep(seq(50, 90, by=5), times=7), 
                         h=rep(300, 36)), ncol=7)
 depthColors <- rbind(NA, depthColors)
 depthColors <- rbind(NA, depthColors)
 depthColors <- cbind(NA, depthColors)
 depthColors <- cbind(NA, depthColors)
-depthText <- matrix("", ncol=9, nrow=9)
-depthText[3:9,2] <- seq(55, 85, by=5)
+depthText <- matrix("", ncol=9, nrow=11)
+depthText[3:11,2] <- seq(50, 90, by=5)
 depthText[2, 3:9] <- seq(20, 80, by=10)
 
-depthSel <- matrix(FALSE, ncol=9, nrow=9)
-for (i in 8:4) depthSel[12-i, i] <- TRUE
 
-
-pdf("plots/LC.pdf", width=6, height=2.5)
+pdf("plots/LC.pdf", width=6, height=3)
 
 
 grid.newpage()
-nr <- nc <- 9
+nr <- 11; nc <- 9
 pushViewport(viewport(layout=grid.layout(nr, nc)))
-cellplot(3:9, 3:9, e={
-    grid.lines(x=c(.105,.895), y=c(.1,.9), gp=gpar(col="grey", lwd=5))
-})
+
 ir <- ic <- 1
 for (i in 1:(nr*nc)) {
     cellplot(ir, ic, e={
         grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=depthColors[ir, ic]))        
         grid.text(depthText[ir, ic])
-        #if (depthSel[ir, ic]) grid.rect(width=.9, height=.7, gp=gpar(col="black", lwd=3, fill=NA))
     })
     ic <- ic + 1
     if (ic > nc) {
@@ -327,6 +321,52 @@ cellplot(6, 1, e={
 })
 cellplot(1, 5, e={
     grid.text("Luminance")
+})
+
+dev.off()
+
+
+
+
+depthColors2 <- matrix(hcl(l=rep(c(70, 70, 70, 70, 70, 30, 30, 30, 30, 30), times=7), 
+                          c=rep(c(50, 60, 70, 80, 90, 50, 60, 70, 80, 90), times=7), 
+                          h=rep(seq(120, 360, length.out=7), each=10)), ncol=7)
+depthColors2 <- rbind(NA, depthColors2)
+depthColors2 <- rbind(NA, depthColors2)
+depthColors2 <- cbind(NA, depthColors2)
+depthColors2 <- cbind(NA, depthColors2)
+depthText2 <- matrix("", ncol=9, nrow=12)
+depthText2[3:12,2] <- c("C=50, L=70", "C=60, L=70", "C=70, L=70", "C=80, L=70", "C=90, L=70",
+                        "C=50, L=30", "C=60, L=30", "C=70, L=30", "C=80, L=30", "C=90, L=30")
+depthText2[2, 3:9] <- seq(120, 360, length.out=7)
+
+pdf("plots/LC2.pdf", width=6, height=3.5)
+
+
+grid.newpage()
+nr <- 12; nc <- 9
+pushViewport(viewport(layout=grid.layout(nr, nc)))
+# cellplot(3:9, 3:9, e={
+#     grid.lines(x=c(.105,.895), y=c(.1,.9), gp=gpar(col="grey", lwd=5))
+# })
+ir <- ic <- 1
+for (i in 1:(nr*nc)) {
+    cellplot(ir, ic, e={
+        grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=depthColors2[ir, ic]))        
+        grid.text(depthText2[ir, ic])
+        #if (depthSel[ir, ic]) grid.rect(width=.9, height=.7, gp=gpar(col="black", lwd=3, fill=NA))
+    })
+    ic <- ic + 1
+    if (ic > nc) {
+        ic <- 1
+        ir <- ir + 1
+    }
+}
+cellplot(6, 1, e={
+    grid.text("Chroma\nLuminance")
+})
+cellplot(1, 5, e={
+    grid.text("Hue")
 })
 
 dev.off()

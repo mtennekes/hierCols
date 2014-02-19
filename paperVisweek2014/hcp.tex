@@ -207,9 +207,28 @@ In many hierarchical structures, there is no order between siblings. When the no
 Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling in Figure~\ref{fig:wheel} shows that the assignment of colors is permuted. The result of the permutation is that siblings are discriminated in each hierarchical layer, which is illustrated in Figure~\ref{fig:graph}.
 
 
-\subsection{Chroma and lumnience values}
+\subsection{Chroma and luminance values}
 
-In order to show depth, we let $C$ and $L$ values only depend on the depth of the corresponding nodes in the tree structure. We let the $L$ decrease linearly with depth and $C$ increase: having more intense colors helps in discriminating leaf nodes. The parameters for the chroma and luminance for the first hierarchical level below the root are by default set as $C_1=60$ and $L_1-70$. For each other hierarchical level $i \in \{2, \ldots, k\}$, the chroma and luminance values are given by
+In order to show depth in the tree, we use bright colors for nodes in high in the tree and dark colors for nodes deeper in the tree. For this purpose we use the chroma and luminance parameters.
+
+In Figure~\ref{fig:lc} 49 colors are depicted for various chroma and luminance value and a constant hue of $H=300$. Brighter colors (with higher $L$) have the tendency to become too saturated. In our opinion, the olors in Figure~\ref{fig:lc} with $L=70$ and $C\geq70$ are a little too saturated. However, for darker colors high values of $C$ may help to discriminate them distinguigh them from other dark colors with different hue values. The question therefore is, what values of $C$ are needed for different values of $L$ in order to distinguish the colors easily without too much saturation.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=3.5in]{LC.pdf}
+  \caption{Colors for different $L$ and $C$ values with a constant $H=300$.}\label{fig:lc}
+\end{figure}
+
+For different pairs of $C$ and $L$, color palettes with different hue values are depicted in Figure~\ref{fig:lc2}. Among the bright color palettes (with $L=70$) the saturation level of $C=60$ is sufficient to distriminate the colors easily. For the dark color paletetes (with $L=30$), saturation values of $C=80$ or higher are not superfluous, especially because the hue range in the lower parts of the tree is often a lot narrower than higher in the tree.
+
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=3.5in]{LC2.pdf}
+  \caption{Colors palettes for different pairs of $L$ and $C$.}\label{fig:lc2}
+\end{figure}
+
+We propose to let the $L$ decrease linearly with depth and $C$ increase. The parameters for the chroma and luminance for the first hierarchical level below the root are by default set as $C_1=60$ and $L_1-70$. For each other hierarchical level $i \in \{2, \ldots, k\}$, the chroma and luminance values are given by
 \begin{equation}
 C_i=(i-1)\beta^C + C_1
 \end{equation}
@@ -219,12 +238,6 @@ L_i=(i-1)\beta^L + L_1.
 \end{equation}
 
 By default, the slope parameters are set as follows: $\beta^C=5$ and $\beta^L=-10$. Since the root node itself does not have a suitable hue value, its color is specified by $<H_0=0, C_0=0, L_0=L_1-\beta^L>$.
-
-\begin{figure}[htb]
-  \centering
-  \includegraphics[width=3.5in]{LC.pdf}
-  \caption{Purmutations of siblings.}\label{fig:lc}
-\end{figure}
 
 
 \subsection{Hue fraction}\label{secf}

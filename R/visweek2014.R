@@ -288,10 +288,8 @@ dev.off()
 depthColors <- matrix(hcl(l=rep(seq(20, 80, by=10), each=9), 
                         c=rep(seq(50, 90, by=5), times=7), 
                         h=rep(300, 36)), ncol=7)
-depthColors <- rbind(NA, depthColors)
-depthColors <- rbind(NA, depthColors)
-depthColors <- cbind(NA, depthColors)
-depthColors <- cbind(NA, depthColors)
+depthColors <- rbind(NA, NA, depthColors)
+depthColors <- cbind(NA, NA, depthColors)
 depthText <- matrix("", ncol=9, nrow=11)
 depthText[3:11,2] <- seq(50, 90, by=5)
 depthText[2, 3:9] <- seq(20, 80, by=10)
@@ -331,10 +329,8 @@ dev.off()
 depthColors2 <- matrix(hcl(l=rep(c(70, 70, 70, 70, 70, 30, 30, 30, 30, 30), times=7), 
                           c=rep(c(50, 60, 70, 80, 90, 50, 60, 70, 80, 90), times=7), 
                           h=rep(seq(120, 360, length.out=7), each=10)), ncol=7)
-depthColors2 <- rbind(NA, depthColors2)
-depthColors2 <- rbind(NA, depthColors2)
-depthColors2 <- cbind(NA, depthColors2)
-depthColors2 <- cbind(NA, depthColors2)
+depthColors2 <- rbind(NA, NA, depthColors2)
+depthColors2 <- cbind(NA, NA, depthColors2)
 depthText2 <- matrix("", ncol=9, nrow=12)
 depthText2[3:12,2] <- c("C=50, L=70", "C=60, L=70", "C=70, L=70", "C=80, L=70", "C=90, L=70",
                         "C=50, L=30", "C=60, L=30", "C=70, L=30", "C=80, L=30", "C=90, L=30")
@@ -366,9 +362,57 @@ for (i in 1:(nr*nc)) {
 }
 
 cellplot(8, 1, e={
-    grid.text("Chroma\nLuminance", just="left", x=.1)
+    grid.text("Chroma,\nLuminance", just="left", x=.1)
 })
 	
+cellplot(1, 5, e={
+    grid.text("Hue")
+})
+
+dev.off()
+
+
+
+
+
+depthColors3 <- matrix(hcl(l=rep(c(70, 60, 50, 40, 30), times=7), 
+                           c=rep(c(60, 65, 70, 75, 80), times=7), 
+                           h=rep(seq(120, 360, length.out=7), each=5)), ncol=7)
+depthColors3 <- rbind(NA, NA, depthColors3)
+depthColors3 <- cbind(NA, NA, depthColors3)
+depthText3 <- matrix("", ncol=9, nrow=7)
+depthText3[3:7,2] <- c("i=1, C=60, L=70", "i=2, C=65, L=60", "i=3, C=70, L=50", "i=4, C=75, L=40", "i=5, C=80, L=30")
+depthText3[2, 3:9] <- seq(120, 360, length.out=7)
+
+pdf("plots/LC3.pdf", width=6, height=2)
+
+
+grid.newpage()
+nr <- 7; nc <- 9
+
+pushViewport(viewport(layout=grid.layout(nr, nc, widths=unit(c(.15, .25, rep(1,nc-2)), c("npc", "npc", rep("null", nc-2))))))
+
+# cellplot(3:9, 3:9, e={
+#     grid.lines(x=c(.105,.895), y=c(.1,.9), gp=gpar(col="grey", lwd=5))
+# })
+ir <- ic <- 1
+for (i in 1:(nr*nc)) {
+    cellplot(ir, ic, e={
+        grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=depthColors3[ir, ic]))        
+        grid.text(depthText3[ir, ic])
+        #if (depthSel[ir, ic]) grid.rect(width=.9, height=.7, gp=gpar(col="black", lwd=3, fill=NA))
+    })
+    ic <- ic + 1
+    if (ic > nc) {
+        ic <- 1
+        ir <- ir + 1
+    }
+}
+
+cellplot(5, 1, e={
+    grid.text("Layer,\nChroma,\nLuminance", just="left", x=.1)
+})
+
 cellplot(1, 5, e={
     grid.text("Hue")
 })

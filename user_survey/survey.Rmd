@@ -33,7 +33,7 @@ dats_bar <- generateRandomHierData(2, seeds=c(20140127, 20140128), levs=c(3, 9, 
 #dats_gr <- generateRandomHierData(2, seeds=c(20140116, 20140117), levs=c(5, 13, 30), addText=FALSE)
 
 
-group <- 2
+group <- 1
 
 branches_tm1 <- list(c("HZ", "AF", "SD", "KL", "SX"),
                     c("JM", "HD", "EP", "EN", "PQ"))
@@ -57,8 +57,11 @@ Antwoord:
 ```
 
 ### Vraag 2
-Hieronder zie je twee gerichte grafen die de structuur tussen de branches weergeven. Om het gebruik van voorkennis uit te sluiten coderen we de branches met letters. Let op: deze codes zijn __willekeurig__ gekozen en hebbben niets te maken met
-SBI codes.
+Hieronder zie je twee gerichte grafen die de structuur van een classificatie 
+weergeven. Om het gebruik van voorkennis uit te sluiten coderen 
+we de categorieën met letters. Let op: deze codes zijn __willekeurig__ gekozen en 
+hebbben niets te maken met
+bijv. SBI codes.
 
 ```{r graph1, fig.cap="Graaf 1"}
 plotGraph(dats_gr[[group]], method="firstcat", seed=seeds_gr[[group]])
@@ -67,7 +70,7 @@ plotGraph(dats_gr[[group]], method="firstcat", seed=seeds_gr[[group]])
 
 #### 2a)
 
-Selecteer de branch/branches die het meest verwant is/zijn met `r branches_gr1[[group]][1]`:
+Selecteer de code(s) die het meest verwant is/zijn met `r branches_gr1[[group]][1]`:
 
 ```{r choices_g1, comment=NA}
 for (i in branches_gr1[[group]][-1]) {
@@ -77,7 +80,7 @@ for (i in branches_gr1[[group]][-1]) {
 
 #### 2b)
 
-Welke branches stammen af van `r branches_gr2[group]`?
+Welke codes stammen af van `r branches_gr2[group]`?
 
 ```
 Antwoord: 
@@ -107,7 +110,7 @@ plotGraph(dats_gr[[3-group]], method="HCP", seed=seeds_gr[[3-group]])
 
 #### 2d)
 
-Selecteer de branch/branches die het meest verwant is/zijn met `r branches_gr1[[3-group]][1]`:
+Selecteer de code(s) die het meest verwant is/zijn met `r branches_gr1[[3-group]][1]`:
 
 ```{r choices_g2, comment=NA}
 for (i in branches_gr1[[3-group]][-1]) {
@@ -117,7 +120,7 @@ for (i in branches_gr1[[3-group]][-1]) {
 
 #### 2e)
 
-Welke branches stammen af van `r branches_gr2[3-group]`?
+Welke codes stammen af van `r branches_gr2[3-group]`?
 
 ```
 Antwoord: 
@@ -164,7 +167,9 @@ Welke kleuren vind je geschikter voor analysedoeleinden?
 
 ### Vraag 3
 
-Hieronder zie je een zogenaamde treemap die de omzet per branch weergeeft. Hoe groter de rechthoek, hoe groter de omzet. Wederom zijn de gebruikte classificaties fictief en zijn de letters willekeurig gekozen.
+Hieronder zie je een zogenaamde treemap die de omzet per branch weergeeft. 
+Hoe groter de rechthoek, hoe groter de omzet. Wederom is de gebruikte 
+classificatie fictief en zijn de letters willekeurig gekozen.
 
 
 ```{r treemap1, fig.cap="Treemap 1"}

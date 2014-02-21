@@ -333,7 +333,7 @@ for (i in branches_bar1[[3-group]][-1]) {
 
 Wat vind je van de volgende stelling?
 
-_"De kleuren in Treemap 4 hebben mij geholpen met het beantwoorden van vraag 4c."_
+_"De kleuren in staafdiagram 2 hebben mij geholpen met het beantwoorden van vraag 4c."_
 
 1. Helemaal mee oneens
 2. Mee oneens

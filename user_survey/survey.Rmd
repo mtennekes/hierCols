@@ -33,7 +33,7 @@ dats_bar <- generateRandomHierData(2, seeds=c(20140127, 20140128), levs=c(3, 9, 
 #dats_gr <- generateRandomHierData(2, seeds=c(20140116, 20140117), levs=c(5, 13, 30), addText=FALSE)
 
 
-group <- 1
+group <- 2
 
 branches_tm1 <- list(c("HZ", "AF", "SD", "KL", "SX"),
                     c("JM", "HD", "EP", "EN", "PQ"))
@@ -321,7 +321,7 @@ plotBar(dats_bar[[3-group]], method="HCP", hue_fraction=0.95)
 
 #### 4c)
 
-Selecteer de code(s) die het meest verwant zijn met `r branches_bar1[[3-group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
+Selecteer de code(s) die het meest verwant zijn met `r branches_bar1[[3-group]][1]` uit onderstaande keuzes:
 
 ```{r choices_b2, comment=NA}
 for (i in branches_bar1[[3-group]][-1]) {
@@ -364,5 +364,12 @@ Welke kleuren vind je geschikter voor analysedoeleinden?
 [] Kleuren van staafdiagram 2
 [] Maakt niet uit
 ```
+
+#### A)
+Eventuele opmerkingen:
+
+
+
+
 
 Dank je wel voor je medewerking!

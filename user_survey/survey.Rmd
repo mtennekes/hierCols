@@ -44,6 +44,8 @@ branches_gr1 <- list(c("J", "K", "S", "C"),
                      c("K", "J", "A", "L"))
 branches_gr2 <- c("G", "B")
 
+branches_bar1 <- list(c("OS","JF","RG","PG","LH"),c("MX","DR","CG","IV","QT"))
+
 seeds_gr <- c(20140101, 20140102)
 
 ```
@@ -105,12 +107,12 @@ Antwoord:
 
 ```{r graph2, fig.cap="Graaf 2"}
 #plotGraph(dats_gr[[3-group]], method="firstcat", seed=20140102)
-plotGraph(dats_gr[[3-group]], method="HCP", seed=seeds_gr[[3-group]])
+plotGraph(dats_gr[[3-group]], method="HCP", seed=seeds_gr[[3-group]], hue_fraction=0.95)
 ```
 
 #### 2d)
 
-Selecteer de code(s) die het meest verwant is/zijn met `r branches_gr1[[3-group]][1]`:
+Selecteer de code(s) die het meest verwant zijn met `r branches_gr1[[3-group]][1]`:
 
 ```{r choices_g2, comment=NA}
 for (i in branches_gr1[[3-group]][-1]) {
@@ -167,7 +169,7 @@ Welke kleuren vind je geschikter voor analysedoeleinden?
 
 ### Vraag 3
 
-Hieronder zie je een zogenaamde treemap die de omzet per branch weergeeft. 
+Hieronder zie je een zogenaamde treemap die de omzet per categorie weergeeft. 
 Hoe groter de rechthoek, hoe groter de omzet. Wederom is de gebruikte 
 classificatie fictief en zijn de letters willekeurig gekozen.
 
@@ -180,9 +182,8 @@ addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"))
 
 #### 3a)
 
-Kruis de branch/branches aan die het meest verwant is/zijn met 
-`r branches_tm1[[group]][1]` (het blauwe plusje) uit onderstaande keuzes
-(die zijn aangegeven met blauwe sterretjes):
+Kruis de code(s) aan die het meest verwant zijn met 
+`r branches_tm1[[group]][1]` uit onderstaande keuzes:
 
 ```{r choices_t1, comment=NA}
 for (i in branches_tm1[[group]][-1]) {
@@ -201,7 +202,7 @@ Antwoord:
 
 Wat vind je van de volgende stelling?
 
-_"De kleuren in Treemap 1 hebben mij geholpen met het beantwoorden van bovenstaande vragen 2a en 2b."_
+_"De kleuren in Treemap 1 hebben mij geholpen met het beantwoorden van bovenstaande vragen 3a en 3b."_
 
 1. Helemaal mee oneens
 2. Mee oneens
@@ -222,7 +223,8 @@ addSymbols(tm, branches_tm1[[3-group]], symbols=c("+", "*", "*", "*", "*"))
 
 #### 3d)
 
-Selecteer de branch/branches die het meest verwant is/zijn met `r branches_tm1[[3-group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
+Selecteer de code(s) die het meest verwant is/zijn met `r branches_tm1[[3-group]][1]`
+uit onderstaande keuzes:
 
 ```{r choices_t2, comment=NA}
 for (i in branches_tm1[[3-group]][-1]) {
@@ -242,7 +244,7 @@ Antwoord:
 
 Wat vind je van de volgende stelling?
 
-_"De kleuren in Treemap 2 hebben mij geholpen met het beantwoorden van bovenstaande vragen 2d en 2e."_
+_"De kleuren in Treemap 2 hebben mij geholpen met het beantwoorden van bovenstaande vragen 3d en 3e."_
 
 1. Helemaal mee oneens
 2. Mee oneens
@@ -274,50 +276,32 @@ Welke kleuren vind je geschikter voor analysedoeleinden?
 [] Maakt niet uit
 ```
 
-
-
-
-
-
-
-
-
-
-
 ### Vraag 4
 
-Hieronder zie je een staafdiagram die de omzet per branch weergeeft. Wederom zijn de gebruikte classificaties fictief en zijn de letters willekeurig gekozen.
-
+Hieronder zie je een staafdiagram die de omzet per categorie in een classificatie
+weergeeft. 
+Wederom is de gebruikte classificatie *fictief* en zijn de letters willekeurig gekozen.
 
 ```{r bar1, fig.cap="Staafdiagram 1"}
 plotBar(dats_bar[[group]], method="firstcat")
-
 ```
 
 #### 4a)
 
-Kruis de branch/branches aan die het meest verwant is/zijn met 
-`r branches_tm1[[group]][1]` (het blauwe plusje) uit onderstaande keuzes
-(die zijn aangegeven met blauwe sterretjes):
+Kruis de code(s) aan die het meest verwant zijn met 
+`r branches_bar1[[group]][1]` uit onderstaande keuzes:
 
 ```{r choices_b1, comment=NA}
-for (i in branches_tm1[[group]][-1]) {
+for (i in branches_bar1[[group]][-1]) {
     cat("[]", i, "\n")
 }
 ```
 
-#### 4b) 
-
-Hoeveel subcategoriën bevat `r branches_tm2[[group]]`?
-
-```
-Antwoord: 
-```
-#### 4c)
+#### 4b)
 
 Wat vind je van de volgende stelling?
 
-_"De kleuren in Staafdiagram 1 hebben mij geholpen met het beantwoorden van bovenstaande vragen 4a en 4b."_
+_"De kleuren in Staafdiagram 1 hebben mij geholpen met het beantwoorden van vraag 4a"_
 
 1. Helemaal mee oneens
 2. Mee oneens
@@ -335,29 +319,21 @@ plotBar(dats_bar[[3-group]], method="HCP", hue_fraction=0.95)
 ```
 
 
-#### 4d)
+#### 4c)
 
-Selecteer de branch/branches die het meest verwant is/zijn met `r branches_tm1[[3-group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
+Selecteer de code(s) die het meest verwant zijn met `r branches_bar1[[3-group]][1]` (het blauwe plusje) uit onderstaande keuzes (die zijn aangegeven met blauwe sterretjes):
 
 ```{r choices_b2, comment=NA}
-for (i in branches_tm1[[3-group]][-1]) {
+for (i in branches_bar1[[3-group]][-1]) {
     cat("[]", i, "\n")
 }
 ```
 
-#### 4e) 
-
-Hoeveel subcategoriën bevat `r branches_tm2[[3-group]]`?
-
-```
-Antwoord: 
-```
-
-#### 4f)
+#### 4d)
 
 Wat vind je van de volgende stelling?
 
-_"De kleuren in Treemap 4 hebben mij geholpen met het beantwoorden van bovenstaande vragen 4d en 4e."_
+_"De kleuren in Treemap 4 hebben mij geholpen met het beantwoorden van vraag 4c."_
 
 1. Helemaal mee oneens
 2. Mee oneens
@@ -369,7 +345,7 @@ _"De kleuren in Treemap 4 hebben mij geholpen met het beantwoorden van bovenstaa
 Antwoord: 
 ```
 
-#### 4g)
+#### 4e)
 
 Welke staafdiagram vind je mooier?
 
@@ -379,7 +355,7 @@ Welke staafdiagram vind je mooier?
 [] Maakt niet uit
 ```
 
-#### 4h)
+#### 4f)
 
 Welke kleuren vind je geschikter voor analysedoeleinden?
 
@@ -388,8 +364,5 @@ Welke kleuren vind je geschikter voor analysedoeleinden?
 [] Kleuren van staafdiagram 2
 [] Maakt niet uit
 ```
-
-
-
 
 Dank je wel voor je medewerking!

@@ -2,7 +2,6 @@ require(igraph)
 
 set.seed(42)
 
-
 generate_tree <- function(N = 21, children=4){
     g <- graph.tree(N, children=children)
     labels <- sample(letters, size=N)
@@ -158,11 +157,11 @@ addSymbols <- function(tm, rect.id, symbols="*") {
 
 
 
-generateGraph <- function(dat, method="HCP") {
+generateGraph <- function(dat, method="HCP", hue_fraction=0.75) {
     require(treemap)
     require(RColorBrewer)
     
-    datcolors <- treepalette(dat, index=c("h1", "h2", "h3"), palette.HCL.options=list(hue_fraction=0.75))
+    datcolors <- treepalette(dat, index=c("h1", "h2", "h3"), palette.HCL.options=list(hue_fraction=hue_fraction))
     set1 <- brewer.pal(8, "Set2")
     datcolors$firstcat.color <- set1[as.integer(datcolors$h1)]
     colorname <- ifelse(method=="HCP", "HCL.color", "firstcat.color")
@@ -194,8 +193,8 @@ generateGraph <- function(dat, method="HCP") {
 
 
 
-plotGraph <- function(dat, method="HCP", seed) {
-    g <- generateGraph(dat, method=method)
+plotGraph <- function(dat, method="HCP", seed, hue_fraction=0.75) {
+    g <- generateGraph(dat, method=method, hue_fraction=hue_fraction)
     set.seed(seed)
     cols <- col2rgb(V(g)$color)
     

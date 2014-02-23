@@ -62,8 +62,8 @@ Antwoord:
 Hieronder zie je twee gerichte grafen die de structuur van een classificatie 
 weergeven. Om het gebruik van voorkennis uit te sluiten coderen 
 we de categorieën met letters. Let op: deze codes zijn __willekeurig__ gekozen en 
-hebbben niets te maken met
-bijv. SBI codes.
+hebben niets te maken met
+bijvoorbeeld SBI codes.
 
 ```{r graph1, fig.cap="Graaf 1"}
 plotGraph(dats_gr[[group]], method="firstcat", seed=seeds_gr[[group]])
@@ -104,6 +104,8 @@ _"De kleuren in graaf 1 hebben mij geholpen met het beantwoorden van bovenstaand
 ```
 Antwoord: 
 ```
+
+De volgende vragen (2d t/m 2f) hebben betrekking op Graaf 2.
 
 ```{r graph2, fig.cap="Graaf 2"}
 #plotGraph(dats_gr[[3-group]], method="firstcat", seed=20140102)
@@ -152,7 +154,7 @@ Welke graaf vind je mooier?
 ```
 [] Graaf 1
 [] Graaf 2
-[] Maak niet uit
+[] Maakt niet uit
 ```
 
 #### 2h)
@@ -162,7 +164,7 @@ Welke kleuren vind je geschikter voor analysedoeleinden?
 ```
 [] Kleuren van graaf 1
 [] Kleuren van graaf 2
-[] Maak niet uit
+[] Maakt niet uit
 ```
 
 
@@ -193,7 +195,7 @@ for (i in branches_tm1[[group]][-1]) {
 
 #### 3b) 
 
-Hoeveel subcategoriën bevat `r branches_tm2[[group]]`?
+Hoeveel subcategorieën bevat `r branches_tm2[[group]]`?
 
 ```
 Antwoord: 
@@ -213,6 +215,8 @@ _"De kleuren in Treemap 1 hebben mij geholpen met het beantwoorden van bovenstaa
 ```
 Antwoord: 
 ```
+
+De volgende vragen (3d t/m 3f) hebben betrekking op de tweede treemap.
 
 ```{r treemap2, fig.cap="Treemap 2"}
 tm <- treemap(dats_tm[[3-group]], index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1", overlap.labels=0.1)  
@@ -234,7 +238,7 @@ for (i in branches_tm1[[3-group]][-1]) {
 
 #### 3e) 
 
-Hoeveel subcategoriën bevat `r branches_tm2[[3-group]]`?
+Hoeveel subcategorieën bevat `r branches_tm2[[3-group]]`?
 
 ```
 Antwoord: 
@@ -313,6 +317,9 @@ _"De kleuren in Staafdiagram 1 hebben mij geholpen met het beantwoorden van vraa
 Antwoord: 
 ```
 
+De volgende vragen (4c en 4d) hebben betrekking op het tweede staafdiagram.
+
+
 ```{r bar2, fig.cap="Staafdiagram 2"}
 plotBar(dats_bar[[3-group]], method="HCP", hue_fraction=0.95)
 
@@ -365,10 +372,11 @@ Welke kleuren vind je geschikter voor analysedoeleinden?
 [] Maakt niet uit
 ```
 
-#### A)
+### Einde
+
+Dit waren de vragen. Het ingevulde document kan worden per e-mail gestuurd naar m.tennekes@cbs.nl of per post naar Martijn Tennekes, kamer 2A42 (Heerlen).
+
 Eventuele opmerkingen:
-
-
 
 
 

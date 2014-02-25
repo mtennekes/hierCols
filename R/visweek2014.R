@@ -140,6 +140,11 @@ str(business)
 treemap(d, index=c("n1", "n2", "n3", "n4"), vSize="emp2010")
 treemap(d[as.integer(d$n1)==3,], index=c("n2", "n3", "n4"), vSize="emp2010", overlap.labels=.1)
 
+
+treemap(d, index=c("n1", "n2", "n3"), vSize="turn2011", overlap.labels=.1, bg.labels=255, title="")
+
+
+
 pdf("plots/TMbusiness.pdf", width=9, height=7)
 treemap(d[as.integer(d$n1)==7,], index=c("n2", "n3", "n4"), vSize="turn2011", overlap.labels=.1, bg.labels=255, title="")
 dev.off()

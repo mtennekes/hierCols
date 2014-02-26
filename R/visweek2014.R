@@ -133,23 +133,31 @@ dev.off()
 
 ## use Statline data for real world application
 data(business)
-source("./R/statline_business_data.R")
+source("./R/statline_business_data2.R")
 
 str(business)
 
-treemap(d, index=c("n1", "n2", "n3", "n4"), vSize="emp2010")
-treemap(d[as.integer(d$n1)==3,], index=c("n2", "n3", "n4"), vSize="emp2010", overlap.labels=.1)
+
+palette.HCL.optionsExp <- list(hue_start=0, hue_end=360, hue_spread=TRUE,
+                               hue_fraction=.75, chroma=60, luminance=70, 
+                               chroma_slope=5, luminance_slope=-10)
+
+palette.HCL.optionsImp <- list(hue_start=0, hue_end=360, hue_spread=TRUE,
+                               hue_fraction=.5, chroma=60, luminance=70, 
+                               chroma_slope=5, luminance_slope=-10)
 
 
-treemap(d, index=c("n1", "n2", "n3"), vSize="turn2011", overlap.labels=.1, bg.labels=255, title="")
-
+itreemap(d, index=c("N1", "N2", "N3", "N4"))
 
 
 pdf("plots/TMbusiness.pdf", width=9, height=7)
-treemap(d[as.integer(d$n1)==7,], index=c("n2", "n3", "n4"), vSize="turn2011", overlap.labels=.1, bg.labels=255, title="")
+treemap(subset(d, subset=N1 == "G Wholesale and retail trade"), index=c("N2", "N3", "N4"), vSize="emp2010", overlap.labels=.25, bg.labels=255, title="", palette.HCL.options=palette.HCL.optionsImp) 
 dev.off()
 
-treegraph(d, index=c("n1", "n2", "n3", "n4"))
+dG <- subset(d, subset=N1 == "G Wholesale and retail trade" & depth>1)
+treegraph(dG, index=c("n2", "n3", "n4", "n5"),  show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=8, vertex.label.dist=0.6, palette.HCL.options=palette.HCL.optionsExp)
+
+
 
 
 ###### experiment with hue fraction

@@ -1,9 +1,12 @@
 ---
-Vragenlijst hierarchische kleurenpaletten
-author: 
+title: Hierarchische kleurenpaletten
+author:
  - Martijn Tennekes
  - Edwin de Jonge
 ---
+
+Hierarchische kleurpaletten
+========================================================
 
 We willen graag het gebruik van kleuren om classificatiestructuren
 te verduidelijken onderzoeken. We hebben zo meteen een aantal vragen voor je. 
@@ -19,7 +22,8 @@ Alvast hartelijk dank voor je medewerking!
 
 ```{r initializatie, echo=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
-library(treemap)
+#library(treemap)
+devtools::load_all("../../treemap/pkg/")
 library(igraph)
 library(grid)
 

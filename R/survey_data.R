@@ -215,7 +215,7 @@ plotGraph <- function(dat, method="HCP", seed, hue_fraction=0.75) {
     plot(g, layout= layout.kamada.kawai(g), edge.arrow.size=.6, vertex.label.cex=.8, vertex.label.family="sans", vertex.label.color=fontcolors)
 }
 
-plotBar <- function(dat, method="HCP", hue_fraction=0.75) {
+plotBar <- function(dat, method="HCP", hue_fraction=0.5) {
     require(ggplot2)
     require(RColorBrewer)
     
@@ -233,7 +233,7 @@ plotBar <- function(dat, method="HCP", hue_fraction=0.75) {
     
     dat$color <- datcolors[[colorname]][match(dat$h3, datcolors$h3)]
     
-    dat$x <- addSpace(dat[, c("h1", "h2", "h3")])
+    dat$x <- addSpace(dat[, c("h1", "h2", "h3")], fact=1.1)
     dat$x <- max(dat$x) - dat$x
     
     ggplot(dat, aes(x=x, y=value, fill=h3)) +

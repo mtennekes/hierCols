@@ -34,7 +34,7 @@ dats_bar <- generateRandomHierData(2, seeds=c(20140127, 20140128), levs=c(3, 9, 
 #dats_gr <- generateRandomHierData(2, seeds=c(20140116, 20140117), levs=c(5, 13, 30), addText=FALSE)
 
 
-group <- 2
+group <- 1
 
 branches_tm1 <- list(c("HZ", "AF", "SD", "KL", "SX"),
                     c("JM", "HD", "EP", "EN", "PQ"))
@@ -322,7 +322,7 @@ De volgende vragen (4c en 4d) hebben betrekking op het tweede staafdiagram.
 
 
 ```{r bar2, fig.cap="Staafdiagram 2"}
-plotBar(dats_bar[[3-group]], method="HCP", hue_fraction=0.95)
+plotBar(dats_bar[[3-group]], method="HCP", hue_fraction=0.6)
 
 ```
 

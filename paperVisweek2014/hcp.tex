@@ -34,6 +34,8 @@
 \usepackage{booktabs}
 \usepackage{subfigure}
 
+\usepackage{listings}
+
 %% We encourage the use of mathptmx for consistent usage of times font
 %% throughout the proceedings. However, if you encounter conflicts
 %% with other math-related packages, you may want to disable it.
@@ -134,6 +136,7 @@ Color is an important means to display categorical data in statistical graphics.
 
 \begin{document}
 
+\lstset{language=R}
 %% The ``\maketitle'' command must be the first command after the
 %% ``\begin{document}'' command. It prepares and prints the title block.
 
@@ -158,13 +161,13 @@ This paper is outlined as follows. In Section~\ref{secmethod} we describe the pr
 \section{Method}\label{secmethod}
 Our method maps a tree structure on colors in HCL space, such that it reflects the hierarchical properties of the tree. We use the hue parameter $H$, with range [0, 360], for the tree structure, where the hue of each child node resembles the hue of its parent. The chroma and lumnience parameters $C$ and $L$, both with range [0, 100], are used to discriminate the different hierarchical levels.
 
-We illustrate Tree Colors with a radial tree graph that is depicted in Figure~\ref{fig:graph}. Although other graph layouts may be more suitable to highlight the tree structure, for instance the Fruchterman-Reingold algorithm~\cite{Fruchterman91} applied in the graph in Figure~\ref{fig:teaser}, this radial layout preserves the original order of nodes in each hierarchical layer, which is in many cases, and also in this case, purely alphabetical. The Tree Colors in this graph can therefore be applied in the same order in any other visualization method with a radial layout, or a  layer-wise linear layout. %Radial layouts have proven to be very useful in many tree visualizations methods and navigation tools \cite{schulz2011}.
+We illustrate Tree Colors with a radial tree graph that is depicted in Figure~\ref{fig:graph}. Although other graph layouts may be more suitable to highlight the tree structure, for instance the Fruchterman-Reingold algorithm~\cite{Fruchterman91} applied in the graph in Figure~\ref{fig:teaser}, the applied radial Reingold-Tilford layout~\cite{reingold81} preserves the original order of nodes in each hierarchical layer, which is in many cases, and also in this case, purely alphabetical. The Tree Colors in this graph can therefore be applied in the same order in any other visualization method with a radial layout, or a  layer-wise linear layout. %Radial layouts have proven to be very useful in many tree visualizations methods and navigation tools \cite{schulz2011}.
 
 \begin{figure}[htb]
 
   \centering
   \includegraphics[width=3.2in]{HCPgraph.pdf}
-  \caption{Tree with HCP colors.}\label{fig:graph}
+  \caption{Radial graph with Tree Colors.}\label{fig:graph}
 
 \end{figure}
 
@@ -258,7 +261,7 @@ The fraction $f$ is needed to introduce a `hue gap' between nodes with a differe
   \caption{Graphs with different fraction values.}\label{fig:graphf}
 \end{figure}
 
-The choice of $f$ depends on several aspects, such as the application, the size and dimensions of the hierarchical data, and on the used visualization method. In Figures~\ref{fig:graphf} a graph is shown with different values of $f$. For such explicit tree visualizations, high values of $f$ can be chosen to discriminate the leaf nodes without loosing tough of the global tree structure which is clearly visible, also without Tree Colors. Even values of (or close to) $1.00$ are appropriate here. To be on the save side, we suggest $f=0.75$ for explicit tree visualizations as a guideline.
+The choice of $f$ depends on several aspects, such as the application, the size and dimensions of the hierarchical data, and on the used visualization method. In Figures~\ref{fig:graphf} a graph with a Fruchterman-Reingold layout~\cite{Fruchterman91} is shown with different values of $f$. For such explicit tree visualizations, high values of $f$ can be chosen to discriminate the leaf nodes without loosing tough of the global tree structure which is clearly visible, also without Tree Colors. Even values of (or close to) $1.00$ are appropriate here. To be on the save side, we suggest $f=0.75$ for explicit tree visualizations as a guideline.
 
 \begin{figure}[htb]
   \centering
@@ -269,7 +272,21 @@ The choice of $f$ depends on several aspects, such as the application, the size 
 
 For implicit tree visualizations where the tree structure is not clearly visible without colors, lower values of $f$ are more suitable. To illustrate this, a treemap with different values of $f$ is depicted in Figure~\ref{fig:treemapf}. For $f=0.75$ and especially $f=1.00$, it is difficult to grasp the global tree structure immediately; the main categories A and C are hard to take apart as well as the categories B and D. Therefore we suggest $f=0.50$ as a rule of thumb for implicit tree visualizations.
 
-\clearpage
+\section{Software}
+
+A free and open source software tool is available to experiment with the different parameter settings described above. This tool is contained in the software package treemap~\cite{treemap} of the statistical software environment R~\cite{r2013}. After installation R and the package treemap, only two lines of code are required to  start the interactive tool:
+\begin{lstlisting}
+library(treemap)
+treecolors()
+\end{lstlisting}
+
+A screenshot is shown in Figure~\ref{fig:screen}.
+
+\begin{figure}[htb]
+  \centering
+  \fbox{\includegraphics[width=3.5in]{screenshot_treecolors.png}}
+  \caption{Screenshot.}\label{fig:screen}
+\end{figure}
 
 
 

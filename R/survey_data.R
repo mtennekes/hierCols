@@ -246,9 +246,10 @@ plotBar <- function(dat, method="HCP", hue_fraction=0.5) {
 
 
 addSpace <- function(dat, fact=1.10) {
+    d <- ncol(dat)
     dat <- lapply(dat, as.integer) 
     diff <- lapply(dat, function(x)x[-1]!=x[-(length(x))])
-    diff <- matrix(unlist(diff), ncol=3)
+    diff <- matrix(unlist(diff), ncol=d)
     steps <- floor(log10(apply(diff, MARGIN=1,FUN=function(x)sum(1, as.numeric(x)*(10^(length(x):1))))))
     cumsum(c(0, fact^steps))
 }

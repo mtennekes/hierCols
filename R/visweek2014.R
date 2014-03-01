@@ -32,7 +32,7 @@ hd <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(3, 12, 25
 
 
 # plot for method description for dividing hue range
-palette.HCL.options <- list(hue_start=0, hue_end=360, hue_spread=TRUE,
+palette.HCL.options <- list(hue_start=0, hue_end=360, 
                             hue_fraction=0.75, chroma=60, luminance=70, 
                             chroma_slope=5, luminance_slope=-10)
 
@@ -124,7 +124,7 @@ dev.off()
 pdf("plots/HCPgraph.pdf", width=6, height=6)
 set.seed(20140203)
 #treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=4, palette.HCL.options=palette.HCL.options)
-treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=4, palette.HCL.options=palette.HCL.options, directed=FALSE)
+treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=10, vertex.label.dist=.5, palette.HCL.options=palette.HCL.options, directed=FALSE)
 dev.off()
 
 
@@ -138,11 +138,11 @@ source("./R/statline_business_data2.R")
 str(business)
 
 
-palette.HCL.optionsExp <- list(hue_start=0, hue_end=360, hue_spread=TRUE,
+palette.HCL.optionsExp <- list(hue_start=0, hue_end=360, 
                                hue_fraction=.75, chroma=60, luminance=70, 
                                chroma_slope=5, luminance_slope=-10)
 
-palette.HCL.optionsImp <- list(hue_start=0, hue_end=360, hue_spread=TRUE,
+palette.HCL.optionsImp <- list(hue_start=0, hue_end=360, 
                                hue_fraction=.5, chroma=60, luminance=70, 
                                chroma_slope=5, luminance_slope=-10)
 
@@ -158,6 +158,44 @@ dG <- subset(d, subset=N1 == "G Wholesale and retail trade" & depth>1)
 treegraph(dG, index=c("n2", "n3", "n4", "n5"),  show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=8, vertex.label.dist=0.6, palette.HCL.options=palette.HCL.optionsExp)
 
 
+## statline population per province
+library(ggplot2)
+library(reshape2)
+library(scales)
+
+source("./R/statline_population_data.R")
+
+
+
+treegraph(nlpop, index=c("ld", "prov"), vertex.size=10, palette.HCL.options=palette.HCL.optionsExp)
+
+
+nlpop2 <- melt(nlpop, na.rm=FALSE, value.name="x", id.vars=c("ld", "prov"), variable.name="year")
+nlpop2$year <- as.integer(nlpop2$year) + 1959
+
+nlpop2$x[is.na(nlpop2$x)] <- 0
+
+
+palette.HCL.optionsBar <- list(hue_start=240, hue_end=500, 
+                               hue_fraction=.75, chroma=60, luminance=70, 
+                               chroma_slope=5, luminance_slope=-10)
+nlpal <- treepalette(nlpop, index=c("ld", "prov"), palette.HCL.options=palette.HCL.optionsBar)
+nlpal2 <- nlpal$HCL.color[match(levels(nlpop2$prov), nlpal$prov)]
+
+ggplot(nlpop2, aes(x=year, y=x, fill=prov)) + geom_area() +
+    scale_fill_manual(values=nlpal2)
+
+nlpop3 <- nlpop2[nlpop2$year==2012,]
+nlpop3$pos <- addSpace(nlpop[,1:2])
+nlpop3$pos <- max(nlpop3$pos) - nlpop3$pos
+
+gbar <- ggplot(nlpop3, aes(x=pos, y=x, fill=prov)) + 
+    geom_bar(stat="identity") +
+    scale_x_continuous("", breaks=nlpop3$pos, labels=nlpop3$prov) +
+    scale_y_continuous("", labels=comma) +
+    scale_fill_manual(values=nlpal2) + coord_flip() + theme_bw() + theme(legend.position="none")
+
+ggsave("./plots/pop_bar.pdf", width=5, height=5)
 
 
 ###### experiment with hue fraction
@@ -207,7 +245,7 @@ dat2 <- dat3childs
 par(mfrow=c(2,2))
 for (i in 1:length(fs)) {
     set.seed(20140212)
-    treegraph(dat2, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=8, vertex.label.dist=0.6,palette.HCL.options=list(hue_fraction=fs[i]), mai=c(.2,.2,.2,.2))
+    treegraph(dat2, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.layout=igraph::layout.auto, vertex.size=10, vertex.label.dist=0.6,palette.HCL.options=list(hue_fraction=fs[i]), mai=c(.2,.2,.2,.2))
     title(paste("\n                               Fraction =", fs_format[i]), font.main=1)
 }
 dev.off()
@@ -222,9 +260,12 @@ pdf("plots/Treemap_teaser.pdf", width=8, height=8)
 treemap(dat2, index=c("index1", "index2", "index3"), vSize="x", palette.HCL.options=list(hue_fraction=.5), title="", overlap=.1, fontsize.labels=14, bg.labels=255)
 dev.off()
 
+set.seed(20140303)
+dat3 <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(3, 9, 27), value.generator=rnorm, value.generator.args=list(mean=3))
+
 pdf("plots/Graph_teaser.pdf", width=8, height=8)
-set.seed(20140213)
-p <- treegraph(dat2, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.size=6, vertex.layout=igraph::layout.fruchterman.reingold, palette.HCL.options=list(hue_fraction=.95), edge.arrow.size=1)
+set.seed(20140301)
+p <- treegraph(dat3, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.size=10, vertex.label.dist=.5, vertex.label.cex=1.4, vertex.layout=igraph::layout.fruchterman.reingold, palette.HCL.options=list(hue_fraction=.95))
 dev.off()
 
 

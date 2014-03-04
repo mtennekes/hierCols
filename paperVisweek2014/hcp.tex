@@ -36,6 +36,8 @@
 
 \usepackage{listings}
 
+\usepackage{afterpage}
+
 %% We encourage the use of mathptmx for consistent usage of times font
 %% throughout the proceedings. However, if you encounter conflicts
 %% with other math-related packages, you may want to disable it.
@@ -145,7 +147,7 @@ Color is an important means to display categorical data in statistical graphics.
 
 \maketitle
 
-Hierarchical data are of crucial importance in official statistics. Most published data follow a hierarchical classification, for instance broken down by geographic regions or economic activities. To produce statistics it is therefore important to expore and visualize rough input data in a hierarchically structured manner. Several data visualization methods are useful for this task, for instance treemaps
+Hierarchical data are of crucial importance in official statistics. Most published data follow a hierarchical classification, for instance broken down by geographic regions or economic activities. To produce statistics it is therefore important to expore and visualize rough input data without losing the underlying hierarchical structure. Several data visualization methods are useful for this task, for instance treemaps
 \cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the hierarchical structure would be very useful in supporting visual analysis.
 
 Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should not suggest non-existent order or proximity and introduce perceptual bias. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
@@ -184,7 +186,7 @@ We start with the root node, which has by default hue range $[0, 360]$:
 \begin{enumerate}[i] \itemsep1pt \parskip0pt 
 \parsep0pt
 \item divide $r$ in $N$ equal parts $r_i$;
-\item permute the $r_i$'s and assign them to the child nodes;
+\item permute the $r_i$'s, reverse the even-numbered ones, and assign them to the child nodes;
 \item reduce each $r_i$ by keeping the middle fraction $f$;
 \item for each child node $v_i$ DO AssignHue($v_i$, $r_i$).
 \end{enumerate}
@@ -209,7 +211,21 @@ The permutations for three to twelve siblings for a hue range between 120 (green
   \caption{Purmutations of siblings.}\label{fig:perm}
 \end{figure}
 
-Furthermore, the permutation within even numbered branches is reversed to differentiate between branches. Note the labeling in Figure~\ref{fig:wheel} shows that the assignment of colors is permuted. The result of the permutation is that siblings are discriminated in each hierarchical layer, which is illustrated in Figure~\ref{fig:graph}.
+Furthermore, the permuted color ranges within even numbered branches are reversed to differentiate between branches. This is needed because the first category is always mapped to the lowest hue value (in Figure~\ref{fig:perm}, category A has the most greenish color in all shown cases), and the last category to a higher hue value. To reverse the hue ranges in an alternating way, so only the even-numered, the hue distance between any two adjacant nodes with different parents will increase, and thus easier to tell apart. 
+
+Note that the labeling in Figure~\ref{fig:wheel} shows that the assignment of colors is permuted and also reversed for even-numbered branches. The three top-layer hue ranges [0, 120], [120, 240], and [240, 360] are assigned to A, C, and B respectively. Branches A and C are odd-numered, so the hue ranges of the second layer are only permuted; the permutations for these branches are [A.1, A.3, A.2, A.4], and [C.1, C.3, C.5, C.2, C.4]. Since branch B is odd-numered, the hue ranges are not only permuted, but also reversed: [B.2, B.3, B.1].
+
+The result of the these permutations is that siblings are discriminated in each hierarchical layer, which is illustrated in Figure~\ref{fig:graph}. For comparison, the permutation is turned off in the graphs shown in Figure~\ref{fig:graph_noperm}. In the left graph, the hue values form a gradual hue circle, where ony the hue fraction $f$ creates small hue gaps between branches. The even-numbered branches are reversed in the right graph. The leaf nodes of branch B are now more distinct from the other leaf nodes. However, the distinction between branches of the second hierarchical layer is still less than with permutation enabled (Figure~\ref{fig:graph}).
+
+\begin{figure}[htb]
+
+  \centering
+  \includegraphics[width=3.5in]{HCPgraph2.pdf}
+  \caption{Radial graphs with the permutation disabled. Reversion of even-numbered branches is disabled on the left, and enabled on the right.}\label{fig:graph_noperm}
+
+\end{figure}
+
+
 
 
 \subsection{Chroma and luminance values}
@@ -272,6 +288,30 @@ The choice of $f$ depends on several aspects, such as the application, the size 
 
 For implicit tree visualizations where the tree structure is not clearly visible without colors, lower values of $f$ are more suitable. To illustrate this, a treemap with different values of $f$ is depicted in Figure~\ref{fig:treemapf}. For $f=0.75$ and especially $f=1.00$, it is difficult to grasp the global tree structure immediately; the main categories A and C are hard to take apart as well as the categories B and D. Therefore we suggest $f=0.50$ as a rule of thumb for implicit tree visualizations.
 
+\subsection{Parameter overview}
+
+\begin{table}[htb]
+\begin{tabular}{lll}
+\toprule
+Parameter    & Range & Default value \\
+\midrule
+Hue start & 0 to 360  & 0      \\
+Hue end          & 0 to 360 & 360       \\
+Hue fraction & 0 to 1 & 0.75 (explicit) \\
+	&	 & 0.50 (implicit) \\
+Hue permutations & TRUE or FALSE & TRUE      \\
+Hue reverse   & TRUE or FALSE     & TRUE      \\
+Luminance first level value & 0 to 100  & 70      \\
+Luminance slope value &       & -10       \\
+Chroma first level value &  0 to 100  & 60       \\
+Chroma slope value &     & 5       \\
+\bottomrule
+\end{tabular}
+\caption{Parameters}\label{param}
+\end{table}
+
+test
+
 \section{Software}
 
 A free and open source software tool is available to experiment with the different parameter settings described above. This tool is contained in the software package treemap~\cite{treemap} of the statistical software environment R~\cite{r2013}. After installation R and the package treemap, only two lines of code are required to  start the interactive tool:
@@ -280,7 +320,7 @@ library(treemap)
 treecolors()
 \end{lstlisting}
 
-A screenshot is shown in Figure~\ref{fig:screen}.
+A screenshot of the interactive tool is shown in Figure~\ref{fig:screen}. On the leftside panel, the user can create random tree data, and experiment with the parameters. On the main panel, four visualizations are shown: two graphs (Reingold-Tilford and Fruchterman-Reingold), a treemap and a bar chart. Also a table of the data is provided included the color values, and HCL values of the different nodes.
 
 \begin{figure}[htb]
   \centering
@@ -288,27 +328,24 @@ A screenshot is shown in Figure~\ref{fig:screen}.
   \caption{Screenshot.}\label{fig:screen}
 \end{figure}
 
+\afterpage{\clearpage}
 
 
 \section{Application}\label{secapplication}
-The hierarchical colors can be applied to enhance standard tree visualizations, as we saw in Figure~\ref{fig:sbiF}. Strictly speaking this is redundant color usage, but in our opinion it can improve many tree visualizations, because branches can be distinguished more easily. 
+National statistics on business enterprises are often published per economic sector. Economic sectors are structured hierachically. For instance, the class of bakeries may have a parent class food manufacturers, which in turn is a child of the class of manufacturers. All member countries of the European Union use same dassifition system of economic activity, namely the \textit{Nomenclature statistique des activit\'es \'economiques dans la Communaut\'e europ\'eenne} (NACE) system. This system has 21 main sectors and consists of four hierarchical layers.
 
-A second example of improvement is depicted in Figure~\ref{fig:treemapF}. It shows a treemap depicting (fictious) turnover values in Construction (NACE F). In official statistics, turnover is available for each business enterprise in a business register, and aggregated according to the NACE tree. The hierarchical color palette is used to differentiate between different aggregated groups, that makes it possible to compare turnover values at different hierarchical layers. Although the colors of higher NACE layers are only used for the text label backgrounds, they are also resembled by the colors of the lowest NACE layers. This treemap is created with the free and open source R package treemap \cite{treemap}.
-
-Hierarchical colors can also improve visualizations without explicit tree structure. The colors hint at the underlying tree structure.
-To illustrate this, a bar chart and a stacked area chart of fictive turnover data are depicted in Figure~\ref{fig:charts}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. The bar chart can be used to compare turnover values of all leaf node sectors in Construction (NACE F), and the stacked area plot to analyse turnover values in time.
-
-
-
+One of the largest statistics that uses the NACE system are the Structural Business Statistics (SBS) that cover industry, construction, trade and services. In Figure~\ref{fig:treemapApp}, the net turnover of the Dutch wholesale and retail trade enterprises in 2011 is visualized by a treemap. The Tree Colors of the non-leaf nodes are used for the text label backgrounds. The number of digits in the category names represent the hierarchical layer. Each of the three main brandwes of this sector (45, 46 and 47) clearly has a distinct hue range. Furthermore, some leaf nodes, for instance the pink colored 466, are a brighter than others, beuse they represent the third rather than the fourth NACE layer.
 
 
 \begin{figure}[htb]
   \centering
   \includegraphics[width=3.5in]{TMbusiness.pdf}
-
-  \caption{Turnover among Dutch manufacturing enterprises in 2011}\label{fig:treemapApp}
-
+  \caption{Turnover among Dutch wholesale and retail trade enterprises in 2011}\label{fig:treemapApp}
 \end{figure}
+
+
+Hierarchical colors can also improve visualizations without explicit tree structure. The colors hint at the underlying tree structure.
+To illustrate this, a bar chart and a stacked area chart of fictive turnover data are depicted in Figure~\ref{fig:charts}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. The bar chart can be used to compare turnover values of all leaf node sectors in Construction (NACE F), and the stacked area plot to analyse turnover values in time.
 
 
 \begin{figure}[htb]
@@ -321,25 +358,6 @@ To illustrate this, a bar chart and a stacked area chart of fictive turnover dat
 
 
 
-
-
-\begin{figure}[htb]
-  \centering
-  \includegraphics[width=1.235in]{bar_chart.pdf}
-  \includegraphics[width=2.065in]{stackedarea_chart.pdf}
-  \caption{Bar chart and stacked area chart with hierarchical colors}\label{fig:charts}
-\end{figure}
-
-%\begin{figure}[htb]
-%  \centering
-%  \includegraphics[width=0.25in]{stackedline_chart.pdf}
-%  \caption{Stacked line chart with hierarchical colors}\label{fig:linechart}
-%\end{figure}
-%\begin{figure}[htb]
-%  \centering
-%  \includegraphics[width=1.75in]{stackedbar_chart.pdf}
-%  \caption{Stacked bar chart with hierarchical colors}\label{fig:barchart}
-%\end{figure}
 
 
 

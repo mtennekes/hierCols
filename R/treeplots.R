@@ -73,7 +73,7 @@ drawHCL <- function(gridsize=1e3, C=60, L=80, r=c(0.6, 0.8), cuts=NULL, marks=NU
         
         x1 <- 0.5 + sin(lr)*marks.labels.r/2
         y1 <- 0.5 + cos(lr)*marks.labels.r/2
-        grid.text(lbls, x1, y1, gp=gpar(cex=marks.labels.cex))
+        grid.text(lbls, x1, y1, gp=gpar(cex=marks.labels.cex, fontfamily="URWHelvetica"))
         
         
         mr <- marks / 180 * pi
@@ -101,7 +101,7 @@ drawHCL <- function(gridsize=1e3, C=60, L=80, r=c(0.6, 0.8), cuts=NULL, marks=NU
         
         x1 <- 0.5 + sin(lr)*labels.r/2
         y1 <- 0.5 + cos(lr)*labels.r/2
-        grid.text(lbls, x1, y1, gp=gpar(cex=labels.cex))
+        grid.text(lbls, x1, y1, gp=gpar(cex=labels.cex, fontfamily="URWHelvetica"))
     }
     
 }

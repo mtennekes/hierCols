@@ -10,43 +10,38 @@ source("./R/survey_data.R")
 
 data(business)
 
-## mooi voorbeeld voor in paper (meerdere evenwichten)
-treegraph(business, index=c("NACE1", "NACE2", "NACE3"), show.labels=FALSE, vertex.layout=igraph::layout.fruchterman.reingold)
 
-treegraph(business, index=c("NACE1", "NACE2", "NACE3"), show.labels=FALSE, vertex.layout=igraph::layout.auto)
-
-
+# function to create font embedded pdf's
+# make sure the fontfamily in e is set to a available family, such as URWHelvetica
+PDF <- function(filename, ..., e) {
+    pdf(filename, ...)
+    e
+    dev.off()
+    #embedFonts(filename, outfile = filename)
+}
+#embedFonts is turn off to embed fonts in the final pdf (article)
 
 
 # show permutations
 for (i in 2:20) cat(i, ":", spread(i), "\n")
 
 
-## use business sector F as example for dissociated category names
-# hd <- business[as.integer(business$NACE1)==6, c("NACE2", "NACE3", "NACE4", "turnover")]
-# hd <- fancyLevels(hd, index=names(hd)[1:3])
+#####################################################################################
+#######
+####### create data for method description
+#######
+#####################################################################################
 
 set.seed(20140217)
 hd <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(3, 12, 25))
-
-
-
 # plot for method description for dividing hue range
 palette.HCL.options <- list(hue_start=0, hue_end=360, 
                             hue_fraction=0.75, chroma=60, luminance=70, 
                             chroma_slope=5, luminance_slope=-10)
-
 dat <- treepalette(hd[,1:3], palette.HCL.options=palette.HCL.options, prepare.dat=TRUE, return.parameters=TRUE)
-
-
-#dat$label <- with(dat, paste(as.character(L1), as.character(L2), as.character(L3), sep="."))
-#dat$label <- gsub(".NA", "", dat$label, fixed=TRUE)
-
 dat$l <- ifelse(!is.na(dat$index3), 3, ifelse(!is.na(dat$index2), 2, 1))
-
 dat$label <- ifelse(dat$l==1, as.character(dat$index1), ifelse(dat$l==2, as.character(dat$index2), as.character(dat$index3)))
     
-
 rem1 <- as.list(as.data.frame(apply(dat[dat$l==1, c("HCL.hue_lb", "HCL.hue_ub")], MARGIN=1,FUN=function(x)x)))
 rem2 <- as.list(as.data.frame(apply(dat[dat$l==2, c("HCL.hue_lb", "HCL.hue_ub")], MARGIN=1,FUN=function(x)x)))
 rem3 <- as.list(as.data.frame(apply(dat[dat$l==3, c("HCL.hue_lb", "HCL.hue_ub")], MARGIN=1,FUN=function(x)x)))
@@ -71,64 +66,80 @@ labs3 <- labs3[-c(17:19,20:22)]  ## to prevent overplotting
 
 gridsize <- 401#5e2+1
 
-pdf("plots/hcl_method2.pdf", width=8, height=8.4)
-#png("plots/hcl_method2.png", width=2000, height=2100, res=265)
+#####################################################################################
+#######
+####### method plots
+#######
+#####################################################################################
 
-grid.newpage()
-pushViewport(viewport(layout=grid.layout(nrow=4, ncol=2, heights = unit(rep(1,4), c("null", "lines", "null", "lines")))))
 
-cellplot(1,1, e={
-    cat(convertHeight(unit(1,"npc"), "inch", valueOnly=TRUE), "\n",
-        convertWidth(unit(1,"npc"), "inch", valueOnly=TRUE), "\n")
-    drawHCL(gridsize=gridsize, marks=c(0, 120, 240),
-            marks.dashed=c(rep(F, sum(dat$l==1))))
+PDF("plots/hcl_method2.pdf", width=8, height=8.4, e={
+    grid.newpage()
+    pushViewport(viewport(layout=grid.layout(nrow=4, ncol=2, heights = unit(rep(1,4), c("null", "lines", "null", "lines")))))
+    
+    cellplot(1,1, e={
+        cat(convertHeight(unit(1,"npc"), "inch", valueOnly=TRUE), "\n",
+            convertWidth(unit(1,"npc"), "inch", valueOnly=TRUE), "\n")
+        drawHCL(gridsize=gridsize, marks=c(0, 120, 240),
+                marks.dashed=c(rep(F, sum(dat$l==1))))
+    })
+    
+    cellplot(2,1, e={
+        grid.text("(a) Hue range equally split in three", x=0.05, y=unit(0.5, "lines"), just="left", gp=gpar(fontfamily="URWHelvetica"))
+    })
+    
+    cellplot(1,2, e={
+        drawHCL(gridsize=gridsize, marks=c(0, 120, 240, borders1),
+                marks.dashed=c(rep(F, sum(dat$l==1)), rep(T, 2*sum(dat$l==1))),
+                cuts=cuts1, labels=labs1)
+    })
+    cellplot(2,2, e={
+        grid.text("(b) Middle fractions assigned to first layer nodes", x=0.05, y=unit(0.5, "lines"), just="left", gp=gpar(fontfamily="URWHelvetica"))
+    })
+    
+    
+    cellplot(3,1, e={
+        drawHCL(gridsize=gridsize, marks=c(37.5, 60, 82.5, 135+(18*(0:4)), 285, 315, borders1), 
+                marks.dashed=F, 
+                cuts=cuts2, labels=labs2, labels.cex=0.7)
+    })
+    cellplot(4,1, e={
+        grid.text("(c) Recursively applied to second layer nodes", x=0.05, y=unit(0.5, "lines"), just="left", gp=gpar(fontfamily="URWHelvetica"))
+    })
+    
+    cellplot(3,2, e={
+        drawHCL(gridsize=gridsize, 
+                marks.dashed=T, 
+                cuts=cuts3, labels=labs3, labels.cex=0.6)
+    })
+    cellplot(4,2, e={
+        grid.text("(d) Recursively applied to third layer nodes", x=0.05, y=unit(0.5, "lines"), just="left", gp=gpar(fontfamily="URWHelvetica"))
+    })
 })
-
-cellplot(2,1, e={
-    grid.text("(a) Hue range equally split in three", x=0.05, y=unit(0.5, "lines"), just="left")
-})
-
-cellplot(1,2, e={
-    drawHCL(gridsize=gridsize, marks=c(0, 120, 240, borders1),
-            marks.dashed=c(rep(F, sum(dat$l==1)), rep(T, 2*sum(dat$l==1))),
-            cuts=cuts1, labels=labs1)
-})
-cellplot(2,2, e={
-    grid.text("(b) Middle fractions assigned to first layer nodes", x=0.05, y=unit(0.5, "lines"), just="left")
-})
-
-
-cellplot(3,1, e={
-    drawHCL(gridsize=gridsize, marks=c(37.5, 60, 82.5, 135+(18*(0:4)), 285, 315, borders1), 
-            marks.dashed=F, 
-            cuts=cuts2, labels=labs2, labels.cex=0.7)
-})
-cellplot(4,1, e={
-    grid.text("(c) Recursively applied to second layer nodes", x=0.05, y=unit(0.5, "lines"), just="left")
-})
-
-cellplot(3,2, e={
-    drawHCL(gridsize=gridsize, 
-            marks.dashed=T, 
-            cuts=cuts3, labels=labs3, labels.cex=0.6)
-})
-cellplot(4,2, e={
-    grid.text("(d) Recursively applied to third layer nodes", x=0.05, y=unit(0.5, "lines"), just="left")
-})
-
-dev.off()
-
 
 
 ## 
-pdf("plots/HCPgraph.pdf", width=6, height=6)
-set.seed(20140203)
-#treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=4, palette.HCL.options=palette.HCL.options)
-treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=10, vertex.label.dist=.5, palette.HCL.options=palette.HCL.options, directed=FALSE)
-dev.off()
+PDF("plots/HCPgraph.pdf", width=6, height=6, useDingbats=FALSE, e={
+    set.seed(20140203)
+    #treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=4, palette.HCL.options=palette.HCL.options)
+    treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=10, vertex.label.dist=.5, palette.HCL.options=palette.HCL.options, directed=FALSE, vertex.label.family="URWHelvetica")
+})
 
 
+PDF("plots/HCPgraph2.pdf", width=6, height=3.5, useDingbats=FALSE, e={
+    par(mfrow=c(1,2))
+    set.seed(20140203)
+    treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=12, vertex.label.cex=.6, vertex.label.dist=.6, palette.HCL.options=c(palette.HCL.options, list(hue_perm=FALSE, hue_rev=FALSE)), directed=FALSE, vertex.label.family="URWHelvetica")
+    
+    treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=12, vertex.label.cex=.6, vertex.label.dist=.6, palette.HCL.options=c(palette.HCL.options, list(hue_perm=FALSE)), directed=FALSE, vertex.label.family="URWHelvetica")
+})
 
+
+#####################################################################################
+#######
+####### Staline applications
+#######
+#####################################################################################
 
 
 ## use Statline data for real world application
@@ -147,15 +158,16 @@ palette.HCL.optionsImp <- list(hue_start=0, hue_end=360,
                                chroma_slope=5, luminance_slope=-10)
 
 
-itreemap(d, index=c("N1", "N2", "N3", "N4"))
+#itreemap(d, index=c("N1", "N2", "N3", "N4"))
 
 
-pdf("plots/TMbusiness.pdf", width=9, height=7)
-treemap(subset(d, subset=N1 == "G Wholesale and retail trade"), index=c("N2", "N3", "N4"), vSize="emp2010", overlap.labels=.25, bg.labels=255, title="", palette.HCL.options=palette.HCL.optionsImp) 
-dev.off()
+PDF("plots/TMbusiness.pdf", width=9, height=7, e={
+    treemap(subset(d, subset=N1 == "G Wholesale and retail trade"), index=c("N2", "N3", "N4"), vSize="emp2010", overlap.labels=.25, bg.labels=255, title="", palette.HCL.options=palette.HCL.optionsImp, ymod.labels=c(.1,0,0), fontfamily.labels="URWHelvetica") 
+})
 
-dG <- subset(d, subset=N1 == "G Wholesale and retail trade" & depth>1)
-treegraph(dG, index=c("n2", "n3", "n4", "n5"),  show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=8, vertex.label.dist=0.6, palette.HCL.options=palette.HCL.optionsExp)
+
+# dG <- subset(d, subset=N1 == "G Wholesale and retail trade" & depth>1)
+# treegraph(dG, index=c("n2", "n3", "n4", "n5"),  show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=8, vertex.label.dist=0.6, palette.HCL.options=palette.HCL.optionsExp)
 
 
 ## statline population per province
@@ -167,7 +179,7 @@ source("./R/statline_population_data.R")
 
 
 
-treegraph(nlpop, index=c("ld", "prov"), vertex.size=10, palette.HCL.options=palette.HCL.optionsExp)
+# treegraph(nlpop, index=c("ld", "prov"), vertex.size=10, palette.HCL.options=palette.HCL.optionsExp)
 
 
 nlpop2 <- melt(nlpop, na.rm=FALSE, value.name="x", id.vars=c("ld", "prov"), variable.name="year")
@@ -182,8 +194,7 @@ palette.HCL.optionsBar <- list(hue_start=240, hue_end=500,
 nlpal <- treepalette(nlpop, index=c("ld", "prov"), palette.HCL.options=palette.HCL.optionsBar)
 nlpal2 <- nlpal$HCL.color[match(levels(nlpop2$prov), nlpal$prov)]
 
-ggplot(nlpop2, aes(x=year, y=x, fill=prov)) + geom_area() +
-    scale_fill_manual(values=nlpal2)
+# ggplot(nlpop2, aes(x=year, y=x, fill=prov)) + geom_area() + scale_fill_manual(values=nlpal2)
 
 nlpop3 <- nlpop2[nlpop2$year==2012,]
 nlpop3$pos <- addSpace(nlpop[,1:2])
@@ -193,9 +204,16 @@ gbar <- ggplot(nlpop3, aes(x=pos, y=x, fill=prov)) +
     geom_bar(stat="identity") +
     scale_x_continuous("", breaks=nlpop3$pos, labels=nlpop3$prov) +
     scale_y_continuous("", labels=comma) +
-    scale_fill_manual(values=nlpal2) + coord_flip() + theme_bw() + theme(legend.position="none")
+    scale_fill_manual(values=nlpal2) + coord_flip() + theme_bw() + theme(legend.position="none", text=element_text(family="URWHelvetica"))
 
 ggsave("./plots/pop_bar.pdf", width=5, height=5)
+embedFonts("./plots/pop_bar.pdf", outfile="./plots/pop_bar.pdf")
+
+#####################################################################################
+#######
+####### hue fraction
+#######
+#####################################################################################
 
 
 ###### experiment with hue fraction
@@ -220,35 +238,39 @@ fs_format <- format(fs)
 nr <- 2
 nc <- 2
 
-pdf("plots/Treemaps_hue.pdf", width=10, height=10)
 dat <- dat4childs
 
-grid.newpage()
-vplayout <- function(x, y) viewport(layout.pos.row = x, layout.pos.col = y)
-pushViewport(viewport(layout=grid.layout(nr,nc)))
-
-ir <- ic <- 1
-for (i in 1:length(fs)) {
-    treemap(dat, index=names(dat)[1:(ncol(dat)-1)], vSize="x", palette.HCL.options=list(hue_fraction=fs[i]), vp=vplayout(ir,ic), title=paste("Fraction =", fs_format[i]), overlap=0.1, bg.labels=255)
-    ic <- ic + 1
-    if (ic > nc) {
-        ic <- 1
-        ir <- ir + 1
+PDF("plots/Treemaps_hue.pdf", width=10, height=10, e={
+    grid.newpage()
+    vplayout <- function(x, y) viewport(layout.pos.row = x, layout.pos.col = y)
+    pushViewport(viewport(layout=grid.layout(nr,nc)))
+    
+    ir <- ic <- 1
+    for (i in 1:length(fs)) {
+        treemap(dat, index=names(dat)[1:(ncol(dat)-1)], vSize="x", palette.HCL.options=list(hue_fraction=fs[i]), vp=vplayout(ir,ic), title=paste("Fraction =", fs_format[i]), overlap=0.1, bg.labels=255, fontfamily.labels="URWHelvetica", fontfamily.title="URWHelvetica")
+        ic <- ic + 1
+        if (ic > nc) {
+            ic <- 1
+            ir <- ir + 1
+        }
     }
-}
-dev.off()
+})
 
-
-pdf("plots/Graph_hue.pdf", width=8, height=8)
 dat2 <- dat3childs
+PDF("plots/Graph_hue.pdf", width=8, height=8, useDingbats=FALSE, e={
+    par(mfrow=c(2,2))
+    for (i in 1:length(fs)) {
+        set.seed(20140212)
+        treegraph(dat2, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.layout=igraph::layout.auto, vertex.size=10, vertex.label.dist=0.6,palette.HCL.options=list(hue_fraction=fs[i]), mai=c(.2,.2,.2,.2), vertex.label.family="URWHelvetica")
+        title(paste("\n                               Fraction =", fs_format[i]), font.main=1, family="URWHelvetica")
+    }
+})
 
-par(mfrow=c(2,2))
-for (i in 1:length(fs)) {
-    set.seed(20140212)
-    treegraph(dat2, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.layout=igraph::layout.auto, vertex.size=10, vertex.label.dist=0.6,palette.HCL.options=list(hue_fraction=fs[i]), mai=c(.2,.2,.2,.2))
-    title(paste("\n                               Fraction =", fs_format[i]), font.main=1)
-}
-dev.off()
+#####################################################################################
+#######
+####### teaser
+#######
+#####################################################################################
 
 
 ## teaser
@@ -256,17 +278,24 @@ set.seed(20140216)
 #dat2 <- random.hierarchical.data(method="random", number.children=3, value.generator=rnorm, value.generator.args=list(mean=3), labels.prefix=c("Main", "Sub", ""))
 dat2 <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(5,20, 40), value.generator=rnorm, value.generator.args=list(mean=3), labels.prefix=c("Main", "Sub", ""))
 
-pdf("plots/Treemap_teaser.pdf", width=8, height=8)
-treemap(dat2, index=c("index1", "index2", "index3"), vSize="x", palette.HCL.options=list(hue_fraction=.5), title="", overlap=.1, fontsize.labels=14, bg.labels=255)
-dev.off()
+PDF("plots/Treemap_teaser.pdf", width=8, height=8, e={
+    treemap(dat2, index=c("index1", "index2", "index3"), vSize="x", palette.HCL.options=list(hue_fraction=.5), title="", overlap=.1, fontsize.labels=14, bg.labels=255, fontfamily.labels="URWHelvetica")
+})
+
 
 set.seed(20140303)
 dat3 <- random.hierarchical.data(method="random.arcs", nodes.per.layer=c(3, 9, 27), value.generator=rnorm, value.generator.args=list(mean=3))
 
-pdf("plots/Graph_teaser.pdf", width=8, height=8)
-set.seed(20140301)
-p <- treegraph(dat3, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.size=10, vertex.label.dist=.5, vertex.label.cex=1.4, vertex.layout=igraph::layout.fruchterman.reingold, palette.HCL.options=list(hue_fraction=.95))
-dev.off()
+PDF("plots/Graph_teaser.pdf", width=8, height=8, useDingbats=FALSE, e={
+    set.seed(20140301)
+    p <- treegraph(dat3, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.size=10, vertex.label.dist=.5, vertex.label.cex=1.4, vertex.layout=igraph::layout.fruchterman.reingold, palette.HCL.options=list(hue_fraction=.95), vertex.label.family="URWHelvetica")
+})
+
+#####################################################################################
+#######
+####### permutation
+#######
+#####################################################################################
 
 
 ## permutation order
@@ -274,7 +303,7 @@ n <- 3:12
 nr <- 5
 nc <- 18
 
-palette.HCL.options2 <- list(hue_start=120, hue_end=240, hue_spread=TRUE,
+palette.HCL.options2 <- list(hue_start=120, hue_end=240, 
                             hue_fraction=1, chroma=60, luminance=70, 
                             chroma_slope=5, luminance_slope=-10)
 
@@ -314,28 +343,29 @@ texts[5, 10:17] <- LETTERS[order(spread(8))]
 texts[1:5,1] <- 3:7
 texts[1:5,18] <- 12:8
 
-pdf("plots/Permutations.pdf", width=6, height=2.5)
-
-grid.newpage()
-pushViewport(viewport(layout=grid.layout(nr, nc)))
-
-ir <- ic <- 1
-for (i in 1:(nr*nc)) {
-    cellplot(ir, ic, e={
-        grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=colors[ir, ic]))        
-        grid.text(texts[ir, ic])        
-    })
-    ic <- ic + 1
-    if (ic > nc) {
-        ic <- 1
-        ir <- ir + 1
+PDF("plots/Permutations.pdf", width=6, height=2.5, e={
+    grid.newpage()
+    pushViewport(viewport(layout=grid.layout(nr, nc)))
+    
+    ir <- ic <- 1
+    for (i in 1:(nr*nc)) {
+        cellplot(ir, ic, e={
+            grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=colors[ir, ic]))        
+            grid.text(texts[ir, ic], gp=gpar(fontfamily="URWHelvetica"))        
+        })
+        ic <- ic + 1
+        if (ic > nc) {
+            ic <- 1
+            ir <- ir + 1
+        }
     }
-}
+})
 
-dev.off()
-
-
-## tree depth
+#####################################################################################
+#######
+####### tree depth
+#######
+#####################################################################################
 
 
 
@@ -349,33 +379,30 @@ depthText[3:11,2] <- seq(50, 90, by=5)
 depthText[2, 3:9] <- seq(20, 80, by=10)
 
 
-pdf("plots/LC.pdf", width=6, height=3)
-
-
-grid.newpage()
-nr <- 11; nc <- 9
-pushViewport(viewport(layout=grid.layout(nr, nc)))
-
-ir <- ic <- 1
-for (i in 1:(nr*nc)) {
-    cellplot(ir, ic, e={
-        grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=depthColors[ir, ic]))        
-        grid.text(depthText[ir, ic])
-    })
-    ic <- ic + 1
-    if (ic > nc) {
-        ic <- 1
-        ir <- ir + 1
+PDF("plots/LC.pdf", width=6, height=3, e={
+    grid.newpage()
+    nr <- 11; nc <- 9
+    pushViewport(viewport(layout=grid.layout(nr, nc)))
+    
+    ir <- ic <- 1
+    for (i in 1:(nr*nc)) {
+        cellplot(ir, ic, e={
+            grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=depthColors[ir, ic]))        
+            grid.text(depthText[ir, ic], gp=gpar(fontfamily="URWHelvetica"))
+        })
+        ic <- ic + 1
+        if (ic > nc) {
+            ic <- 1
+            ir <- ir + 1
+        }
     }
-}
-cellplot(6, 1, e={
-    grid.text("Chroma")
+    cellplot(6, 1, e={
+        grid.text("Chroma", gp=gpar(fontfamily="URWHelvetica"))
+    })
+    cellplot(1, 5, e={
+        grid.text("Luminance", gp=gpar(fontfamily="URWHelvetica"))
+    })
 })
-cellplot(1, 5, e={
-    grid.text("Luminance")
-})
-
-dev.off()
 
 
 
@@ -390,41 +417,39 @@ depthText2[3:12,2] <- c("C=50, L=70", "C=60, L=70", "C=70, L=70", "C=80, L=70", 
                         "C=50, L=30", "C=60, L=30", "C=70, L=30", "C=80, L=30", "C=90, L=30")
 depthText2[2, 3:9] <- seq(120, 360, length.out=7)
 
-pdf("plots/LC2.pdf", width=6, height=3.5)
+PDF("plots/LC2.pdf", width=6, height=3.5, e={
 
-
-grid.newpage()
-nr <- 12; nc <- 9
-
-pushViewport(viewport(layout=grid.layout(nr, nc, widths=unit(c(.15, .2, rep(1,nc-2)), c("npc", "npc", rep("null", nc-2))))))
-
-# cellplot(3:9, 3:9, e={
-#     grid.lines(x=c(.105,.895), y=c(.1,.9), gp=gpar(col="grey", lwd=5))
-# })
-ir <- ic <- 1
-for (i in 1:(nr*nc)) {
-    cellplot(ir, ic, e={
-        grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=depthColors2[ir, ic]))        
-        grid.text(depthText2[ir, ic])
-        #if (depthSel[ir, ic]) grid.rect(width=.9, height=.7, gp=gpar(col="black", lwd=3, fill=NA))
-    })
-    ic <- ic + 1
-    if (ic > nc) {
-        ic <- 1
-        ir <- ir + 1
+    grid.newpage()
+    nr <- 12; nc <- 9
+    
+    pushViewport(viewport(layout=grid.layout(nr, nc, widths=unit(c(.15, .2, rep(1,nc-2)), c("npc", "npc", rep("null", nc-2))))))
+    
+    # cellplot(3:9, 3:9, e={
+    #     grid.lines(x=c(.105,.895), y=c(.1,.9), gp=gpar(col="grey", lwd=5))
+    # })
+    ir <- ic <- 1
+    for (i in 1:(nr*nc)) {
+        cellplot(ir, ic, e={
+            grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=depthColors2[ir, ic]))        
+            grid.text(depthText2[ir, ic], gp=gpar(fontfamily="URWHelvetica"))
+            #if (depthSel[ir, ic]) grid.rect(width=.9, height=.7, gp=gpar(col="black", lwd=3, fill=NA))
+        })
+        ic <- ic + 1
+        if (ic > nc) {
+            ic <- 1
+            ir <- ir + 1
+        }
     }
-}
+    
+    cellplot(8, 1, e={
+        grid.text("Chroma,\nLuminance", just="left", x=.1, gp=gpar(fontfamily="URWHelvetica"))
+    })
+    	
+    cellplot(1, 5, e={
+        grid.text("Hue", gp=gpar(fontfamily="URWHelvetica"))
+    })
 
-cellplot(8, 1, e={
-    grid.text("Chroma,\nLuminance", just="left", x=.1)
 })
-	
-cellplot(1, 5, e={
-    grid.text("Hue")
-})
-
-dev.off()
-
 
 
 
@@ -438,37 +463,40 @@ depthText3 <- matrix("", ncol=9, nrow=7)
 depthText3[3:7,2] <- c("i=1, C=60, L=70", "i=2, C=65, L=60", "i=3, C=70, L=50", "i=4, C=75, L=40", "i=5, C=80, L=30")
 depthText3[2, 3:9] <- seq(120, 360, length.out=7)
 
-pdf("plots/LC3.pdf", width=6, height=2)
 
+PDF("plots/LC3.pdf", width=6, height=2, e={
 
-grid.newpage()
-nr <- 7; nc <- 9
-
-pushViewport(viewport(layout=grid.layout(nr, nc, widths=unit(c(.15, .25, rep(1,nc-2)), c("npc", "npc", rep("null", nc-2))))))
-
-# cellplot(3:9, 3:9, e={
-#     grid.lines(x=c(.105,.895), y=c(.1,.9), gp=gpar(col="grey", lwd=5))
-# })
-ir <- ic <- 1
-for (i in 1:(nr*nc)) {
-    cellplot(ir, ic, e={
-        grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=depthColors3[ir, ic]))        
-        grid.text(depthText3[ir, ic])
-        #if (depthSel[ir, ic]) grid.rect(width=.9, height=.7, gp=gpar(col="black", lwd=3, fill=NA))
-    })
-    ic <- ic + 1
-    if (ic > nc) {
-        ic <- 1
-        ir <- ir + 1
+    grid.newpage()
+    nr <- 7; nc <- 9
+    
+    pushViewport(viewport(layout=grid.layout(nr, nc, widths=unit(c(.15, .25, rep(1,nc-2)), c("npc", "npc", rep("null", nc-2))))))
+    
+    # cellplot(3:9, 3:9, e={
+    #     grid.lines(x=c(.105,.895), y=c(.1,.9), gp=gpar(col="grey", lwd=5))
+    # })
+    ir <- ic <- 1
+    for (i in 1:(nr*nc)) {
+        cellplot(ir, ic, e={
+            grid.rect(width=.9, height=.7, gp=gpar(col=NA,fill=depthColors3[ir, ic]))        
+            grid.text(depthText3[ir, ic], gp=gpar(fontfamily="URWHelvetica"))
+            #if (depthSel[ir, ic]) grid.rect(width=.9, height=.7, gp=gpar(col="black", lwd=3, fill=NA))
+        })
+        ic <- ic + 1
+        if (ic > nc) {
+            ic <- 1
+            ir <- ir + 1
+        }
     }
-}
+    
+    cellplot(5, 1, e={
+        grid.text("Layer,\nChroma,\nLuminance", just="left", x=.1, gp=gpar(fontfamily="URWHelvetica"))
+    })
+    
+    cellplot(1, 5, e={
+        grid.text("Hue", gp=gpar(fontfamily="URWHelvetica"))
+    })
 
-cellplot(5, 1, e={
-    grid.text("Layer,\nChroma,\nLuminance", just="left", x=.1)
 })
 
-cellplot(1, 5, e={
-    grid.text("Hue")
-})
 
-dev.off()
+embedFonts("./paperVisweek2014/hcp.pdf", outfile="./paperVisweek2014/hcp.pdf")

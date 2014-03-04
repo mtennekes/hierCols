@@ -147,7 +147,7 @@ Color is an important means to display categorical data in statistical graphics.
 
 \maketitle
 
-Hierarchical data are of crucial importance in official statistics. Most published data follow a hierarchical classification, for instance broken down by geographic regions or economic activities. To produce statistics it is therefore important to expore and visualize rough input data without losing the underlying hierarchical structure. Several data visualization methods are useful for this task, for instance treemaps
+Data are often hierarchically structured in official statistics. Business data are typically broken down by economic activity and demographic data by geographic region. To produce statistics it is therefore important to expore rough input data without losing the underlying hierarchical structure. Several data visualization methods are useful for this task, for instance treemaps
 \cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the hierarchical structure would be very useful in supporting visual analysis.
 
 Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should not suggest non-existent order or proximity and introduce perceptual bias. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
@@ -176,18 +176,19 @@ We illustrate Tree Colors with a radial tree graph that is depicted in Figure~\r
 \subsection{Hue values}
 
 For selecting hue values we use the following recursive algorithm. It will assign to each node $v$ of a tree structure a hue value $H$ and a hue value range $r$.
-We start with the root node, which has by default hue range $[0, 360]$:
+We start with the root node, which has by default hue range $[H_{start}=0, H_{end}=360]$:
 
 \smallskip{\bf AssignHue($v$, $r$)}
 \begin{enumerate} \itemsep1pt \parskip0pt 
 \parsep0pt
-\item Assign the middle hue value in $r$ to $H$ \footnote{The root node itself is colored grey, so its hue is irrelevant.}.
+\item Assign the middle hue value in $r$ to the hue value of node $v$, which is $H_v$ \footnote{The root node itself is colored grey, so its hue is irrelevant.}.
 \item Let $N$ be the number of child nodes of $v$. If $N>0$ :
 \begin{enumerate}[i] \itemsep1pt \parskip0pt 
 \parsep0pt
-\item divide $r$ in $N$ equal parts $r_i$;
-\item permute the $r_i$'s, reverse the even-numbered ones, and assign them to the child nodes;
-\item reduce each $r_i$ by keeping the middle fraction $f$;
+\item divide $r$ in $N$ equal parts $r_i$ with $i=1,\ldots,N$;
+\item if $H_{perm}$ then permute the $r_i$'s;
+\item if $H_{rev}$ then reverse the even-numbered $r_i$'s;
+\item reduce each $r_i$ by keeping the middle fraction $H_{frac}$;
 \item for each child node $v_i$ DO AssignHue($v_i$, $r_i$).
 \end{enumerate}
 \end{enumerate}
@@ -198,10 +199,12 @@ We start with the root node, which has by default hue range $[0, 360]$:
   \caption{Assignment of hue values.}\label{fig:wheel}
 \end{figure}
 
-This algorithm is illustrated in Figure~\ref{fig:wheel}. In (a) the full hue range (for a constant $C=60$ and $L=70$)  is divided and permuted among the three children of the root, A, B and C. For these three ranges, the middle fractions (with $f=0.75$) are kept in (b).
-In (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
+This algorithm is illustrated in Figure~\ref{fig:wheel}. In (a) the full hue range (for a constant $C=60$ and $L=70$)  is split in three equal parts, since the root node has three children. Of each part, only the middle fractions (with $H_{frac}=0.75$ by default) are kept in (b). The ranges are assigned to A, B, and C. In (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
 
-In many hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. The way to determine the permuted order is to equally spread the siblings on a circle in the original order, and to pick the siblings at angles of 0 modulo 144 degrees. Notice that the difference of any two adjacent siblings in $[1, 3, 5, 2, 4]$ is exactly $2/5 * 360=144$ degrees, also between the last and the first sibling. For the cases with more than five siblings this picking angle is rounded down if needed. It may occur that a sibling is picked twice while othershave not yet been picked, for instance when 360 is a multiple of the rounded picking angle. In these cases, the next sibling is picked and the process continues with the same picking angle. For the three and four siblings case we use the permutations $[1, 3, 2]$ and $[1, 3, 2, 4]$ respectively. 
+
+\subsubsection{Hue permutations and reversals}
+
+In many hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are by default ($H_{perm}=\mbox{TRUE}$) permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. The way to determine the permuted order is to equally spread the siblings on a circle in the original order, and to pick the siblings at angles of 0 modulo 144 degrees. Notice that the difference of any two adjacent siblings in $[1, 3, 5, 2, 4]$ is exactly $2/5 * 360=144$ degrees, also between the last and the first sibling. For the cases with more than five siblings this picking angle is rounded down if needed. It may occur that a sibling is picked twice while othershave not yet been picked, for instance when 360 is a multiple of the rounded picking angle. In these cases, the next sibling is picked and the process continues with the same picking angle. For the three and four siblings case we use the permutations $[1, 3, 2]$ and $[1, 3, 2, 4]$ respectively. 
 
 The permutations for three to twelve siblings for a hue range between 120 (green) and 240 (blue) are depicted in Figure~\ref{fig:perm}. Note that the order of the five-siblings case, which is [1, 3, 5, 2, 4], is the position of the siblings A, B, C, D, and E respectively. Therefore, the permutation of them is A, D, B, E, and C. 
 
@@ -211,26 +214,47 @@ The permutations for three to twelve siblings for a hue range between 120 (green
   \caption{Purmutations of siblings.}\label{fig:perm}
 \end{figure}
 
-Furthermore, the permuted color ranges within even numbered branches are reversed to differentiate between branches. This is needed because the first category is always mapped to the lowest hue value (in Figure~\ref{fig:perm}, category A has the most greenish color in all shown cases), and the last category to a higher hue value. To reverse the hue ranges in an alternating way, so only the even-numered, the hue distance between any two adjacant nodes with different parents will increase, and thus easier to tell apart. 
+
+Furthermore, the permuted color ranges within even numbered branches are by default reversed ($H_{rev}=\mbox{TRUE}$) to differentiate between branches. This is needed because the first category is always mapped to the lowest hue value (in Figure~\ref{fig:perm}, category A has the most greenish color in all shown cases), and the last category to a higher hue value. To reverse the hue ranges in an alternating way, so only the even-numered, the hue distance between any two adjacant nodes with different parents will increase, and thus easier to tell apart. 
 
 Note that the labeling in Figure~\ref{fig:wheel} shows that the assignment of colors is permuted and also reversed for even-numbered branches. The three top-layer hue ranges [0, 120], [120, 240], and [240, 360] are assigned to A, C, and B respectively. Branches A and C are odd-numered, so the hue ranges of the second layer are only permuted; the permutations for these branches are [A.1, A.3, A.2, A.4], and [C.1, C.3, C.5, C.2, C.4]. Since branch B is odd-numered, the hue ranges are not only permuted, but also reversed: [B.2, B.3, B.1].
 
-The result of the these permutations is that siblings are discriminated in each hierarchical layer, which is illustrated in Figure~\ref{fig:graph}. For comparison, the permutation is turned off in the graphs shown in Figure~\ref{fig:graph_noperm}. In the left graph, the hue values form a gradual hue circle, where ony the hue fraction $f$ creates small hue gaps between branches. The even-numbered branches are reversed in the right graph. The leaf nodes of branch B are now more distinct from the other leaf nodes. However, the distinction between branches of the second hierarchical layer is still less than with permutation enabled (Figure~\ref{fig:graph}).
+The result of the these permutations is that siblings are discriminated in each hierarchical layer, which is illustrated in Figure~\ref{fig:graph}. For comparison, the permutation is turned off in the graphs shown in Figure~\ref{fig:graph_noperm}. In the left graph, the hue values form a gradual hue circle, where ony the hue fraction $H_{frac}$ creates small hue gaps between branches. The even-numbered branches are reversed in the right graph. The leaf nodes of branch B are now more distinct from the other leaf nodes. However, the distinction between branches of the second hierarchical layer is still less than with permutation enabled (Figure~\ref{fig:graph}).
 
 \begin{figure}[htb]
 
   \centering
   \includegraphics[width=3.5in]{HCPgraph2.pdf}
-  \caption{Radial graphs with the permutation disabled. Reversion of even-numbered branches is disabled on the left, and enabled on the right.}\label{fig:graph_noperm}
+  \caption{Radial graphs with permutation disabled. Reversal of even-numbered branches is disabled on the left, and enabled on the right.}\label{fig:graph_noperm}
 
 \end{figure}
 
 
+\subsubsection{Hue fraction}\label{secf}
+
+The fraction $H_{frac}$ is needed to introduce a `hue gap' between nodes with a different parent. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. If $H_{frac}=0$, the hue ranges are diminished to single hue points, which implies that each main branch is assinged a constant hue. On the other end of the extreme, if $H_{frac}=1$, the full hue range is available at each hierarchical layer, which makes leaf nodes easier to distinguish, but harder to take apart from leaf nodes of other branches.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=3.5in]{Graph_hue.pdf}
+  \caption{Graphs with different fraction values.}\label{fig:graphf}
+\end{figure}
+
+The choice of $f$ depends on several aspects, such as the application, the size and dimensions of the hierarchical data, and on the used visualization method. In Figures~\ref{fig:graphf} a graph with a Fruchterman-Reingold layout~\cite{Fruchterman91} is shown with different values of $H_{frac}$. For such explicit tree visualizations, high values of $H_{frac}$ can be chosen to discriminate the leaf nodes without loosing tough of the global tree structure which is clearly visible, also without Tree Colors. Even values of (or close to) $1.00$ are appropriate here. To be on the save side, we suggest $H_{frac}=0.75$ for explicit tree visualizations as a guideline.
+
+\begin{figure}[htb]
+  \centering
+  \includegraphics[width=3.5in]{Treemaps_hue.pdf}
+  \caption{Treemaps with different fraction values.}\label{fig:treemapf}
+\end{figure}
+
+
+For implicit tree visualizations where the tree structure is not clearly visible without colors, lower values of $H_{frac}$ are more suitable. To illustrate this, a treemap with different values of $H_{frac}$ is depicted in Figure~\ref{fig:treemapf}. For $H_{frac}=0.75$ and especially $H_{frac}=1.00$, it is difficult to grasp the global tree structure immediately; the main categories A and C are hard to take apart as well as the categories B and D. Therefore we suggest $H_{frac}=0.50$ as a rule of thumb for implicit tree visualizations.
 
 
 \subsection{Chroma and luminance values}
 
-In order to show depth in the tree, we use bright colors for nodes high in the tree and dark colors for nodes lower in the tree. The intuition behind this approach is that dark colors are often assiciated by humans with high particle densities. In most tree representations, the density of nodes will increase with the depth of the tree. Therefore, we let luminance decrease linearly with depth.  We set the default luminance value for the first (highest) layer below the root as $L_1=70$. For the other layers $i=2,\ldots, k$, the luminance value is defined as
+In order to show depth in the tree, we use bright colors for nodes high in the tree and dark colors for nodes lower in the tree. The intuition behind this approach is that dark colors are often assiciated by humans with high particle densities. In most tree representations, the density of nodes will increase with the depth of the tree. Therefore, we let luminance decrease linearly with depth.  We set the default luminance value for the first (highest) layer below the root as $L_1=70$. For the other layers $i=2,\ldots, d$, where $d$ is the depth of the tree, the luminance value is defined as
 \begin{equation}
 L_i=(i-1)\beta^L + L_1,
 \end{equation}
@@ -253,7 +277,7 @@ In Figure~\ref{fig:lc} a table of colors are depicted for various chroma and lum
 
 For different pairs of $C$ and $L$, color palettes with a fixed hue range from 120 and 360 are depicted in Figure~\ref{fig:lc2}. Among the bright color palettes (with $L=70$) the saturation level of $C=60$ is sufficient to distriminate the colors easily. For the dark color paletetes (with $L=30$), saturation values of $C=80$ or higher are not superfluous, especially because the assigned hue range is often very narrow for nodes low in the tree.
 
-Therefore, we propose to increase $C$ with depth. Let $C_1=60$ be the chroma value for the first layer. For layer $i=2,\ldots, k$, the chroma value is defined as
+Therefore, we propose to increase $C$ with depth. Let $C_1=60$ be the chroma value for the first layer. For layer $i=2,\ldots, d$ the chroma value is defined as
 \begin{equation}
 C_i=(i-1)\beta^C + C_1,
 \end{equation}
@@ -267,50 +291,45 @@ So per hierarchical layer $i$, we have specified a fixed pair of $L_i$ and $C_i$
   \caption{Colors palettes for matched pairs of default $L$ and $C$ values for the top five hierarchical layers.}\label{fig:lc3}
 \end{figure}
 
-\subsection{Hue fraction}\label{secf}
 
-The fraction $f$ is needed to introduce a `hue gap' between nodes with a different parent. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. If $f=0$, the hue ranges are diminished to single hue points, which implies that each main branch is assinged a constant hue. On the other end of the extreme, if $f=1$, the full hue range is available at each hierarchical layer, which makes leaf nodes easier to distinguish, but harder to take apart from leaf nodes of other branches.
-
-\begin{figure}[htb]
-  \centering
-  \includegraphics[width=3.5in]{Graph_hue.pdf}
-  \caption{Graphs with different fraction values.}\label{fig:graphf}
-\end{figure}
-
-The choice of $f$ depends on several aspects, such as the application, the size and dimensions of the hierarchical data, and on the used visualization method. In Figures~\ref{fig:graphf} a graph with a Fruchterman-Reingold layout~\cite{Fruchterman91} is shown with different values of $f$. For such explicit tree visualizations, high values of $f$ can be chosen to discriminate the leaf nodes without loosing tough of the global tree structure which is clearly visible, also without Tree Colors. Even values of (or close to) $1.00$ are appropriate here. To be on the save side, we suggest $f=0.75$ for explicit tree visualizations as a guideline.
-
-\begin{figure}[htb]
-  \centering
-  \includegraphics[width=3.5in]{Treemaps_hue.pdf}
-  \caption{Treemaps with different fraction values.}\label{fig:treemapf}
-\end{figure}
-
-
-For implicit tree visualizations where the tree structure is not clearly visible without colors, lower values of $f$ are more suitable. To illustrate this, a treemap with different values of $f$ is depicted in Figure~\ref{fig:treemapf}. For $f=0.75$ and especially $f=1.00$, it is difficult to grasp the global tree structure immediately; the main categories A and C are hard to take apart as well as the categories B and D. Therefore we suggest $f=0.50$ as a rule of thumb for implicit tree visualizations.
 
 \subsection{Parameter overview}
 
+An overview of all parameters that are used in the described method is provided in Table~\ref{table:param}. The luminance and chroma parameters are restricted to the following contraints:
+\begin{equation}
+0 \leq (d-1)\beta^L + L_1 \leq 100
+\end{equation}
+and 
+\begin{equation}
+0 \leq (d-1)\beta^C + C_1 \leq 100.
+\end{equation}
+
+
+
 \begin{table}[htb]
-\begin{tabular}{lll}
+\begin{footnotesize}
+\begin{tabular}{llll}
 \toprule
-Parameter    & Range & Default value \\
+\multicolumn{2}{l}{Parameter    } & Range & Default value \\
 \midrule
-Hue start & 0 to 360  & 0      \\
-Hue end          & 0 to 360 & 360       \\
-Hue fraction & 0 to 1 & 0.75 (explicit) \\
-	&	 & 0.50 (implicit) \\
-Hue permutations & TRUE or FALSE & TRUE      \\
-Hue reverse   & TRUE or FALSE     & TRUE      \\
-Luminance first level value & 0 to 100  & 70      \\
-Luminance slope value &       & -10       \\
-Chroma first level value &  0 to 100  & 60       \\
-Chroma slope value &     & 5       \\
+Hue start 				& $H_{start}$ &0 to 360  & 0      \\
+Hue end   				& $H_{end}$ & 0 to 360 & 360       \\
+Hue fraction 				& $H_f$	& 0 to 1 & 0.75 (explicit) \\
+					&	&	 & 0.50 (implicit) \\
+Hue permutations 			& $H_{perm}$ &Boolean & TRUE      \\
+Hue reverse   			& $H_{rev}$ & Boolean  & TRUE      \\
+Luminance first level value 	& $L_1$	& 0 to 100  & 70      \\
+Luminance slope value 		& $\beta^L$ &       & -10       \\
+Chroma first level value 		& $C_1$ &  0 to 100  & 60       \\
+Chroma slope value 		& $\beta^C$ &     & 5       \\
 \bottomrule
 \end{tabular}
-\caption{Parameters}\label{param}
+\end{footnotesize}
+\caption{Parameters}\label{table:param}
 \end{table}
 
-test
+
+
 
 \section{Software}
 
@@ -332,7 +351,7 @@ A screenshot of the interactive tool is shown in Figure~\ref{fig:screen}. On the
 
 
 \section{Application}\label{secapplication}
-National statistics on business enterprises are often published per economic sector. Economic sectors are structured hierachically. For instance, the class of bakeries may have a parent class food manufacturers, which in turn is a child of the class of manufacturers. All member countries of the European Union use same dassifition system of economic activity, namely the \textit{Nomenclature statistique des activit\'es \'economiques dans la Communaut\'e europ\'eenne} (NACE) system. This system has 21 main sectors and consists of four hierarchical layers.
+National statistics on business enterprises are often published per economic sector. Economic sectors are structured hierachically. For instance, the class of bakeries may have a parent class food manufacturers, which in turn is a child of the class of manufacturers. All member countries of the European Union use same dassifition system of economic activity, namely the \textit{Nomenclature statistique des activit\'es \'economiques dans la Communaut\'e europ\'eenne} (NACE) system~\cite{nace}. This system has 21 main sectors and consists of four hierarchical layers.
 
 One of the largest statistics that uses the NACE system are the Structural Business Statistics (SBS) that cover industry, construction, trade and services. In Figure~\ref{fig:treemapApp}, the net turnover of the Dutch wholesale and retail trade enterprises in 2011 is visualized by a treemap. The Tree Colors of the non-leaf nodes are used for the text label backgrounds. The number of digits in the category names represent the hierarchical layer. Each of the three main brandwes of this sector (45, 46 and 47) clearly has a distinct hue range. Furthermore, some leaf nodes, for instance the pink colored 466, are a brighter than others, beuse they represent the third rather than the fourth NACE layer.
 

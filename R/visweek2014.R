@@ -20,6 +20,7 @@ PDF <- function(filename, ..., e) {
     #embedFonts(filename, outfile = filename)
 }
 #embedFonts is turn off to embed fonts in the final pdf (article)
+windowsFonts(URWHelvetica=windowsFont("URWHelvetica"))
 
 
 # show permutations
@@ -271,7 +272,6 @@ PDF("plots/Graph_hue.pdf", width=8, height=8, useDingbats=FALSE, e={
 ####### teaser
 #######
 #####################################################################################
-
 
 ## teaser
 set.seed(20140216)

@@ -249,7 +249,7 @@ The choice of $f$ depends on several aspects, such as the application, the size 
 \end{figure}
 
 
-For implicit tree visualizations where the tree structure is not clearly visible without colors, lower values of $H_{frac}$ are more suitable. To illustrate this, a treemap with different values of $H_{frac}$ is depicted in Figure~\ref{fig:treemapf}. For $H_{frac}=0.75$ and especially $H_{frac}=1.00$, it is difficult to grasp the global tree structure immediately; the main categories A and C are hard to take apart as well as the categories B and D. Therefore we suggest $H_{frac}=0.50$ as a rule of thumb for implicit tree visualizations.
+For implicit tree visualizations where the tree structure is not clearly visible without colors, lower values of $H_{frac}$ are more suitable. To illustrate this, a treemap with different values of $H_{frac}$ is depicted in Figure~\ref{fig:treemapf}. We applied the ordered treemap layout~\cite{Bederson2002} for these treemaps. For $H_{frac}=0.75$ and especially $H_{frac}=1.00$, it is difficult to grasp the global tree structure immediately; the main categories A and C are hard to take apart as well as the categories B and D. Therefore we suggest $H_{frac}=0.50$ as a rule of thumb for implicit tree visualizations.
 
 
 \subsection{Chroma and luminance values}
@@ -258,7 +258,7 @@ In order to show depth in the tree, we use bright colors for nodes high in the t
 \begin{equation}
 L_i=(i-1)\beta^L + L_1,
 \end{equation}
-where the default value for the slope parameter $\beta^L$ is set to $-10$. In case the root node is visualized, it is colored grey. Its luminance value of the root node is specified by $L_0=L_1-\beta^L$.
+where the default value for the slope parameter $\beta^L$ is set to $-10$. In case the root node is visualized, it is colored grey. Its luminance value is specified by $L_0=L_1-\beta^L$.
 
 \begin{figure}[htb]
   \centering
@@ -333,13 +333,17 @@ Chroma slope value 		& $\beta^C$ &     & 5       \\
 
 \section{Software}
 
-A free and open source software tool is available to experiment with the different parameter settings described above. This tool is contained in the software package treemap~\cite{treemap} of the statistical software environment R~\cite{r2013}. After installation R and the package treemap, only two lines of code are required to  start the interactive tool:
+The Tree Colors are implemented in the treemap package~\cite{treemap} of the statistical software environment R~\cite{r2013}. All treemaps in this paper are created directly with this package, without post-processing. The implemented layout algorithms are the ordered treemap layout algorithm (pivot by size)~\cite{Bederson2002} and the squarified treemap layout algorithm~\cite{bruls99}. By default, Tree Colors are used to clarify the hierarchical structure of the data. However, the color attribute can also be used for a second variable, or to compare two hierarchical datasets~\cite{tennekes2011b}. 
+
+The graphs in this paper are also created with the treemap package. The graph layouts are processed with the dependency package igraph~\cite{igraph}.
+
+The treemap packaga also contains an interactive tool to create and visualize Tree Colors. After installation R and the package treemap, only two lines of code are required to start this tool:
 \begin{lstlisting}
 library(treemap)
 treecolors()
 \end{lstlisting}
 
-A screenshot of the interactive tool is shown in Figure~\ref{fig:screen}. On the leftside panel, the user can create random tree data, and experiment with the parameters. On the main panel, four visualizations are shown: two graphs (Reingold-Tilford and Fruchterman-Reingold), a treemap and a bar chart. Also a table of the data is provided included the color values, and HCL values of the different nodes.
+A screenshot of this interactive tool is shown in Figure~\ref{fig:screen}. On the leftside panel, the user can create random tree data, and experiment with the parameters. On the main panel, four visualizations are shown: two graphs (Reingold-Tilford and Fruchterman-Reingold), a treemap and a bar chart. Also a table of the data is provided included the color values, and HCL values of the different nodes.
 
 \begin{figure}[htb]
   \centering
@@ -347,7 +351,7 @@ A screenshot of the interactive tool is shown in Figure~\ref{fig:screen}. On the
   \caption{Screenshot.}\label{fig:screen}
 \end{figure}
 
-\afterpage{\clearpage}
+%\afterpage{\clearpage}
 
 
 \section{Application}\label{secapplication}
@@ -363,8 +367,8 @@ One of the largest statistics that uses the NACE system are the Structural Busin
 \end{figure}
 
 
-Hierarchical colors can also improve visualizations without explicit tree structure. The colors hint at the underlying tree structure.
-To illustrate this, a bar chart and a stacked area chart of fictive turnover data are depicted in Figure~\ref{fig:charts}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. The bar chart can be used to compare turnover values of all leaf node sectors in Construction (NACE F), and the stacked area plot to analyse turnover values in time.
+% Hierarchical colors can also improve visualizations without explicit tree structure. The colors hint at the underlying tree structure.
+% To illustrate this, a bar chart and a stacked area chart of fictive turnover data are depicted in Figure~\ref{fig:charts}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. The bar chart can be used to compare turnover values of all leaf node sectors in Construction (NACE F), and the stacked area plot to analyse turnover values in time.
 
 
 \begin{figure}[htb]
@@ -392,7 +396,7 @@ We recommend a user study to evaluate the obtained hierarchical color palettes w
 
 %% if specified like this the section will be committed in review mode
 \acknowledgments{
-The authors wish to thank their collegues at Statistics Netherlands who participated in the user survey.}
+The authors wish to thank their collegues at Statistics Netherlands who participated in the user survey ...}
 
 \bibliographystyle{abbrv}
 %%use following if all content of bibtex file should be shown

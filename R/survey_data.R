@@ -51,7 +51,7 @@ df6 <- tree2df(g6)
 #' @param k number of datasets
 #' @param seeds seeds for k layouts
 #' @param levs number of nodes per hierarchical layer. Each node is randomly assigned to a node in the parent layer. Therefore, the number of nodes in higher layers can be lower.
-generateRandomHierData <- function(k, seeds, levs=c(5, 20, 60), addText=TRUE) {
+generateRandomHierData <- function(k, seeds, levs=c(5, 20, 60), addText=TRUE, prefices=c("Hoofdcategorie", "Subcategorie")) {
     dats <- list() # to be filled with k random datasets
     n <- sum(levs)
     for (i in 1:k) {
@@ -67,8 +67,8 @@ generateRandomHierData <- function(k, seeds, levs=c(5, 20, 60), addText=TRUE) {
         h3 <- setdiff(l, c(h1,h2))
         
         if (addText) {
-            h1 <- paste("Hoofdcategorie", h1)
-            h2 <- paste("Subcategorie", h2)
+            h1 <- paste(prefices[1], h1)
+            h2 <- paste(prefices[2], h2)
         }
         
         dats[[i]] <- data.frame(h1=factor(NA, levels=h1),
@@ -193,7 +193,7 @@ generateGraph <- function(dat, method="HCP", hue_fraction=0.75) {
 
 
 
-plotGraph <- function(dat, method="HCP", seed, hue_fraction=0.75) {
+plotGraph <- function(dat, method="HCP", seed, hue_fraction=0.75, vertex.label.family="sans") {
     g <- generateGraph(dat, method=method, hue_fraction=hue_fraction)
     set.seed(seed)
     cols <- col2rgb(V(g)$color)
@@ -212,7 +212,7 @@ plotGraph <- function(dat, method="HCP", seed, hue_fraction=0.75) {
 #     greys <- rev(sequential_hcl(n=4, c.=0, l=c(0,100)))
 #     fontcolors <- greys[luminence]
     
-    plot(g, layout= layout.kamada.kawai(g), edge.arrow.size=.6, vertex.label.cex=.8, vertex.label.family="sans", vertex.label.color=fontcolors)
+    plot(g, layout= layout.kamada.kawai(g), edge.arrow.size=.6, vertex.label.cex=.8, vertex.label.family=vertex.label.family, vertex.label.color=fontcolors)
 }
 
 plotBar <- function(dat, method="HCP", hue_fraction=0.5) {

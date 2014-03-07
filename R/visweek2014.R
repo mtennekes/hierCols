@@ -167,8 +167,17 @@ PDF("plots/TMbusiness.pdf", width=9, height=7, e={
 })
 
 
-# dG <- subset(d, subset=N1 == "G Wholesale and retail trade" & depth>1)
-# treegraph(dG, index=c("n2", "n3", "n4", "n5"),  show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=8, vertex.label.dist=0.6, palette.HCL.options=palette.HCL.optionsExp)
+dG <- subset(d, subset=N1 == "G Wholesale and retail trade" & depth>1)
+set.seed(20140307)
+PDF("plots/Gbusiness_FR.pdf", width=9, height=7, e={
+    treegraph(dG, index=c("n2", "n3", "n4", "n5"),  show.labels=TRUE, vertex.layout=igraph::layout.fruchterman.reingold, vertex.size=8, vertex.label.dist=.4, vertex.label.cex=1.1, palette.HCL.options=palette.HCL.optionsExp, vertex.label.family="URWHelvetica")
+})
+
+set.seed(20140307)
+PDF("plots/Gbusiness_KK.pdf", width=9, height=7, e={
+    treegraph(dG, index=c("n2", "n3", "n4", "n5"),  show.labels=TRUE, vertex.layout=igraph::layout.kamada.kawai, vertex.size=8, vertex.label.dist=.4, vertex.label.cex=1.1, palette.HCL.options=palette.HCL.optionsExp, vertex.label.family="URWHelvetica")
+})
+
 
 
 ## statline population per province
@@ -497,6 +506,64 @@ PDF("plots/LC3.pdf", width=6, height=2, e={
     })
 
 })
+
+
+#####################################################################################
+#######
+####### user survey
+#######
+#####################################################################################
+
+library(igraph)
+library(grid)
+
+source("./R/survey_data.R")
+dats_tm <- generateRandomHierData(2, seeds=c(20140114, 20140115), prefices=c("Main category", "Sub category"))
+dats_gr <- generateRandomHierData(2, seeds=c(20140116, 20140117), levs=c(3,6,17), addText=FALSE)
+dats_bar <- generateRandomHierData(2, seeds=c(20140127, 20140128), levs=c(3, 9, 22))
+
+hue_start <- c(90, 0)
+hue_end <- c(450, 360)
+
+branches_tm1 <- list(c("HZ", "AF", "SD", "KL", "SX"),
+                     c("JM", "HD", "EP", "EN", "PQ"))
+
+branches_tm2 <- c("Main category AJ", "Main category SA")
+branches_gr1 <- list(c("J", "K", "S", "C"),
+                     c("K", "J", "A", "L"))
+branches_gr2 <- c("G", "B")
+branches_bar1 <- list(c("OS","JF","RG","PG","LH"),c("MX","DR","CG","IV","QT"))
+
+seeds_gr <- c(20140101, 20140102)
+
+group <- 1
+PDF("plots/Graph_survey_FC.pdf", width=4, height=4, useDingbats=FALSE, e={
+    par(mai=c(0,0,0,0))
+    plotGraph(dats_gr[[group]], method="firstcat", seed=seeds_gr[[group]], vertex.label.family="URWHelvetica")
+})
+PDF("plots/Graph_survey_TC.pdf", width=4, height=4, useDingbats=FALSE, e={
+    par(mai=c(0,0,0,0))
+    plotGraph(dats_gr[[group]], method="HCP", seed=seeds_gr[[group]], hue_fraction=0.75, vertex.label.family="URWHelvetica")
+})
+
+group <- 2
+PDF("plots/Treemap_survey_TC.pdf", width=6, height=6, useDingbats=FALSE, e={
+
+    tm <- treemap(dats_tm[[group]], index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255, overlap.labels=0.1, palette.HCL.options=list(hue_start=hue_start[[group]], hue_end=hue_end[[group]], hue_fraction=.6), fontfamily.labels="URWHelvetica", fontfamily.title="URWHelvetica")
+    
+    addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"))
+})
+
+PDF("plots/Treemap_survey_FC.pdf", width=6, height=6, useDingbats=FALSE, e={
+    tm <- treemap(dats_tm[[group]], index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1", overlap.labels=0.1, fontfamily.labels="URWHelvetica", fontfamily.title="URWHelvetica")
+    addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"))
+})
+
+
+g1 <- plotBar(dats_bar[[group]], method="firstcat") + theme(text=element_text(family="URWHelvetica"))
+g2 <- plotBar(dats_bar[[group]], method="HCP", hue_fraction=0.6) + theme(text=element_text(family="URWHelvetica"))
+ggsave("plots/Bar_survey_FC.pdf", g1, width=4, height=4, scale=1.5)
+ggsave("plots/Bar_survey_TC.pdf", g2, width=4, height=4, scale=1.5)
 
 
 embedFonts("./paperVisweek2014/hcp.pdf", outfile="./paperVisweek2014/hcp.pdf")

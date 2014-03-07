@@ -165,7 +165,7 @@ Our method maps a tree structure on colors in HCL space, such that it reflects t
 
 We illustrate Tree Colors with a radial tree graph that is depicted in Figure~\ref{fig:graph}. Although other graph layouts may be more suitable to highlight the tree structure, for instance the Fruchterman-Reingold algorithm~\cite{Fruchterman91} applied in the graph in Figure~\ref{fig:teaser}, the applied radial Reingold-Tilford layout~\cite{reingold81} preserves the original order of nodes in each hierarchical layer, which is in many cases, and also in this case, purely alphabetical. The Tree Colors in this graph can therefore be applied in the same order in any other visualization method with a radial layout, or a  layer-wise linear layout. %Radial layouts have proven to be very useful in many tree visualizations methods and navigation tools \cite{schulz2011}.
 
-\begin{figure}[htb]
+\begin{figure}[tb]
 
   \centering
   \includegraphics[width=3.2in]{HCPgraph.pdf}
@@ -193,7 +193,7 @@ We start with the root node, which has by default hue range $[H_{start}=0, H_{en
 \end{enumerate}
 \end{enumerate}
 
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \includegraphics[width=3.5in]{hcl_method2.pdf}
   \caption{Assignment of hue values.}\label{fig:wheel}
@@ -208,7 +208,7 @@ In many hierarchical structures, there is no order between siblings. When the no
 
 The permutations for three to twelve siblings for a hue range between 120 (green) and 240 (blue) are depicted in Figure~\ref{fig:perm}. Note that the order of the five-siblings case, which is [1, 3, 5, 2, 4], is the position of the siblings A, B, C, D, and E respectively. Therefore, the permutation of them is A, D, B, E, and C. 
 
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \includegraphics[width=3.5in]{Permutations.pdf}
   \caption{Purmutations of siblings.}\label{fig:perm}
@@ -221,7 +221,7 @@ Note that the labeling in Figure~\ref{fig:wheel} shows that the assignment of co
 
 The result of the these permutations is that siblings are discriminated in each hierarchical layer, which is illustrated in Figure~\ref{fig:graph}. For comparison, the permutation is turned off in the graphs shown in Figure~\ref{fig:graph_noperm}. In the left graph, the hue values form a gradual hue circle, where ony the hue fraction $H_{frac}$ creates small hue gaps between branches. The even-numbered branches are reversed in the right graph. The leaf nodes of branch B are now more distinct from the other leaf nodes. However, the distinction between branches of the second hierarchical layer is still less than with permutation enabled (Figure~\ref{fig:graph}).
 
-\begin{figure}[htb]
+\begin{figure}[tb]
 
   \centering
   \includegraphics[width=3.5in]{HCPgraph2.pdf}
@@ -234,7 +234,7 @@ The result of the these permutations is that siblings are discriminated in each 
 
 The fraction $H_{frac}$ is needed to introduce a `hue gap' between nodes with a different parent. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. If $H_{frac}=0$, the hue ranges are diminished to single hue points, which implies that each main branch is assinged a constant hue. On the other end of the extreme, if $H_{frac}=1$, the full hue range is available at each hierarchical layer, which makes leaf nodes easier to distinguish, but harder to take apart from leaf nodes of other branches.
 
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \includegraphics[width=3.5in]{Graph_hue.pdf}
   \caption{Graphs with different fraction values.}\label{fig:graphf}
@@ -242,7 +242,7 @@ The fraction $H_{frac}$ is needed to introduce a `hue gap' between nodes with a 
 
 The choice of $f$ depends on several aspects, such as the application, the size and dimensions of the hierarchical data, and on the used visualization method. In Figures~\ref{fig:graphf} a graph with a Fruchterman-Reingold layout~\cite{Fruchterman91} is shown with different values of $H_{frac}$. For such explicit tree visualizations, high values of $H_{frac}$ can be chosen to discriminate the leaf nodes without loosing tough of the global tree structure which is clearly visible, also without Tree Colors. Even values of (or close to) $1.00$ are appropriate here. To be on the save side, we suggest $H_{frac}=0.75$ for explicit tree visualizations as a guideline.
 
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \includegraphics[width=3.5in]{Treemaps_hue.pdf}
   \caption{Treemaps with different fraction values.}\label{fig:treemapf}
@@ -260,7 +260,7 @@ L_i=(i-1)\beta^L + L_1,
 \end{equation}
 where the default value for the slope parameter $\beta^L$ is set to $-10$. In case the root node is visualized, it is colored grey. Its luminance value is specified by $L_0=L_1-\beta^L$.
 
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \includegraphics[width=3.5in]{LC.pdf}
   \caption{Colors for different $L$ and $C$ values with a constant $H=300$.}\label{fig:lc}
@@ -269,7 +269,7 @@ where the default value for the slope parameter $\beta^L$ is set to $-10$. In ca
 In Figure~\ref{fig:lc} a table of colors are depicted for various chroma and luminance values and a constant hue of $H=300$. Brighter colors (with higher values of $L$) have the tendency to become too saturated in our opinion, for instance, the colors with $L=70$ and $C\geq70$. However, for dark colors, high values of $C$ may help to discriminate them distinguigh them from other dark colors with different hue values. The question therefore is, what values of $C$ are needed for what values of $L$ in order to distinguish the colors easily without using too much saturation.
 
 
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \includegraphics[width=3.5in]{LC2.pdf}
   \caption{Colors palettes for different pairs of $L$ and $C$.}\label{fig:lc2}
@@ -285,7 +285,7 @@ where the slope parameter is set to $\beta^C=5$ by default. The chroma value for
 
 So per hierarchical layer $i$, we have specified a fixed pair of $L_i$ and $C_i$. For these pairs, we depicted color palettes with a fixed hue range between 120 and 360 in Figure~\ref{fig:lc3}.
 
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \includegraphics[width=3.5in]{LC3.pdf}
   \caption{Colors palettes for matched pairs of default $L$ and $C$ values for the top five hierarchical layers.}\label{fig:lc3}
@@ -306,7 +306,7 @@ and
 
 
 
-\begin{table}[htb]
+\begin{table}[tb]
 \begin{footnotesize}
 \begin{tabular}{llll}
 \toprule
@@ -333,19 +333,19 @@ Chroma slope value 		& $\beta^C$ &     & 5       \\
 
 \section{Software}
 
-The Tree Colors are implemented in the treemap package~\cite{treemap} of the statistical software environment R~\cite{r2013}. All treemaps in this paper are created directly with this package, without post-processing. The implemented layout algorithms are the ordered treemap layout algorithm (pivot by size)~\cite{Bederson2002} and the squarified treemap layout algorithm~\cite{bruls99}. By default, Tree Colors are used to clarify the hierarchical structure of the data. However, the color attribute can also be used for a second variable, or to compare two hierarchical datasets~\cite{tennekes2011b}. 
+The Tree Colors are implemented in the treemap package~\cite{treemap} of the statistical software environment R~\cite{r2013}. All treemaps in this paper are created directly with this package, without post-processing. The implemented layout algorithms are the ordered treemap layout algorithm (pivot by size)~\cite{Bederson2002} and the squarified treemap layout algorithm~\cite{bruls99}. By default, Tree Colors are used to clarify the hierarchical structure of the data. However, the color attribute can also be used for a second variable or to compare two hierarchical datasets~\cite{tennekes2011b}. 
 
 The graphs in this paper are also created with the treemap package. The graph layouts are processed with the dependency package igraph~\cite{igraph}.
 
-The treemap packaga also contains an interactive tool to create and visualize Tree Colors. After installation R and the package treemap, only two lines of code are required to start this tool:
+The treemap package also contains an interactive tool to create and visualize Tree Colors. After installation R and the package treemap, only two lines of code are required to start this tool:
 \begin{lstlisting}
 library(treemap)
 treecolors()
 \end{lstlisting}
 
-A screenshot of this interactive tool is shown in Figure~\ref{fig:screen}. On the leftside panel, the user can create random tree data, and experiment with the parameters. On the main panel, four visualizations are shown: two graphs (Reingold-Tilford and Fruchterman-Reingold), a treemap and a bar chart. Also a table of the data is provided included the color values, and HCL values of the different nodes.
+A screenshot of this interactive tool is shown in Figure~\ref{fig:screen}. On the leftside panel, the user can create random tree data, and experiment with the parameters. On the main panel, four visualizations can be shown: two graphs (Reingold-Tilford and Fruchterman-Reingold), a treemap and a bar chart. Also a table of the tree structured data is provided included the color values in hexadecimal format and the HCL values of the all nodes.
 
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \fbox{\includegraphics[width=3.5in]{screenshot_treecolors.png}}
   \caption{Screenshot.}\label{fig:screen}
@@ -354,38 +354,91 @@ A screenshot of this interactive tool is shown in Figure~\ref{fig:screen}. On th
 %\afterpage{\clearpage}
 
 
-\section{Application}\label{secapplication}
-National statistics on business enterprises are often published per economic sector. Economic sectors are structured hierachically. For instance, the class of bakeries may have a parent class food manufacturers, which in turn is a child of the class of manufacturers. All member countries of the European Union use same dassifition system of economic activity, namely the \textit{Nomenclature statistique des activit\'es \'economiques dans la Communaut\'e europ\'eenne} (NACE) system~\cite{nace}. This system has 21 main sectors and consists of four hierarchical layers.
+\section{Applications}\label{secapplication}
 
-One of the largest statistics that uses the NACE system are the Structural Business Statistics (SBS) that cover industry, construction, trade and services. In Figure~\ref{fig:treemapApp}, the net turnover of the Dutch wholesale and retail trade enterprises in 2011 is visualized by a treemap. The Tree Colors of the non-leaf nodes are used for the text label backgrounds. The number of digits in the category names represent the hierarchical layer. Each of the three main brandwes of this sector (45, 46 and 47) clearly has a distinct hue range. Furthermore, some leaf nodes, for instance the pink colored 466, are a brighter than others, beuse they represent the third rather than the fourth NACE layer.
+\subsection{Econommic activity}
+
+National statistics on business enterprises are often published per economic sector. Economic sectors are typically structured hierachically. For instance, the class of bakeries may have a parent class food manufacturers, which in turn is a child of the class of manufacturers. All member states of the European Union use same dassifition system of economic activity, namely the \textit{Nomenclature statistique des activit\'es \'economiques dans la Communaut\'e europ\'eenne} (NACE) system~\cite{nace}. This system has 21 main economic sectors and consists of four hierarchical layers.
 
 
-\begin{figure}[htb]
+In Figure~\ref{fig:graphFRApp}, the NACE codes of the sector G, wholesale and retail trade, are depicted by a graph with the Fruchterman-Reingold layout algortihm~\cite{Fruchterman91}. In our opinion, Tree Colors contribute to clarify the tree structure.
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=3.5in]{Gbusiness_FR.pdf}
+  \caption{Graph of all wholesale and retail trade NACE codes produced by the Fruchterman-Reingold layout algorithm}\label{fig:graphFRApp}
+\end{figure}
+
+The same graph is depicted in Figure~\ref{fig:graphKKApp} with the Kamada-Kawai layout algorithm~\cite{Kamada89}. In comparison to the Figure~\ref{fig:graphFRApp}, the leaf nodes are all forced more outwards by the Kamada-Kawai algorithm. This may clarify the tree structure better, but at the cost of possible artifacts. In this case there are the two crossed edges, namely 465-4651 and 464-4643. The Tree Colors of the corresponding nodes help to discriminate the two local branches that overlap each other.
+
+
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=3.5in]{Gbusiness_KK.pdf}
+  \caption{Graph of all wholesale and retail trade NACE codes produced by the Kamada-Kawai layout algorithm}\label{fig:graphKKApp}
+\end{figure}
+
+
+One of the largest statistics that uses the NACE system are the Structural Business Statistics (SBS) that cover industry, construction, trade and services. The main target variables are turnover, number of persons employed, total purchases, and financial result. These statistics are produced for the entire European Union. However, the applied production method which include data collection, editing, analyses and estimation may vary from country to country, depending on the budget, legislation, and the availability of administratieve data sources such as tax data and the chamber of commerce. As for the Netherlands, data from small enterprises, i.e. less than 10 employees, are taken directly from tax administrations, data from medium enterprises (up to 50 employees) are taken from a sample survey, and data from large enterprises (50 employees or more) are taken from a full sample survey~\cite{cbsSBS}.
+
+%In current practice, the SBS data are analysed separately per main economic sector, since for each sector domain specific knowledge is required.
+
+In Figure~\ref{fig:treemapApp}, the net turnover of the Dutch wholesale and retail trade enterprises in 2011 is visualized by a treemap. The Tree Colors of the non-leaf nodes are used for the text label backgrounds. The number of digits in the category names represent the hierarchical layer. Each of the three main brandwes of this sector (45, 46 and 47) clearly has a distinct hue range. Furthermore, some leaf nodes, for instance the pink colored 466, are a brighter than others, because they represent the third rather than the fourth NACE layer.
+
+
+\begin{figure}[tb]
   \centering
   \includegraphics[width=3.5in]{TMbusiness.pdf}
   \caption{Turnover among Dutch wholesale and retail trade enterprises in 2011}\label{fig:treemapApp}
 \end{figure}
 
+\subsection{Regional classifications}
+Many publications in official statistics are broken down by region, especially regarding demographics.
+In many situations, thematic maps are useful as a data visualization tool for spacial statistics, in particular choropleths and cartograms. However, non-spacial visualization methods are often suffient for the task at hand. In those cases, the geographic location of the regions is less important for the analysis than the comparison of some specific target variable between regions. Tree Colors can improve the discrimination between the regions in a subtle may.
 
-% Hierarchical colors can also improve visualizations without explicit tree structure. The colors hint at the underlying tree structure.
-% To illustrate this, a bar chart and a stacked area chart of fictive turnover data are depicted in Figure~\ref{fig:charts}. Such graphics could be useful when the hierarchical structure will not be the main focus in the conducted analyses. The bar chart can be used to compare turnover values of all leaf node sectors in Construction (NACE F), and the stacked area plot to analyse turnover values in time.
+In Figure~\ref{fig:barApp} a bar chart created with the R package ggplot2~\cite{ggplot2} is depiced of the Dutch population broken down by its twelve provinces. For comparing the populations to each other, a bar chart is a good working horse, since length is perceived quite accurately~\cite{Mackinlay1986}. We applied Tree Colors to add information about the geographic location of the provinces. Typically, the provinces are grouped by the country parts north, east, west, and south. We use those country parts as the first hierarchical layer, and the provinces themselves as the second hierarchical layer. The obtained Tree Colors discriminate the provinces while grouping the provinces by country code. To enhance the groupings, the vertical space between any two adjacent bars that represent provinces in different country parts is slightly increased.
 
-
-\begin{figure}[htb]
+\begin{figure}[tb]
   \centering
   \includegraphics[width=3.5in]{pop_bar.pdf}
 
-  \caption{Dutch population in 2012}\label{fig:barApp}
+  \caption{Dutch population in 2012 per province}\label{fig:barApp}
 
 \end{figure}
 
 
 
-
-
-
-
 \section{User study}~\label{secuser}
+
+test
+
+\begin{figure}[tb]
+  \centering
+  \mbox{\subfigure{\includegraphics[width=1.7in]{Graph_survey_FC.pdf}}
+  \subfigure{\includegraphics[width=1.7in]{Graph_survey_TC.pdf}}}
+  \caption{Dutch population in 2012 per province}\label{fig:graphSvy}
+
+\end{figure}
+
+\begin{figure}[tb]
+  \centering
+  % \includegraphics[width=3in]{Treemap_survey_TC.pdf}
+  \mbox{\subfigure{\includegraphics[width=1.4in]{Treemap_survey_FC.pdf}}
+  \subfigure{\includegraphics[width=1.4in]{Treemap_survey_TC.pdf}}}
+  \caption{Dutch population in 2012 per province}\label{fig:treemapSvy}
+
+\end{figure}
+
+test
+
+\begin{figure}[tb]
+  \centering
+  \mbox{\subfigure{\includegraphics[width=1.7in]{Bar_survey_FC.pdf}}
+  \subfigure{\includegraphics[width=1.7in]{Bar_survey_TC.pdf}}}
+  \caption{Dutch population in 2012 per province}\label{fig:barSvy}
+
+\end{figure}
 
 
 \section{Discussion}~\label{secdisc}

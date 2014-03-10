@@ -300,6 +300,11 @@ PDF("plots/Graph_teaser.pdf", width=8, height=8, useDingbats=FALSE, e={
     p <- treegraph(dat3, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.size=10, vertex.label.dist=.5, vertex.label.cex=1.4, vertex.layout=igraph::layout.fruchterman.reingold, palette.HCL.options=list(hue_fraction=.95), vertex.label.family="URWHelvetica")
 })
 
+jpeg("plots/Graph_teaser.jpg", width=250, height=183, type = "cairo")
+set.seed(20140301)
+p <- treegraph(dat3, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.size=10, vertex.label.dist=.6, vertex.label.cex=.7, edge.width=2, vertex.layout=igraph::layout.fruchterman.reingold, palette.HCL.options=list(hue_fraction=.95), vertex.label.family="URWHelvetica", mai=c(0,0,.1,0))
+dev.off()
+
 #####################################################################################
 #######
 ####### permutation

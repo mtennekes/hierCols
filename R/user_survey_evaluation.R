@@ -1,39 +1,58 @@
 ### survey evaluation
 us <- read.csv("user_survey/survey_evaluation.txt", header=TRUE, sep="\t", stringsAsFactors=FALSE)
 
+us
+which(us$vraag!="")
 
-s <- list(
-    cb = us[1:3,-1],
-    g1.a = us[4:8, -1],
-    g1.b = us[9:10, -1],
-    g1.eval = us[11:15, -1],
-    g2.a = us[16:20, -1],
-    g2.b = us[21:22, -1],
-    g2.eval = us[23:27, -1],
-    g.mooi = us[28:30, -1],
-    g.inter = us[31:33, -1],
-    g.over = us[34:36, -1],
-    t1.a = us[37:42, -1],
-    t1.b = us[43:46, -1],
-    t1.eval = us[47:51, -1],
-    t2.a = us[52:57, -1],
-    t2.b = us[58:61, -1],
-    t2.eval = us[62:66, -1],
-    t.mooi = us[67:69, -1],
-    t.inter = us[70:72, -1],
-    t.over = us[73:75, -1],
-    b1.a = us[76:81, -1],
-    b1.eval = us[82:86, -1],
-    b2.a = us[87:92, -1],
-    b2.eval = us[93:97, -1],
-    b.mooi = us[98:100, -1],
-    b.inter = us[101:103, -1],
-    b.over = us[104:106, -1])
-    
+id <- rep(0, nrow(us))
+id[which(us$vraag!="")] <- 1
+cumsum(id)
+
+s <- split(us[,-1], cumsum(id))
+names(s) <- c("cb", 
+        "g1.a", "g1.b", "g1.eval", 
+        "g2.a", "g2.b", "g2.eval",
+        "g.mooi", "g.inter", "g.over",
+        "t1.a", "t1.b", "t1.eval",
+        "t2.a", "t2.b", "t2.eval",
+        "t.mooi", "t.inter", "t.over",
+        "b1", "b1.eval",
+        "b2", "b2.eval",
+        "b.mooi", "b.inter", "b.over")
+        
 s <- lapply(s, function(x){
     x$antwoord <- factor(x$antwoord, levels=unique(x$antwoord))
     x
 })
+
+fc_ind <- c(2:4, 14:16, 20:21)
+tc_ind <- c(5:7, 11:13, 22:23)
+ev_ind1 <- c(8:10, 24:26)
+ev_ind2 <- 17:19
+
+s[fc_ind] <- lapply(s[fc_ind], function(x){
+    names(x)[2:3] <- c("TreeColors", "FirstColors")
+    x
+})
+s[tc_ind] <- lapply(s[tc_ind], function(x){
+    x <- x[, c(1,3,2)]
+    names(x)[2:3] <- c("TreeColors", "FirstColors")
+    x
+})
+s[ev_ind1] <- lapply(s[ev_ind1], function(x){
+    x[,1] <- factor(c("FirstColors", "TreeColors", "indifferent"), levels=c("FirstColors", "TreeColors", "indifferent"))
+    x
+})
+s[ev_ind2] <- lapply(s[ev_ind2], function(x){
+    x[,1] <- factor(c("TreeColors", "FirstColors", "indifferent"), levels=c("FirstColors", "TreeColors", "indifferent"))
+    x
+})
+
+s[2:7]
+s[8:10]
+
+s[11:16]
+
 
 # reverse version 2 answers
 q <- c("g.mooi", "g.inter", "g.over", "t.mooi", "t.inter", "t.over", "b.mooi", "b.inter", "b.over")

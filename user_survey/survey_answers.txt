@@ -1,0 +1,51 @@
+====================================================================
+(in versie 2 zijn onderstaande versies omgedraaid)
+
+Graaf 1 (J):
+K = zelfde hoofd-, andere subbranch
+P = zelfde subbranch
+C = andere hoofdbranch
+
+G => Q, R, M, K en F
+
+Graaf 2 (K):
+J = zelfde hoofd-, andere subbranch
+A = andere hoofdbranch
+L = zelfde subbranch
+
+B => Q en O
+
+===================================================================
+
+Treemap 1 (HZ):
+AF = zelfde subbranch
+SD = zelfde hoofd-, andere subbranch
+KL = zelfde hoofd-, andere subbranch
+SX = andere hoofdbranch
+
+SA: 5
+
+Treemap 2 (JM):
+HD = zelfde hoofd-, andere subbranch
+EP = zelfde hoofd-, andere subbranch
+EN = andere hoofdbranch
+PQ = zelfde subbranch
+
+AJ = 7
+
+NB: het aantal subcategorien zijn in de referentie treemaps makkelijk af  te lezen door de grijze subcategorielabels te tellen.
+===================================================================
+
+Bar 1 (UT):
+NF = andere hoofdbranch
+XX = zelfde hoofd-, andere subbranch
+EV = zelfde subbranch
+GG = zelfde hoofd-, andere subbranch
+
+Bar 2 (MX):
+QT = zelfde hoofd-, andere subbranch
+IV = zelfde subbranch
+DR = zelfde hoofd-, andere subbranch
+IB = andere hoofdbranch
+
+NB: respondenten kunnen op het verkeerde been worden gezet door de lengtes te vergelijken (wellicht geen probleem, omdat dit ook voor de referentie plots geldt)

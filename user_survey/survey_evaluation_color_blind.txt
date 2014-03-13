@@ -1,39 +1,39 @@
 vraag	antwoord	V1	V2
 1	nee	0	0
-	gedeeltelijk	3	4
+	gedeeltelijk	3	5
 	ja	0	1
 2A1	JK	0	0
-	JP	2	4
+	JP	2	5
 	JC	0	0
 	JKP	1	0
 	JKPC	0	1
-2A2	G_QRMKF	3	5
+2A2	G_QRMKF	3	6
 2A3	1	1	2
 	2	1	2
-	3	0	0
+	3	0	1
 	4	0	1
 	5	1	0
 2B1	KJ	1	0
 	KA	0	0
-	KL	1	4
+	KL	1	5
 	KJL	1	0
 	KJAL	0	1
-2B2	B_OQ	3	4
+2B2	B_OQ	3	5
 2B3	1	0	3
-	2	2	0
+	2	2	1
 	3	0	0
 	4	0	1
 	5	1	1
-2mooi	F1	1	2
+2mooi	F1	1	3
 	F2	1	0
 	maaktnietuit	1	3
 2inter	F1	0	1
 	F2	0	0
-	maaktnietuit	3	4
-2over	F1	1	3
+	maaktnietuit	3	5
+2over	F1	1	4
 	F2	1	0
 	maaktnietuit	1	2
-3A1	HZ_AF	2	2
+3A1	HZ_AF	2	3
 	HZ_SD	0	1
 	HZ_KL	0	1
 	HZ_SX	0	0
@@ -41,39 +41,39 @@ vraag	antwoord	V1	V2
 	HZ_SDKLSX	0	1
 	HZ_AFSDKL	1	0
 3A2	SA_4	0	0
-	SA_5	3	5
+	SA_5	3	6
 	SA_6	0	0
 3A3	1	0	1
 	2	1	2
 	3	0	1
-	4	1	1
+	4	1	2
 	5	1	0
 3B1	JM_HD	0	0
 	JM_ED	0	0
 	JM_EN	0	3
-	JM_PQ	2	2
+	JM_PQ	2	3
 	JM_HDEPPQ	1	0
 3B2	AJ_5	0	3
 	AJ_6	0	0
-	AJ_7	3	2
+	AJ_7	3	3
 	AJ_8	0	0
 3B3	1	0	2
 	2	2	2
 	3	0	0	
 	4	0	0
-	5	1	1
+	5	1	2
 3mooi	F1	1	0
 	F2	2	4	
-	maaktnietuit	0	1
-3inter	F1	1	1
+	maaktnietuit	0	2
+3inter	F1	1	2
 	F2	1	2
 	maaktnietuit	1	2
 3over	F1	1	0
 	F2	2	4
-	maaktnietuit	0	1
+	maaktnietuit	0	2
 4A1	UT_NF	0	2
 	UT_XX	0	2
-	UT_EV	0	1
+	UT_EV	0	2
 	UT_GG	0	0
 	UT_XXEVGG	3	0
 	UT_NFXX	0	0
@@ -81,24 +81,24 @@ vraag	antwoord	V1	V2
 	2	1	0
 	3	0	0
 	4	0	1
-	5	2	0
+	5	2	1
 4B1	MX_QT	1	0
 	MX_IV	0	0
 	MX_DR	0	1
 	MX_IB	0	3
-	MX_QTIVDR	2	0
+	MX_QTIVDR	2	1
 	MX_x	0	1
 4B2	1	0	4
 	2	1	0
 	3	0	0
 	4	1	1
-	5	1	0
+	5	1	1
 4mooi	F1	2	3
 	F2	1	1
-	maaktnietuit	0	1
+	maaktnietuit	0	2
 4inter	F1	1	0
-	F2	1	2
+	F2	1	3
 	maaktnietuit	1	3
 4over	F1	2	3
 	F2	1	1
-	maaktnietuit	0	1
+	maaktnietuit	0	2

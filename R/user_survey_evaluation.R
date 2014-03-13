@@ -54,9 +54,9 @@ s[ev_ind2] <- lapply(s[ev_ind2], function(x){
 ans1 <- list(
     g1 = c(JP=1, JK=2, JKP=2),
     g2 = c(KL=1, KJ=2, KJL=2),
-    t1 = c(HZ_AF=1, HZ_SD=2, HZ_KL=2, HZ_SDKL=2, HZ_AFSDKL=2),
+    t1 = c(HZ_AF=1, HZ_SD=2, HZ_KL=2, HZ_SDKL=2, HZ_AFSD=2, HZ_AFSDKL=2),
     t2 = c(JM_PQ=1, JM_HD=2, JM_EP=2, JM_HDEP=2, JM_HDEPPQ=2),
-    b1 = c(UT_EV=1, UT_XX=2, UT_GG=2, UT_EVGG=2, UT_XXEVGG=2),
+    b1 = c(UT_EV=1, UT_XX=2, UT_GG=2, UT_EVGG=2, UT_XXEV=2, UT_XXEVGG=2),
     b2 = c(MX_IV=1, MX_QT=2, MX_DR=2, MX_QTIVDR=2))
 ans2 <- c(
     g1 = "G_QRMKF",
@@ -96,19 +96,44 @@ t[read_id] <- lapply(t[read_id], function(x){
 
 
 u <- do.call(rbind, t[read_id])
-u$viz <- factor(c(rep("Graph", 8), rep("Treemap", 8), rep("Bar chart", 4)))
-u$version <- factor(c(rep(1, 4), rep(2, 4), rep(1, 4), rep(2, 4), rep(1, 2), rep(2, 2)), levels=1:2)
-u$read <- factor(c(rep(c("Related", "Related", "Offspring", "Offspring"), 4), rep("Related", 4)), levels=c("Related", "Offspring"))
+u$viz <- factor(c(rep("Graph", 8), rep("Treemap", 8), rep("Bar chart", 4)), 
+                levels=c("Graph", "Treemap", "Bar chart"))
+u$Version <- factor(c(rep(1, 4), rep(2, 4), rep(1, 4), rep(2, 4), rep(1, 2), rep(2, 2)), levels=1:2)
+qrel <- "Ques. about relations"
+qoff <- "Ques. about offspring"
+
+u$read <- factor(c(rep(c(qrel, qrel, qoff, qoff), 4), rep(qrel, 4)), levels=c(qrel, qoff))
 
 uFC <- u[,-3]
 uTC <- u[,-2]
 names(uFC)[2] <- "Value"
 names(uTC)[2] <- "Value"
-uFC$method <- factor("FirstColors", levels=c("FirstColors", "TreeColors"))
-uTC$method <- factor("TreeColors", levels=c("FirstColors", "TreeColors"))
+uFC$method <- factor("First Colors", levels=c("First Colors", "Tree Colors"))
+uTC$method <- factor("Tree Colors", levels=c("First Colors", "Tree Colors"))
 u <- rbind(uFC, uTC)
 
 require(ggplot2)
+require(grid)
 
-ggplot(u[u$Correct==1,], aes(x=version, y=Value, color=method)) + geom_point() +
-    facet_grid(viz~read) + coord_flip()
+(g1 <- ggplot(u[u$Correct==1,], aes(x=Version, y=Value, color=method, shape=method)) + 
+     scale_shape("Method") + scale_color_discrete("Method") + 
+    scale_y_continuous("Percentage correct answers") + geom_point() + facet_grid(viz~read) + coord_flip() + theme(panel.margin = unit(.5, "lines")))
+
+ggsave("./plots/user_study_results.pdf", g1, width=4, height=2.5, scale=1.5)
+
+
+
+v <- u[u$Correct==1,]
+v$Value[v$method=="TreeColors"] <- v$Value[v$method=="TreeColors"] - v$Value[v$method=="FirstColors"]
+v <- v[v$method=="TreeColors", 1:5]
+
+v$viz_method <- paste(as.character(v$viz), as.character(v$read))
+
+ggplot(v, aes(x=version, y=Value, fill=viz)) + geom_point() +
+    facet_grid(viz_method~.) + coord_flip()
+
+
+
+
+
+

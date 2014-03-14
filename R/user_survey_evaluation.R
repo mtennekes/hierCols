@@ -128,32 +128,52 @@ require(grid)
 
 (g1 <- ggplot(u, aes(x=Version, y=Value, color=method, shape=method)) + 
      scale_shape("Method") + scale_color_discrete("Method") + 
-     scale_y_continuous("Percentage correct answers") + geom_pointrange() + 
+     scale_y_continuous("Percentage correct answers") + geom_point() + 
      facet_grid(viz~read) + coord_flip() + theme(panel.margin = unit(.5, "lines")))
 
 ggsave("./plots/user_study_results.pdf", g1, width=4, height=2.5, scale=1.5)
 
 
-(g2 <- ggplot(u, aes(x=Version, y=Value, color=method, shape=method, ymax=Value+SE, ymin=Value-SE)) + 
-     scale_shape("Method") + scale_color_discrete("Method") + 
-     scale_y_continuous("Percentage correct answers") + geom_pointrange() + 
+(g2 <- ggplot(u, aes(x=Version, y=Value, color=method, ymax=Value+SE, ymin=Value-SE)) + 
+     scale_color_discrete("Method") + 
+     scale_y_continuous("Percentage correct answers") + geom_pointrange(position=position_dodge(width=-.3)) + 
      facet_grid(viz~read) + coord_flip() + theme(panel.margin = unit(.5, "lines")))
 
 ggsave("./plots/user_study_results2.pdf", g2, width=4, height=2.5, scale=1.5)
 
+ev_ind <- sort(c(ev_ind1, ev_ind2))
+
+v <- t[ev_ind]
+Viz <- c(rep("Graph", 3), rep("Treemap", 3), rep("Bar chart", 3))
+Subject <- rep(c("Pretty", "Interpretation", "Organized"), 3)
+v <- mapply(function(x, v, s) {
+    x1 <- x[, -3]
+    x2 <- x[, -2]
+    names(x1)[2] <- "Value"
+    names(x2)[2] <- "Value"
+    x1$Value <- x1$Value / sum(x1$Value) * 100
+    x2$Value <- x2$Value / sum(x2$Value) * 100
+    x <- rbind(x1, x2)
+    x$Version <- factor(c(rep(1,3),rep(2,3)))
+    x$Viz <- factor(v, levels=unique(Viz))
+    x$Subject <- factor(s, levels=unique(Subject))
+    x
+}, v, Viz, Subject, SIMPLIFY=FALSE)
+
+v <- do.call(rbind, v)
+
+library(scales)
+pal <- c(scales::hue_pal()(2), "#AAAAAA")
+
+(g3 <- ggplot(v, aes(x=Version, y=Value, fill=antwoord)) +
+     geom_bar(stat="identity", width=.8, position=position_dodge(width=-.8)) +
+     scale_fill_manual(values=pal) +
+     facet_grid(Viz~Subject)) + coord_flip()
 
 
+v2 <- aggregate(v$Value, by=v[, c("antwoord", "Viz", "Subject")], FUN=sum)
 
-
-
-## chi square
-lapply(t[read_id], function(x)list(x, chisq.test(x[,-1])))
-
-m <- t[[11]][,-1]
-
-n <- sum(m[,2])
-p.est <- m[1,2] / n
-sqrt(p.est*(1-p.est)/n)*n
-
-se <- sqrt(n*p.est*(1-p.est))
-
+(g4 <- ggplot(v2, aes(x=antwoord, y=x, fill=antwoord)) +
+     geom_bar(stat="identity", width=.8, position=position_dodge(width=-.8)) +
+     scale_fill_manual(values=pal) +
+     facet_grid(Viz~Subject)) + coord_flip()

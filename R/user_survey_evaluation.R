@@ -1,8 +1,6 @@
 ### survey evaluation
 us <- read.csv("user_survey/survey_evaluation.txt", header=TRUE, sep="\t", stringsAsFactors=FALSE)
 
-us
-which(us$vraag!="")
 
 id <- rep(0, nrow(us))
 id[which(us$vraag!="")] <- 1
@@ -86,28 +84,41 @@ t[c(3, 6, 12, 15)] <- mapply(FUN=function(x, a){
 }, t[c(3, 6, 12, 15)], ans2, SIMPLIFY=FALSE)
 
 
-names(t)
 read_id <- c(2,3,5,6,11,12,14,15,20,22)
-t[read_id] <- lapply(t[read_id], function(x){
-    x$FirstColors <- x$FirstColors / sum(x$FirstColors) * 100
-    x$TreeColors <- x$TreeColors / sum(x$TreeColors) * 100
-    x
+
+
+t2 <- t
+t2[read_id] <- lapply(t2[read_id], function(x){
+    n <- colSums(x[,-1])
+    p.est <- unlist(x[1,-1] / n)
+    se <- sqrt(n*p.est*(1-p.est))
+    
+    
+    est <- unlist(x[1, -1])
+    
+    est.perc <- est / n * 100
+    se.perc <- se / n * 100
+    names(se.perc) <- paste(names(se.perc), "se", sep=".") 
+    
+    c(est.perc, se.perc)
 })
 
 
-u <- do.call(rbind, t[read_id])
-u$viz <- factor(c(rep("Graph", 8), rep("Treemap", 8), rep("Bar chart", 4)), 
+
+u <- as.data.frame(do.call(rbind, t2[read_id]), row.names = NA)
+u$viz <- factor(c(rep("Graph", 4), rep("Treemap", 4), rep("Bar chart", 2)), 
                 levels=c("Graph", "Treemap", "Bar chart"))
-u$Version <- factor(c(rep(1, 4), rep(2, 4), rep(1, 4), rep(2, 4), rep(1, 2), rep(2, 2)), levels=1:2)
+u$Version <- factor(c(rep(1, 2), rep(2, 2), rep(1, 2), rep(2, 2), 1, 2), levels=1:2)
 qrel <- "Ques. about relations"
 qoff <- "Ques. about offspring"
 
-u$read <- factor(c(rep(c(qrel, qrel, qoff, qoff), 4), rep(qrel, 4)), levels=c(qrel, qoff))
+u$read <- factor(c(rep(c(qrel, qoff), 4), rep(qrel, 2)), levels=c(qrel, qoff))
 
-uFC <- u[,-3]
-uTC <- u[,-2]
-names(uFC)[2] <- "Value"
-names(uTC)[2] <- "Value"
+
+uFC <- u[,-c(2, 4)]
+uTC <- u[,-c(1, 3)]
+names(uFC)[1:2] <- c("Value", "SE")
+names(uTC)[1:2] <- c("Value", "SE")
 uFC$method <- factor("First Colors", levels=c("First Colors", "Tree Colors"))
 uTC$method <- factor("Tree Colors", levels=c("First Colors", "Tree Colors"))
 u <- rbind(uFC, uTC)
@@ -115,25 +126,34 @@ u <- rbind(uFC, uTC)
 require(ggplot2)
 require(grid)
 
-(g1 <- ggplot(u[u$Correct==1,], aes(x=Version, y=Value, color=method, shape=method)) + 
+(g1 <- ggplot(u, aes(x=Version, y=Value, color=method, shape=method)) + 
      scale_shape("Method") + scale_color_discrete("Method") + 
-    scale_y_continuous("Percentage correct answers") + geom_point() + facet_grid(viz~read) + coord_flip() + theme(panel.margin = unit(.5, "lines")))
+     scale_y_continuous("Percentage correct answers") + geom_pointrange() + 
+     facet_grid(viz~read) + coord_flip() + theme(panel.margin = unit(.5, "lines")))
 
 ggsave("./plots/user_study_results.pdf", g1, width=4, height=2.5, scale=1.5)
 
 
+(g2 <- ggplot(u, aes(x=Version, y=Value, color=method, shape=method, ymax=Value+SE, ymin=Value-SE)) + 
+     scale_shape("Method") + scale_color_discrete("Method") + 
+     scale_y_continuous("Percentage correct answers") + geom_pointrange() + 
+     facet_grid(viz~read) + coord_flip() + theme(panel.margin = unit(.5, "lines")))
 
-v <- u[u$Correct==1,]
-v$Value[v$method=="TreeColors"] <- v$Value[v$method=="TreeColors"] - v$Value[v$method=="FirstColors"]
-v <- v[v$method=="TreeColors", 1:5]
-
-v$viz_method <- paste(as.character(v$viz), as.character(v$read))
-
-ggplot(v, aes(x=version, y=Value, fill=viz)) + geom_point() +
-    facet_grid(viz_method~.) + coord_flip()
+ggsave("./plots/user_study_results2.pdf", g2, width=4, height=2.5, scale=1.5)
 
 
 
 
 
+
+## chi square
+lapply(t[read_id], function(x)list(x, chisq.test(x[,-1])))
+
+m <- t[[11]][,-1]
+
+n <- sum(m[,2])
+p.est <- m[1,2] / n
+sqrt(p.est*(1-p.est)/n)*n
+
+se <- sqrt(n*p.est*(1-p.est))
 

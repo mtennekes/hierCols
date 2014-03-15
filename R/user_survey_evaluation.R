@@ -86,21 +86,33 @@ t[c(3, 6, 12, 15)] <- mapply(FUN=function(x, a){
 
 read_id <- c(2,3,5,6,11,12,14,15,20,22)
 
+library(binom)
 
 t2 <- t
 t2[read_id] <- lapply(t2[read_id], function(x){
     n <- colSums(x[,-1])
-    p.est <- unlist(x[1,-1] / n)
-    se <- sqrt(n*p.est*(1-p.est))
-    
-    
     est <- unlist(x[1, -1])
-    
+    p.est <- unlist(x[1,-1] / n)
+
+    # estimation in percentages
     est.perc <- est / n * 100
+
+    # standard error in percentages
+    se <- sqrt(n*p.est*(1-p.est))
     se.perc <- se / n * 100
     names(se.perc) <- paste(names(se.perc), "se", sep=".") 
     
-    c(est.perc, se.perc)
+    # confidence interval in percentages    
+    res <- binom.confint(est, n, methods="exact")
+    lb <- res$lower * n
+    ub <- res$upper * n
+    lb.perc <- lb / n * 100
+    ub.perc <- ub / n * 100
+    names(lb.perc) <- paste(names(lb.perc), "lb", sep=".") 
+    names(ub.perc) <- paste(names(ub.perc), "ub", sep=".") 
+    
+     
+    c(est.perc, se.perc, lb.perc, ub.perc)
 })
 
 
@@ -115,10 +127,10 @@ qoff <- "Ques. about offspring"
 u$read <- factor(c(rep(c(qrel, qoff), 4), rep(qrel, 2)), levels=c(qrel, qoff))
 
 
-uFC <- u[,-c(2, 4)]
-uTC <- u[,-c(1, 3)]
-names(uFC)[1:2] <- c("Value", "SE")
-names(uTC)[1:2] <- c("Value", "SE")
+uFC <- u[,-c(2, 4, 6, 8)]
+uTC <- u[,-c(1, 3, 5, 7)]
+names(uFC)[1:4] <- c("Value", "SE", "lb", "ub")
+names(uTC)[1:4] <- c("Value", "SE", "lb", "ub")
 uFC$method <- factor("First Colors", levels=c("First Colors", "Tree Colors"))
 uTC$method <- factor("Tree Colors", levels=c("First Colors", "Tree Colors"))
 u <- rbind(uFC, uTC)
@@ -134,7 +146,7 @@ require(grid)
 ggsave("./plots/user_study_results.pdf", g1, width=4, height=2.5, scale=1.5)
 
 
-(g2 <- ggplot(u, aes(x=Version, y=Value, color=method, ymax=Value+SE, ymin=Value-SE)) + 
+(g2 <- ggplot(u, aes(x=Version, y=Value, color=method, ymax=ub, ymin=lb)) + 
      scale_color_discrete("Method") + 
      scale_y_continuous("Percentage correct answers") + geom_pointrange(position=position_dodge(width=-.3)) + 
      facet_grid(viz~read) + coord_flip() + theme(panel.margin = unit(.5, "lines")))

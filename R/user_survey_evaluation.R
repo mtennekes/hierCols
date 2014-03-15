@@ -103,7 +103,7 @@ t2[read_id] <- lapply(t2[read_id], function(x){
     names(se.perc) <- paste(names(se.perc), "se", sep=".") 
     
     # confidence interval in percentages    
-    res <- binom.confint(est, n, methods="exact")
+    res <- binom.confint(est, n, methods="ac")
     lb <- res$lower * n
     ub <- res$upper * n
     lb.perc <- lb / n * 100

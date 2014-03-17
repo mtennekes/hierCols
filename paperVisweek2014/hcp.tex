@@ -419,32 +419,38 @@ A questionnaire has been distributed among employees of Statistics Netherlands. 
 
 Many people have a color vision deficiency, which clearly effects the perception of Tree Colors. Although Tree Colors were not developed with color blindness in mind, it is important to know whether the respondent have a color vision deficiency or not. First, we directly asked the respondents whether they are (partially) color blind. Respondents who did no know the answer were tested for color blindness using the Ishihara test~\cite{ishihara}. 
 
-Three visualisation methods were used in the survey, namely the (directed) graph, the treemap and the bar plot. For each of the three methods, respondents received questions of two plots, one with Tree Colors and one with 
+Three visualisation methods were used in the survey, namely the (directed) graph, the treemap and the bar plot. For each of the three methods, respondents received questions of two plots of two different datasets, one with Tree Colors and one with qualitative that are assinged to the first hierarchical layer. The latter palettes are called First Colors. The colors are taken from ColorBrewer palettes~\cite{brewer03}, which are quite popular in cartography and statistical visualizations.
 
-Respondents were asked to 
+
+In order to exclude the effects of all other aestetics than color as much as possible, we spread two versions of the survey where per visualization method the datasets were swapped. Therefore, the same visualization is shown to both groups with different color schemes, which is illustrated in Figures~\ref{fig:graphSvy},~\ref{fig:treemapSvy}, and~\ref{fig:barSvy}. An overview of the plots used in the two versions of the questionnaires is provided in Table~\ref{table:ques}.
 
 
 \begin{table}[tb]
 \begin{footnotesize}
 \begin{tabular}{llll}
 \toprule
-
+Method & Color scheme & Version 1 & Version 2\\
 \midrule
+Graph & First Colors & Dataset 1 & Dataset 2\\
+Graph & Tree Colors & Dataset 2 & Dataset 1\\
+Treemap & Tree Colors & Dataset 3 & Dataset 4\\
+Treemap & First Colors & Dataset 4 & Dataset 3\\
+Bar chart & First Colors & Dataset 5 & Dataset 6\\
+Bar chart & Tree Colors & Dataset 6 & Dataset 5\\
 \bottomrule
 \end{tabular}
 \end{footnotesize}
-\caption{Questionairre setup}\label{table:param}
+\caption{Questionairre setup}\label{table:ques}
 \end{table}
 
 
 
-test
 
 \begin{figure}[tb]
   \centering
   \mbox{\subfigure{\includegraphics[width=1.7in]{Graph_survey_FC.pdf}}
   \subfigure{\includegraphics[width=1.7in]{Graph_survey_TC.pdf}}}
-  \caption{Dutch population in 2012 per province}\label{fig:graphSvy}
+  \caption{Graphs applied to Dataset 1 with First Colors (left) and Tree Colors (right)}\label{fig:graphSvy}
 
 \end{figure}
 
@@ -453,7 +459,7 @@ test
   % \includegraphics[width=3in]{Treemap_survey_TC.pdf}
   \mbox{\subfigure{\includegraphics[width=1.4in]{Treemap_survey_FC.pdf}}
   \subfigure{\includegraphics[width=1.4in]{Treemap_survey_TC.pdf}}}
-  \caption{Dutch population in 2012 per province}\label{fig:treemapSvy}
+  \caption{Treemaps applied to Dataset 4 with First Colors (left) and Tree Colors (right)}\label{fig:treemapSvy}
 
 \end{figure}
 
@@ -463,10 +469,23 @@ test
   \centering
   \mbox{\subfigure{\includegraphics[width=1.7in]{Bar_survey_FC.pdf}}
   \subfigure{\includegraphics[width=1.7in]{Bar_survey_TC.pdf}}}
-  \caption{Dutch population in 2012 per province}\label{fig:barSvy}
+  \caption{Bar charts applied to Dataset 5 with First Colors (left) and Tree Colors (right)}\label{fig:barSvy}
 
 \end{figure}
 
+
+\begin{figure}[tb]
+  \centering
+	\includegraphics[width=3.5in]{user_study_results_mod.pdf}
+  \caption{Results of reading questions}\label{fig:user1}
+
+\end{figure}
+
+\begin{figure}[tb]
+  \centering
+	\includegraphics[width=3.5in]{user_study_results2.pdf}
+  \caption{Results of evaluation questions}\label{fig:user2}
+\end{figure}
 
 \section{Discussion}~\label{secdisc}
 In our opinion, the proposed method to create hierarchical color palettes improves statistical visualizations, both hierarchically and non-hierarchically structured. The pre-condition that colors in the same hierarchical layer should be similar in terms of colorfulness and brightness it satisfied. This property is especially important in statistical visualizations, since they aim to visualize data as objectively as possible. The downside of the proposed method is that some leaf node colors will still be hard to distinguish.

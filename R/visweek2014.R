@@ -564,7 +564,7 @@ PDF("plots/Treemap_survey_FC.pdf", width=6, height=6, useDingbats=FALSE, e={
     addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"))
 })
 
-
+group <- 1
 g1 <- plotBar(dats_bar[[group]], method="firstcat") + theme(text=element_text(family="URWHelvetica"))
 g2 <- plotBar(dats_bar[[group]], method="HCP", hue_fraction=0.6) + theme(text=element_text(family="URWHelvetica"))
 ggsave("plots/Bar_survey_FC.pdf", g1, width=4, height=4, scale=1.5)

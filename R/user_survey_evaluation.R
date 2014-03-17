@@ -29,21 +29,21 @@ ev_ind1 <- c(8:10, 24:26)
 ev_ind2 <- 17:19
 
 s[fc_ind] <- lapply(s[fc_ind], function(x){
-    names(x)[2:3] <- c("FirstColors", "TreeColors")
+    names(x)[2:3] <- c("First Colors", "Tree Colors")
     x
 })
 s[tc_ind] <- lapply(s[tc_ind], function(x){
     x <- x[, c(1,3,2)]
-    names(x)[2:3] <- c("FirstColors", "TreeColors")
+    names(x)[2:3] <- c("First Colors", "Tree Colors")
     x
 })
 s[ev_ind1] <- lapply(s[ev_ind1], function(x){
-    x[,1] <- factor(c("FirstColors", "TreeColors", "indifferent"), levels=c("FirstColors", "TreeColors", "indifferent"))
+    x[,1] <- factor(c("First Colors", "Tree Colors", "Indifferent"), levels=c("First Colors", "Tree Colors", "Indifferent"))
     x
 })
 s[ev_ind2] <- lapply(s[ev_ind2], function(x){
     x <- x[c(2, 1, 3), ]
-    x[,1] <- factor(c("FirstColors", "TreeColors", "indifferent"), levels=c("FirstColors", "TreeColors", "indifferent"))
+    x[,1] <- factor(c("First Colors", "Tree Colors", "Indifferent"), levels=c("First Colors", "Tree Colors", "Indifferent"))
     x
 })
 
@@ -78,8 +78,9 @@ t[c(3, 6, 12, 15)] <- mapply(FUN=function(x, a){
     grp[x$antwoord==a] <- 1
     grp <- factor(as.character(grp), levels=1:2)
     y <- aggregate(x[, -1], by=list(grp), sum)
-    names(y)[1] <- "Correct"
-    if (nrow(y)==1) y <- rbind(y, data.frame(Correct=2, FirstColors=0, TreeColors=0))
+    names(y) <- c("Correct", "FC", "TC")
+    if (nrow(y)==1) y <- rbind(y, data.frame(Correct=2, "FC"=0, "TC"=0))
+    names(y) <- c("Correct", "First Colors", "Tree Colors")
     y
 }, t[c(3, 6, 12, 15)], ans2, SIMPLIFY=FALSE)
 
@@ -118,9 +119,11 @@ t2[read_id] <- lapply(t2[read_id], function(x){
 
 
 u <- as.data.frame(do.call(rbind, t2[read_id]), row.names = NA)
-u$viz <- factor(c(rep("Graph", 4), rep("Treemap", 4), rep("Bar chart", 2)), 
+u$viz <- factor(c(rep("Graph", 4), rep("Treemap", 4), rep("Bar chart", 2)),
                 levels=c("Graph", "Treemap", "Bar chart"))
-u$Version <- factor(c(rep(1, 2), rep(2, 2), rep(1, 2), rep(2, 2), 1, 2), levels=1:2)
+u$Dataset <- factor(c(1,1,2,2,1,1,2,2,1,2), levels=2:1)#c(1,1,2,2,4,4,3,3,5,6)
+#u$Dataset <- factor(c(1,1,2,2,4,4,3,3,5,6))
+u$VD <- factor(paste0(u$viz, ", dataset", u$Dataset))
 qrel <- "Ques. about relations"
 qoff <- "Ques. about offspring"
 
@@ -137,27 +140,47 @@ u <- rbind(uFC, uTC)
 
 require(ggplot2)
 require(grid)
+require(RColorBrewer)
+require(scales)
+require(reshape2)
+pal <- brewer.pal(3, "RdYlGn")
 
-(g1 <- ggplot(u, aes(x=Version, y=Value, color=method, shape=method)) + 
-     scale_shape("Method") + scale_color_discrete("Method") + 
-     scale_y_continuous("Percentage correct answers") + geom_point() + 
-     facet_grid(viz~read) + coord_flip() + theme(panel.margin = unit(.5, "lines")))
+pal <- brewer.pal(6, "Dark2")[c(2,6,5)]
 
-ggsave("./plots/user_study_results.pdf", g1, width=4, height=2.5, scale=1.5)
+#pal[2] <- "#AAAAAA"
 
 
-(g2 <- ggplot(u, aes(x=Version, y=Value, color=method, ymax=ub, ymin=lb)) + 
-     scale_color_discrete("Method") + 
-     scale_y_continuous("Percentage correct answers") + geom_pointrange(position=position_dodge(width=-.3)) + 
-     facet_grid(viz~read) + coord_flip() + theme(panel.margin = unit(.5, "lines")))
 
-ggsave("./plots/user_study_results2.pdf", g2, width=4, height=2.5, scale=1.5)
+(g1 <- ggplot(u, aes(x=Dataset, y=Value, color=method, ymax=ub, ymin=lb)) + 
+     scale_color_manual("Method", values=pal[-2]) + 
+     scale_y_continuous("Percentage correct answers", breaks=seq(0, 100, 20)) + 
+     geom_pointrange(size=.8, position=position_dodge(width=-.5)) + 
+     facet_grid(viz~read, drop=FALSE) +theme_bw() + coord_flip() +
+     theme(panel.grid.major = element_line(colour="gray"), 
+            panel.grid.minor = element_blank(), 
+            panel.margin = unit(.5, "lines")))
+
+
+ggsave("./plots/user_study_results.pdf", width=5, height=2.5, scale=1.5)
+
+
+grob <- ggplotGrob(g1)
+grob$grobs[[5]]$children$axis$grobs[[1]]$label <- c("4", "3")
+grob$grobs[[6]]$children$axis$grobs[[1]]$label <- c("6", "5")
+
+scale=1.5
+pdf("./plots/user_study_results_mod.pdf", width=5*scale, height=2.5*scale)
+grid.draw(grob)
+dev.off()
+
+
+
 
 ev_ind <- sort(c(ev_ind1, ev_ind2))
 
 v <- t[ev_ind]
 Viz <- c(rep("Graph", 3), rep("Treemap", 3), rep("Bar chart", 3))
-Subject <- rep(c("Pretty", "Interpretation", "Organized"), 3)
+Subject <- rep(c("Prettiness", "Interpretation", "Overview"), 3)
 v <- mapply(function(x, v, s) {
     x1 <- x[, -3]
     x2 <- x[, -2]
@@ -174,18 +197,51 @@ v <- mapply(function(x, v, s) {
 
 v <- do.call(rbind, v)
 
-library(scales)
-pal <- c(scales::hue_pal()(2), "#AAAAAA")
 
-(g3 <- ggplot(v, aes(x=Version, y=Value, fill=antwoord)) +
-     geom_bar(stat="identity", width=.8, position=position_dodge(width=-.8)) +
-     scale_fill_manual(values=pal) +
-     facet_grid(Viz~Subject)) + coord_flip()
+v2 <- aggregate(v$Value, by=v[, c("antwoord", "Viz", "Subject")], FUN=function(x)sum(x)/2)
+
+v3 <- v2
+v3$antwoord <- factor(as.character(v3$antwoord), levels=c("Indifferent", "First Colors", "Tree Colors"))
+
+v3$Viz <- factor(as.character(v3$Viz), levels=rev(levels(v3$Viz)))
 
 
-v2 <- aggregate(v$Value, by=v[, c("antwoord", "Viz", "Subject")], FUN=sum)
+v3pos <- v3[v3$antwoord!="First Colors", ]
+v3pos$x[v3pos$antwoord=="Indifferent"] <- v3pos$x[v3pos$antwoord=="Indifferent"] / 2
 
-(g4 <- ggplot(v2, aes(x=antwoord, y=x, fill=antwoord)) +
-     geom_bar(stat="identity", width=.8, position=position_dodge(width=-.8)) +
-     scale_fill_manual(values=pal) +
-     facet_grid(Viz~Subject)) + coord_flip()
+v3neg <- v3[v3$antwoord!="Tree Colors", ]
+v3neg$x[v3neg$antwoord=="Indifferent"] <- v3neg$x[v3neg$antwoord=="Indifferent"] / 2
+v3neg$x <- -v3neg$x 
+
+levels(v3pos$antwoord)
+levels(v3neg$antwoord)
+
+v3posText <- v3pos
+v3posText$label <- paste0(ifelse(v3posText$antwoord=="Indifferent", round(v3pos$x*2), round(v3pos$x)), "%")
+v3posText$x[v3posText$antwoord=="Tree Colors"] <- v3posText$x[v3posText$antwoord=="Tree Colors"]/2 + v3posText$x[v3posText$antwoord=="Indifferent"]
+v3posText$x[v3posText$antwoord=="Indifferent"] <- 0
+
+v3negText <- v3neg
+v3negText$label <- paste0(-round(v3neg$x), "%")
+v3negText$label[v3negText$antwoord=="Indifferent"] <- ""
+v3negText$x[v3negText$antwoord=="First Colors"] <- v3negText$x[v3negText$antwoord=="First Colors"]/2 + v3negText$x[v3negText$antwoord=="Indifferent"]
+v3negText$x[v3negText$antwoord=="Indifferent"] <- 0
+
+
+(g2 <- ggplot() + aes(Viz, x, fill=antwoord, order=antwoord) +
+    geom_bar(data=v3pos, stat="identity") +
+    geom_bar(data=v3neg, stat="identity") +
+     geom_text(data=v3posText, aes(label=label), size=3) +
+     geom_text(data=v3negText, aes(label=label), size=3) +
+     scale_x_discrete("") +
+    scale_fill_manual(values=pal, "Preference") + 
+    scale_y_continuous(name = "",
+                       labels = paste0(seq(-80, 80, 20), "%"),
+                       limits = c(-80, 80),
+                       breaks = seq(-80, 80, 20)) +
+    facet_wrap(~Subject, ncol=1) + coord_flip() + 
+     theme_bw() +
+     theme(panel.margin = unit(.5, "lines")))
+    
+ggsave("./plots/user_study_results2.pdf", g2, width=4, height=2.5, scale=1.7)
+

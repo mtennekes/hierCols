@@ -523,7 +523,7 @@ library(igraph)
 library(grid)
 
 source("./R/survey_data.R")
-dats_tm <- generateRandomHierData(2, seeds=c(20140114, 20140115), prefices=c("Main category", "Sub category"))
+dats_tm <- generateRandomHierData(2, seeds=c(20140114, 20140115), prefices=c("Main code", "Sub code"))
 dats_gr <- generateRandomHierData(2, seeds=c(20140116, 20140117), levs=c(3,6,17), addText=FALSE)
 dats_bar <- generateRandomHierData(2, seeds=c(20140127, 20140128), levs=c(3, 9, 22))
 
@@ -533,7 +533,7 @@ hue_end <- c(450, 360)
 branches_tm1 <- list(c("HZ", "AF", "SD", "KL", "SX"),
                      c("JM", "HD", "EP", "EN", "PQ"))
 
-branches_tm2 <- c("Main category AJ", "Main category SA")
+branches_tm2 <- c("Main code AJ", "Main code SA")
 branches_gr1 <- list(c("J", "K", "S", "C"),
                      c("K", "J", "A", "L"))
 branches_gr2 <- c("G", "B")

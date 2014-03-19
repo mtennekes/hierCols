@@ -143,6 +143,7 @@ require(grid)
 require(RColorBrewer)
 require(scales)
 require(reshape2)
+require(plyr)
 pal <- brewer.pal(3, "RdYlGn")
 
 pal <- brewer.pal(6, "Dark2")[c(2,6,5)]
@@ -172,6 +173,7 @@ scale=1.5
 pdf("./plots/user_study_results_mod.pdf", width=5*scale, height=2.5*scale)
 grid.draw(grob)
 dev.off()
+
 
 
 
@@ -245,3 +247,107 @@ v3negText$x[v3negText$antwoord=="Indifferent"] <- 0
     
 ggsave("./plots/user_study_results2.pdf", g2, width=4, height=2.5, scale=1.7)
 
+
+
+###### tried plotting help question next to reading question
+
+# (g1b <- ggplot(u, aes(x=Dataset, y=Value, color=method, ymax=ub, ymin=lb)) + 
+#      scale_color_manual("Method", values=pal[-2]) + 
+#      scale_y_continuous("Percentage correct answers", breaks=seq(0, 100, 20)) + 
+#      geom_pointrange(size=.8, position=position_dodge(width=-.5)) + 
+#      facet_grid(viz~read, drop=FALSE) +theme_bw() + coord_flip() +
+#      theme(panel.grid.major = element_line(colour="gray"), 
+#            panel.grid.minor = element_blank(), 
+#            panel.margin = unit(.5, "lines"),
+#            legend.position = "none",
+#            strip.text.y = element_blank()))
+# 
+# 
+# strip.remover <- function(ggp, what="x") {
+#     require(gridExtra)
+#     
+#     zeroGrob <- function() {
+#         g0 <- grob(name="NULL")
+#         class(g0) <- c("zeroGrob",class(g0))
+#         g0
+#     }
+#     
+#     g <- ggplotGrob(ggp)
+#     
+#     g$grobs <- lapply(g$grob, function(gr) {
+#         if (any(grepl(paste0("strip.text.", what),names(gr$children)))) {
+#             gr$children[[grep("strip.background",names(gr$children))]] <- zeroGrob()
+#             gr$children[[grep("strip.text",names(gr$children))]] <- zeroGrob()
+#         }
+#         return(gr)
+#     }
+#     )
+#     
+#     class(g) = c("arrange", "ggplot",class(g)) 
+#     g
+# }
+# 
+# grob <- strip.remover(g1b, "y")
+# grob$grobs[[5]]$children$axis$grobs[[1]]$label <- c("4", "3")
+# grob$grobs[[6]]$children$axis$grobs[[1]]$label <- c("6", "5")
+# 
+# grid.draw(grob)
+
+
+
+u <- t[c(4, 7, 13, 16, 21, 23)]
+u <- mapply(function(x, n, v) {
+    x$viz <- factor(n, levels=c("Graph", "Treemap", "Bar chart"))
+    x$version <- factor(v, levels=1:2)
+    x[[2]] <- x[[2]]/sum(x[[2]])*100
+    x[[3]] <- x[[3]]/sum(x[[3]])*100
+    x        
+}, u, rep(c("Graph", "Treemap", "Bar chart"), each=2), c(1, 2, 1, 2, 1, 2), SIMPLIFY=FALSE)
+
+u <- do.call(rbind, u)
+uT <- u[,-2]
+names(uT)[2] <- "value"
+uF <- u[,-3]
+names(uF)[2] <- "value"
+uT$method <- factor("Tree Colors", levels=c("First Colors", "Tree Colors"))
+uF$method <- factor("First Colors", levels=c("First Colors", "Tree Colors"))
+u <- rbind(uT, uF)
+
+u2 <- ddply(u, .(antwoord, viz, method), function(x)mean(x$value))
+u2$subject <- "Help"
+
+levels(u2$antwoord) <- c("SD", "D", "N", "A", "SA")
+
+(g3 <- ggplot(u2, aes(x=antwoord, fill=method, y=V1)) +
+    geom_bar(stat="identity", position="dodge", width=.8) +
+    scale_fill_manual("Method", values=pal[-2]) + 
+    scale_y_continuous("Percentage") + 
+    scale_x_discrete("Answer") +
+    facet_grid(viz~subject) +theme_bw() +
+    theme(panel.grid.major = element_line(colour="gray"), 
+          panel.grid.minor = element_blank(), 
+          panel.margin = unit(.5, "lines")))
+
+library(gridExtra)
+g_legend<-function(a.gplot){
+    tmp <- ggplot_gtable(ggplot_build(a.gplot))
+    leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+    legend <- tmp$grobs[[leg]]
+    legend
+}
+legend <- g_legend(g3)
+plot(legend)
+g1 <- g1 + theme(legend.position="none")
+grob <- ggplotGrob(g1)
+grob$grobs[[5]]$children$axis$grobs[[1]]$label <- c("4", "3")
+grob$grobs[[6]]$children$axis$grobs[[1]]$label <- c("6", "5")
+
+g3 <- g3 + theme(legend.position="none")
+
+
+scale=1.5
+pdf("./plots/user_study_results_mod2.pdf", width=5*scale, height=3*scale)
+grid.arrange(arrangeGrob(grob, g3, ncol=2, widths=c(4.25/6, 1.75/6)), 
+             arrangeGrob(legend, ncol=2, widths=c(1/6, 5/6)),
+             ncol=1, heights=c(5/6, 1/6))
+dev.off()

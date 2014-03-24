@@ -148,8 +148,7 @@ We present a method to map tree structures to colors from the Hue-Chroma-Luminan
 \firstsection{Introduction}
 
 \maketitle
-
-Data are often hierarchically structured in official statistics. Business data are typically broken down by economic activity and demographic data by geographic region. To produce statistics it is therefore important to explore rough input data without losing the underlying hierarchical structure. Several data visualization methods are useful for this task, for instance treemaps
+Data are often hierarchically structured. For example business data are typically broken down by economic activity and demographic data by geographic region. Visual exploration of such data should use the underlying hierarchical structure. Several data visualization methods are useful for this task, for instance treemaps
 \cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the hierarchical structure would be very useful in supporting visual analysis.
 
 Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should not introduce perceptual bias by suggesting non-existent order or proximity. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
@@ -345,7 +344,7 @@ Chroma slope value 		& $\beta^C$ &     & 5       \\
 
 \section{Software}
 
-The Tree Colors are implemented in the treemap package~\cite{treemap} of the statistical software environment R~\cite{r2013}. All treemaps in this paper are created directly with this package, without post-processing. The implemented layout algorithms are the ordered treemap layout algorithm (pivot by size)~\cite{Bederson2002} and the squarified treemap layout algorithm~\cite{bruls99}. By default, Tree Colors are used to clarify the hierarchical structure of the data. However, the color attribute can also be used for a second variable or to compare two hierarchical datasets~\cite{tennekes2011b}. 
+The Tree Colors method is implemented in the treemap package~\cite{treemap} of the statistical software environment R~\cite{r2013}. All treemaps in this paper are created directly with this package, without post-processing. The implemented layout algorithms are the ordered treemap layout algorithm (pivot by size)~\cite{Bederson2002} and the squarified treemap layout algorithm~\cite{bruls99}. By default, Tree Colors are used to clarify the hierarchical structure of the data. However, the color attribute can also be used for a second variable or to compare two hierarchical datasets~\cite{tennekes2011b}. 
 
 The graphs in this paper are also created with the treemap package. The graph layouts are processed with the dependency package igraph~\cite{igraph}.
 

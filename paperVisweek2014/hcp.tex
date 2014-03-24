@@ -152,20 +152,24 @@ We present a method to map tree structures to colors from the Hue-Chroma-Luminan
 Data are often hierarchically structured in official statistics. Business data are typically broken down by economic activity and demographic data by geographic region. To produce statistics it is therefore important to explore rough input data without losing the underlying hierarchical structure. Several data visualization methods are useful for this task, for instance treemaps
 \cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the hierarchical structure would be very useful in supporting visual analysis.
 
-Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should not suggest non-existent order or proximity and introduce perceptual bias. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
+Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should not introduce perceptual bias by suggesting non-existent order or proximity. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
 
-Although many tree visualizations are proposed in literature \cite{schulz2011}, most of them use color to a small extent. A visualization technique that uses color as a major attribute is the InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned to a different hue values. The color of a parent node is derived from averaging the colors of its children, where larger branches have more weight. An implicit effect is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches. Hierarchical color schemes are also applied to the Hyperbolic Wheel \cite{lam2012}, an exploration tool for hierarchical data.  These color schemes are abstracted from the Hue-Saturation-Lightness (HSL) space, where brightness decreases proportional from root to leaf nodes, and where child nodes inherit the hue values from their parent nodes and add small hue values to distinct them from their siblings. However, hue values of nodes in the same hierarchical layer may be overlapping.
+Although many tree visualizations are proposed in literature \cite{schulz2011}, most of them use color to a small extent. A visualization technique that uses color as a major attribute is the InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned different hue values. The color of a parent node is derived by averaging the colors of its children, where larger branches have more weight. An implicit effect of this method is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches. Hierarchical color schemes are also applied to the Hyperbolic Wheel \cite{lam2012}, an exploration tool for hierarchical data.  These color schemes are abstracted from the Hue-Saturation-Lightness (HSL) space, where brightness decreases proportional from root to leaf nodes, and where child nodes inherit the hue values from their parent nodes and add small hue values to distinct them from their siblings. However, hue values of nodes in the same hierarchical layer may be overlapping.
 
-Our purpose is to map tree structures to color palettes with the following three properties. First, the hierarchical depth of a node should be perceived with color. The second property is that branches should be clearly distinguishable in all parts of the tree, or at least the main branches in large trees. Third and last, each node should have a unique color that is also perceived as unique as much as possible.
+A good hierarchical color scheme should have at least have the following properties. First it should assign a unique and distinct (as possible) color to each node of the tree. Each node is a different category. The second property is that the assigned colors should reflect the tree structure: a node should have a similar color to its parent, and by using transitivity its children and siblings.
+Third and last the hierarchical depth of a node should be encoded in its color. 
 
-The color palettes that are obtained by our proposed method are called Tree Colors. As a starting point, we use the Hue-Chroma-Luminance (HCL) space, a transformation of the CIELUV color space, that is designed with the aim to control human color perception~\cite{ihaka2003}. Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) and HSL color spaces~\cite{zeileis2009}.
+The color palettes that are generated by our proposed method are called Tree Colors. To ensure well
+balance perceptual properties, we use the Hue-Chroma-Luminance (HCL) space, a transformation of the CIELUV color space, that is designed with the aim to control human color perception~\cite{ihaka2003}. Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) and HSL color spaces~\cite{zeileis2009}.
 
-This paper is outlined as follows. In Section~\ref{secmethod} we describe the proposed method. We provide several applications of statistical graphics that use Tree Colors in Section~\ref{secapplication}. The conducted user survey to evaluate the method is described in Section~\ref{secuser}. We conclude with a discusssion in Section~\ref{secdisc}.
+This paper is outlined as follows. In Section~\ref{secmethod} we describe the proposed method. We provide several applications of statistical graphics that use Tree Colors in Section~\ref{secapplication}. The conducted user survey to evaluate the method is described in Section~\ref{secuser}. We conclude with a discussion in Section~\ref{secdisc}.
 
 \section{Method}\label{secmethod}
 Our method maps a tree structure on colors in HCL space, such that it reflects the hierarchical properties of the tree. We use the hue parameter $H$, with range [0, 360], for the tree structure, where the hue of each child node resembles the hue of its parent. The chroma and luminance parameters $C$ and $L$, both with range [0, 100], are used to discriminate the different hierarchical levels.
 
-We illustrate Tree Colors with a radial tree graph that is depicted in Figure~\ref{fig:graph}. Although other graph layouts may be more suitable to highlight the tree structure, for instance the Fruchterman-Reingold algorithm~\cite{Fruchterman91} applied in the graph in Figure~\ref{fig:teaser}, the applied radial Reingold-Tilford layout~\cite{reingold81} preserves the original order of nodes in each hierarchical layer, which is in many cases, and also in this case, purely alphabetical. The Tree Colors in this graph can therefore be applied in the same order in any other visualization method with a radial layout, or a  layer-wise linear layout. %Radial layouts have proven to be very useful in many tree visualizations methods and navigation tools \cite{schulz2011}.
+An example of Tree Colors with a radial tree graph is shown in Figure~\ref{fig:graph}. 
+Although other graph layouts may be more suitable to highlight tree structure, for instance the Fruchterman-Reingold algorithm~\cite{Fruchterman91} applied in the graph in Figure~\ref{fig:teaser}, the applied radial Reingold-Tilford layout~\cite{reingold81} preserves the original order of nodes in each hierarchical layer, which is in this case purely alphabetical. This layout helps to illustrate the assignment of Tree Colors to the node of a tree. 
+%Radial layouts have proven to be very useful in many tree visualizations methods and navigation tools \cite{schulz2011}.
 
 \begin{figure}[tb]
 
@@ -176,22 +180,24 @@ We illustrate Tree Colors with a radial tree graph that is depicted in Figure~\r
 \end{figure}
 
 \subsection{Hue values}
+Hue values are selected using the following recursive algorithm that assigns to each node 
+$v$ of a tree structure a hue value $H_{v}$. 
+The inputs for the algorithm are a hue range $r$, a hue fraction $f$, a boolean permutation flag  
+\textsf{perm} and a boolean reverse flag \textsf{rev}.
+The root of a tree starts with hue range $r=[H_{start}=0, H_{end}=360]$:
 
-For selecting hue values we use the following recursive algorithm. It will assign to each node $v$ of a tree structure a hue value $H$ and a hue value range $r$.
-We start with the root node, which has by default hue range $[H_{start}=0, H_{end}=360]$:
-
-\smallskip{\bf AssignHue($v$, $r$)}
+\smallskip{\bf AssignHue($v$, $r$, $f$, \sf{perm}, \sf{rev})}%
 \begin{enumerate} \itemsep1pt \parskip0pt 
 \parsep0pt
-\item Assign the middle hue value in $r$ to the hue value of node $v$, which is $H_v$ \footnote{The root node itself is colored grey, so its hue is irrelevant.}.
+\item Select the middle hue value in $r$ as the hue value of node $v$, which is $H_v$ \footnote{The root node itself is colored grey, so its hue is irrelevant.}.
 \item Let $N$ be the number of child nodes of $v$. If $N>0$ :
 \begin{enumerate}[i] \itemsep1pt \parskip0pt 
 \parsep0pt
 \item divide $r$ in $N$ equal parts $r_i$ with $i=1,\ldots,N$;
-\item if $H_{perm}$ then permute the $r_i$'s;
-\item if $H_{rev}$ then reverse the even-numbered $r_i$'s;
-\item reduce each $r_i$ by keeping the middle fraction $H_{frac}$;
-\item for each child node $v_i$ DO AssignHue($v_i$, $r_i$).
+\item if \textsf{perm} then permute the $r_i$'s;
+\item if \textsf{rev} then reverse the even-numbered $r_i$'s;
+\item reduce each $r_i$ by keeping it middle fraction $f$;
+\item for each child node $v_i$ DO AssignHue($v_i$, $r_i$, $f$, \textsf{perm}, \textsf{rev}).
 \end{enumerate}
 \end{enumerate}
 
@@ -203,10 +209,12 @@ We start with the root node, which has by default hue range $[H_{start}=0, H_{en
 
 This algorithm is illustrated in Figure~\ref{fig:wheel}. In (a) the full hue range (for a constant $C=60$ and $L=70$)  is split in three equal parts, since the root node has three children. Of each part, only the middle fractions (with $H_{frac}=0.75$ by default) are kept in (b). The ranges are assigned to A, B, and C. In (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
 
-
 \subsubsection{Hue permutations and reversals}
 
-In many hierarchical structures, there is no order between siblings. When the nodes in such structure are plotted in a linear or radial layout, the colors of the siblings should not introduce a perceptual order. Therefore, the assigned hue ranges are by default ($H_{perm}=\mbox{TRUE}$) permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. The way to determine the permuted order is to equally spread the siblings on a circle in the original order, and to pick the siblings at angles of 0 modulo 144 degrees. Notice that the difference of any two adjacent siblings in $[1, 3, 5, 2, 4]$ is exactly $2/5 * 360=144$ degrees, also between the last and the first sibling. For the cases with more than five siblings this picking angle is rounded down if needed. It may occur that a sibling is picked twice while othershave not yet been picked, for instance when 360 is a multiple of the rounded picking angle. In these cases, the next sibling is picked and the process continues with the same picking angle. For the three and four siblings case we use the permutations $[1, 3, 2]$ and $[1, 3, 2, 4]$ respectively. 
+In most hierarchical structures, there is no order between siblings. 
+When the nodes in such structure are plotted in a linear or radial layout, 
+the colors of the siblings should not introduce a perceptual order. Furthermore adjacent leaf nodes with a different parent should have dissimilar colors. herefore, the assigned hue 
+ranges are by default (\textsf{perm=true}) permuted among the siblings. The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. The permuted order is determined by equally spreading the siblings on a circle in the original order, and to pick the siblings at angles of 0 modulo 144 degrees. Notice that the difference of any two adjacent siblings in $[1, 3, 5, 2, 4]$ is exactly $2/5 * 360=144$ degrees, also between the last and the first sibling. For the cases with more than five siblings this picking angle is rounded down if needed. It may occur that a sibling is picked twice while others have not yet been picked, for instance when 360 is a multiple of the rounded picking angle. In these cases, the next sibling is picked and the process continues with the same picking angle. For the three and four siblings case we use the permutations $[1, 3, 2]$ and $[1, 3, 2, 4]$ respectively. 
 
 The permutations for three to twelve siblings for a hue range between 120 (green) and 240 (blue) are depicted in Figure~\ref{fig:perm}. Note that the order of the five-siblings case, which is [1, 3, 5, 2, 4], is the position of the siblings A, B, C, D, and E respectively. Therefore, the permutation of them is A, D, B, E, and C. 
 
@@ -217,11 +225,14 @@ The permutations for three to twelve siblings for a hue range between 120 (green
 \end{figure}
 
 
-Furthermore, the permuted color ranges within even numbered branches are by default reversed ($H_{rev}=\mbox{TRUE}$) to differentiate between branches. This is needed because the first category is always mapped to the lowest hue value (in Figure~\ref{fig:perm}, category A has the most greenish color in all shown cases), and the last category to a higher hue value. To reverse the hue ranges in an alternating way, so only the even-numbered, the hue distance between any two adjacent nodes with different parents will increase, and thus easier to tell apart. 
+Furthermore, the permuted color ranges within even numbered branches are by default reversed (\textsf{rev=true}) to differentiate between branches. This is needed because the first category is always mapped to the lowest hue value (in Figure~\ref{fig:perm}, category A has the most greenish color in all shown cases), and the last category to a higher hue value. To reverse the hue ranges in an alternating way, so only the even-numbered, the hue distance between any two adjacent nodes with different parents will increase, and thus easier to tell apart. 
 
 Note that the labeling in Figure~\ref{fig:wheel} shows that the assignment of colors is permuted and also reversed for even-numbered branches. The three top-layer hue ranges [0, 120], [120, 240], and [240, 360] are assigned to A, C, and B respectively. Branches A and C are odd-numbered, so the hue ranges of the second layer are only permuted; the permutations for these branches are [A.1, A.3, A.2, A.4], and [C.1, C.3, C.5, C.2, C.4]. Since branch B is odd-numbered, the hue ranges are not only permuted, but also reversed: [B.2, B.3, B.1].
 
-The result of the these permutations is that siblings are discriminated in each hierarchical layer, which is illustrated in Figure~\ref{fig:graph}. For comparison, the permutation is turned off in the graphs shown in Figure~\ref{fig:graph_noperm}. In the left graph, the hue values form a gradual hue circle, where ony the hue fraction $H_{frac}$ creates small hue gaps between branches. The even-numbered branches are reversed in the right graph. The leaf nodes of branch B are now more distinct from the other leaf nodes. However, the distinction between branches of the second hierarchical layer is still less than with permutation enabled (Figure~\ref{fig:graph}).
+The result of these permutations is that siblings are better discriminated in each subsequent 
+hierarchical layer, which is illustrated in Figure~\ref{fig:graph}. For comparison, the permutation 
+is turned off in the graphs shown in Figure~\ref{fig:graph_noperm}. In the left graph, the hue values 
+form a gradual hue circle with only small hue gaps between branches, which are caused by hue fraction $f$ (see below). In the right graph the even-numbered branches are reversed. The leaf nodes of branch B are now more distinct from the other leaf nodes. However, the distinction between branches of the second hierarchical layer is still less than with permutation enabled (Figure~\ref{fig:graph}).
 
 \begin{figure}[tb]
 
@@ -340,10 +351,16 @@ The Tree Colors are implemented in the treemap package~\cite{treemap} of the sta
 The graphs in this paper are also created with the treemap package. The graph layouts are processed with the dependency package igraph~\cite{igraph}.
 
 The treemap package also contains an interactive tool to create and visualize Tree Colors. After installation R and the package treemap, only two lines of code are required to start this tool:
-\begin{lstlisting}
+
+%\begin{lstlisting}
+%library(treemap)
+%treecolors()
+%\end{lstlisting}
+% ziet er wat mij betreft mooier uit.
+\begin{verbatim}
 library(treemap)
 treecolors()
-\end{lstlisting}
+\end{verbatim}
 
 A screenshot of this interactive tool is shown in Figure~\ref{fig:screen}. On the left side panel, the user can create random tree data, and experiment with the parameters. On the main panel, four visualizations can be shown: two graphs (Reingold-Tilford and Fruchterman-Reingold), a treemap and a bar chart. Also a table of the tree structured data is provided included the color values in hexadecimal format and the HCL values of the all nodes.
 

@@ -421,13 +421,13 @@ A questionnaire has been distributed among employees of Statistics Netherlands. 
 
 Many people have a color vision deficiency, which clearly effects the perception of Tree Colors. Although Tree Colors were not developed with color blindness in mind, it is important to know whether the respondent have a color vision deficiency or not. First, we directly asked the respondents whether they are (partially) color blind. Respondents who did no know the answer were tested for color blindness using the Ishihara test~\cite{ishihara}. 
 
-Three visualisation methods were used in the survey, namely the (directed) graph, the treemap and the bar chart. For each of the three methods, respondents received questions of two chart of two different datasets, one with Tree Colors and one with First Colors, which are qualitative color palettes that are assinged to the first hierarchical layer. The colors form these palettes are taken from ColorBrewer palettes~\cite{brewer03}, which are popular in cartography and statistical visualizations.
+Three visualisation methods were used in the survey, namely the (directed) graph, the treemap and the bar chart. For each of the three methods, respondents received questions of two chart of two different datasets, one with Tree Colors and one with Main Branch Colors, which are qualitative color palettes that are assinged to the first hierarchical layer. The colors form these palettes are taken from ColorBrewer palettes~\cite{brewer03}, which are popular in cartography and statistical visualizations.
 
 \begin{figure}[tb]
   \centering
   \mbox{\subfigure{\includegraphics[width=1.7in]{Graph_survey_FC.pdf}}
   \subfigure{\includegraphics[width=1.7in]{Graph_survey_TC.pdf}}}
-  \caption{Graphs applied to Dataset 1 with First Colors (left) and Tree Colors (right)}\label{fig:graphSvy}
+  \caption{Graphs applied to Dataset 1 with Main Branch Colors (left) and Tree Colors (right)}\label{fig:graphSvy}
 
 \end{figure}
 
@@ -439,11 +439,11 @@ In order to exclude the effects of all other aestetics but color as much as poss
 \toprule
 Method & Color scheme & Version 1 & Version 2\\
 \midrule
-Graph & First Colors & Dataset 1 & Dataset 2\\
+Graph & Main Branch Colors & Dataset 1 & Dataset 2\\
 Graph & Tree Colors & Dataset 2 & Dataset 1\\
 Treemap & Tree Colors & Dataset 3 & Dataset 4\\
-Treemap & First Colors & Dataset 4 & Dataset 3\\
-Bar chart & First Colors & Dataset 5 & Dataset 6\\
+Treemap & Main Branch Colors & Dataset 4 & Dataset 3\\
+Bar chart & Main Branch Colors & Dataset 5 & Dataset 6\\
 Bar chart & Tree Colors & Dataset 6 & Dataset 5\\
 \bottomrule
 \end{tabular}
@@ -451,12 +451,15 @@ Bar chart & Tree Colors & Dataset 6 & Dataset 5\\
 \caption{Overview of charts in the survey}\label{table:ques}
 \end{table}
 
+The three visualization methods represent three levels of hierarchical explicitness. The graph clearly is an explicit tree visualization by the layout of the nodes and by the edges, which are depicted as directed arcs pointed from the root node. The treemap is an explicit visualization method, in which the hierarchical structure is less clear in comparison to the graph. Except from color, the hierarchical structure is represented by the stacking of the rectangles, the thinkness of the rectangle lines, and by the label fonts. The bar chart is in essence a non-hierarchical visualization method. However, the bar charts that were included in the survey contained a subtle hierarchical element except color, which is the spacings between the bars. The bars represent the leaf nodes of the tree structure. The amount of spacing between two bars is determined by the closeness of the represented data points.
+
+
 \begin{figure}[tb]
   \centering
   % \includegraphics[width=3in]{Treemap_survey_TC.pdf}
   \mbox{\subfigure{\includegraphics[width=1.4in]{Treemap_survey_FC.pdf}}
   \subfigure{\includegraphics[width=1.4in]{Treemap_survey_TC.pdf}}}
-  \caption{Treemaps applied to Dataset 4 with First Colors (left) and Tree Colors (right)}\label{fig:treemapSvy}
+  \caption{Treemaps applied to Dataset 4 with Main Branch Colors (left) and Tree Colors (right)}\label{fig:treemapSvy}
 
 \end{figure}
 
@@ -466,7 +469,7 @@ Bar chart & Tree Colors & Dataset 6 & Dataset 5\\
   \centering
   \mbox{\subfigure{\includegraphics[width=1.7in]{Bar_survey_FC.pdf}}
   \subfigure{\includegraphics[width=1.7in]{Bar_survey_TC.pdf}}}
-  \caption{Bar charts applied to Dataset 5 with First Colors (left) and Tree Colors (right)}\label{fig:barSvy}
+  \caption{Bar charts applied to Dataset 5 with Main Branch Colors (left) and Tree Colors (right)}\label{fig:barSvy}
 
 \end{figure}
 
@@ -474,11 +477,11 @@ All datasets used in the survey were hierarchically structured with three hierar
 
 The survey contained reading and evaluation questions. Per chart, respondents got one or two reading questions and one evaluation question:
 \begin{description}
-\item[Relations] Which of code of codes are most similar to X? The answer options consisted of one code from a different main branche than X, one or two codes from the same main branche but a different sub branche, and one code from the same sub branche as X. From the data structure point of view, we considered the last code as the correct answer.
-\item[Offspring] How many sub codes does main branch X have? This was an open question.
+\item[Relations] Which of code of codes are most similar to X? The answer options consisted of one code from a different main branch than X, one or two codes from the same main branch but a different sub branch, and one code from the same sub branch as X. From the data structure point of view, we considered the last code as the correct answer.
+\item[Offspring] How many subcodes does main branch X have? This was an open question.
 \item[Help] What do you think of the following statement? The charts colors helped me to answer the question(s) above. This question is a five-level Likert item with the answer options Strongly disagree (SD), Disagree (D), Neutral (N), Agree (A) and Strongly agree (SA).
 \end{description}
-Per visualization method, respondends where asked those reading questions for two plots of different datasets, one with First Colors and one with Tree Colors. 
+Per visualization method, respondends where asked those reading questions for two plots of different datasets, one with Main Branch Colors and one with Tree Colors. 
 
 Next, respondents were asked to evaluate these two plots with three questions:
 \begin{description}
@@ -490,23 +493,25 @@ Finally, respondent were given the possibility to write down comments or suggest
 
 \subsection{User survey results}~\label{secuserres}
 
-We recruited 91 respondents with normal color vision and 10 respondents with a color vision deficiency.
+We recruited 95 respondents with normal color vision and 10 respondents with a color vision deficiency.
 
-The results of the reading questions are summarized in Figure~\ref{fig:user1}. Per dataset the percentages of correct answers, that is, from a data structure point of view, are depicted as orange points for the First Colors and as green points for the Tree Colors. For each percentage, the corresponding $95\%$ confidence interval is depicted as a line.
+The results of the reading questions are summarized in the left part of Figure~\ref{fig:user1}. Per dataset the percentages of correct answers, that is, from a data structure point of view, are depicted as orange points for the Main Branch Colors and as green points for the Tree Colors. For each percentage, the corresponding $95\%$ confidence interval is depicted as a line. The right part of Figure~\ref{fig:user1} shows per visualization method the distribution of answers to the question whether colors helpen in answering the reading questions.
 
-Of all three visualization methods, the reading questions regarding the graphs received the highest percentages of correct answers. The reason is that the graphs in the survey are explicit tree visualizations by the position of the nodes. Furthermore, the edges are drawn as directed arcs pointed in the direction from root node. The Tree Colors score slightly better on the relationship questions. The questions about the offspring resulted in 100\% scores for all four color scheme dataset combinations.
-
-Treemaps are implicit tree visualizations in which the hierarchical structure is less clear in comparison to the graphs. Except from color, the hierarchical structure is represented in the stacking of the rectangles, the thinkness of the rectangle lines, and by the label fonts. The percentages of correct answers for the treemaps were lower than for the graphs. It turned out the many respondends also took into account other aestetics of the rectangles, shape (aspect ratio) and area size, for answering the questions. The Tree Colors scored better the First Colors on the relationship question for Dataset 3. However, their scores were identical for Dataset 4. This difference may be caused by the different color scheme instances that were applied. The First Colors scored better than the Tree Colors on the questions about the number of sub codes. A possible explanation of this result could be that respondents clustered the sub code colors by hue. For instance, in Figure~\ref{fig:treemapSvy}(left) respondents were asked how many sub codes Main code AJ has. The correct answer is 7, while one out of four respodents thought the correct answer is 5. Probably, respondents considered sub codes PA and BU to be part of a different main code than the other 5 sub codes.
-
-The bar charts that were included in the survey only contained a very subtle hierarchical element except for color, which is that the spacings between two neighboring bars are determined by the hierarchical distance between the data points that are represented by the bars. The percentage of correct answers for the bar charts with First Colors were therefore much lower than those with Tree Colors. By the broadly defined question, it would be a very weak argument to claim the succes of Tree Colors on this large difference. However, in our opinion it does indicate that Tree Colors are a valuable attribute to visualize a hierarchical data structure in non-hierarchical plots such as bar charts, line charts, and area charts.
-
-The evaluation questions are summarized in Figure~\ref{fig:user2}. The more explicit the visualization method, the prettier the chart with Tree Colors in comparison to First Colors. The interpretation of the graphs was easier according to the respondents with Tree Colors whereas the interpretagion of treemaps was easier with First Colors. Clearly, the charts with First Colors provided the best overview.
+Of all three visualization methods, the reading questions regarding the graphs received the highest percentages of correct answers for both color schemes. The reason is the questions are fairly easy to answer by the explicit tree layouts of graphs. The Tree Colors score slightly better on the relationship questions. The questions about the offspring resulted in 100\% scores for all four color scheme - dataset combinations. As for the graphs, respondents experienced more help from Tree Colors than from Main Branch Colors.
 
 
+The percentages of correct answers for the treemaps were lower than for the graphs. It turned out the many respondends also took into account other aestetics of the rectangles, in particular shape (aspect ratio) and area size, for answering the questions. The Tree Colors scored better the Main Branch Colors on the relationship question for Dataset 3. However, the scores on this question were identical for Dataset 4. This difference may be caused by the different color scheme instances that were applied. The Main Branch Colors scored better than the Tree Colors on the questions about the number of subcodes. A possible explanation of this result could be that respondents clustered the subcode colors by hue. For instance, for Figure~\ref{fig:treemapSvy}(left) respondents were asked how many subcodes Main code AJ has. The correct answer is 7, while one out of four respodents thought the correct answer is 5. Probably, respondents considered subcodes PA and BU to be part of a different main code than the other 5 subcodes. The amount of help that respondends got from the applied colors was similar for Tree Colors and Main Branch Colors.
+
+As for the bar charts, the majority of the respondents did not observe the underlying data hierarchy when the Main Branch Colors were applied. Obviously, the spacings between the bars did not stand out clearly in comparison to other aestatics such as color and length. For example, the question that belongs to Figure~\ref{fig:treemapBar}(left) was which code or codes are most similar to UT, where the possible answers are NF, XX, EV, and GG. Almost 51\% of the respondents checked the codes that belong to the same main branch, XX, EV and GG, and therefore only used color to answer the question. Another 27\% only used length to answer the question, since they answered NF. Only 4\% of the respondenents answered EV, which is given the data hierarchy the correct answer. When Tree Colors were applied, see Figure~\ref{fig:barSvy}(right), none of the respondents checked XX, EV and GG, 23\% chose the equal-length bar NF, and 63\% answered EV correctly. By the broadly defined question, it would be a very weak argument to claim the succes of Tree Colors on this large difference. However, in our opinion it does indicate that Tree Colors are a valuable attribute to visualize a hierarchical data structure in non-hierarchical plots such as bar charts, line charts, and area charts.
+
+The evaluation questions are summarized in Figure~\ref{fig:user2}. In general, respondents liked both color schemes equally, where Tree Colors were favored for graphs.
+
+The interpretation of the graphs was experienced easier with Tree Colors except for the treemaps. This could be explained by level of difficulty of the visualiztion methods. Both graph and bar chart are easy to read visualization methods that the vast majority of the respondents are familiar with. Therefore, people are able to see the benefits of the additional information that the Tree Colors provide over Main Branch Colors. However, treemaps are still largely unknown by the respondents. Additional information provided by the applied color scheme could therefore be a little confusing.
 
 
 
-
+The charts with Main Branch Colors provided the best overview for the majority of the respondents. This result is not surprising at all, since a good overview is obtained by discriminating the main branches. 
+Recall that the hue fraction, $H_f$, is a trade-off between discrimination of the main branched and discrimination of the leaf nodes. Notice that Tree Colors with $H_f=0$ are identical to Main Branch Colors, where only the applied color palette is different.
 
 
 \begin{figure}[tb]
@@ -523,9 +528,9 @@ The evaluation questions are summarized in Figure~\ref{fig:user2}. The more expl
 \end{figure}
 
 \section{Discussion}~\label{secdisc}
-In our opinion, the proposed method to create hierarchical color palettes improves statistical visualizations, both hierarchically and non-hierarchically structured. The pre-condition that colors in the same hierarchical layer should be similar in terms of colorfulness and brightness it satisfied. This property is especially important in statistical visualizations, since they aim to visualize data as objectively as possible. The downside of the proposed method is that some leaf node colors will still be hard to distinguish.
+%In our opinion, the proposed method to create hierarchical color palettes improves statistical visualizations, both hierarchically and non-hierarchically structured. The pre-condition that colors in the same hierarchical layer should be similar in terms of colorfulness and brightness it satisfied. This property is especially important in statistical visualizations, since they aim to visualize data as objectively as possible. The downside of the proposed method is that some leaf node colors will still be hard to distinguish.
 
-We recommend a user study to evaluate the obtained hierarchical color palettes when applied in various statistical visualizations. The main aim of this user study would be to find out whether hierarchical palettes are useful in statistical analysis.
+%We recommend a user study to evaluate the obtained hierarchical color palettes when applied in various statistical visualizations. The main aim of this user study would be to find out whether hierarchical palettes are useful in statistical analysis.
 
 
 %% if specified like this the section will be committed in review mode

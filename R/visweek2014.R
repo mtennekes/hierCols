@@ -523,7 +523,7 @@ library(igraph)
 library(grid)
 
 source("./R/survey_data.R")
-dats_tm <- generateRandomHierData(2, seeds=c(20140114, 20140115), prefices=c("Main code", "Sub code"))
+dats_tm <- generateRandomHierData(2, seeds=c(20140114, 20140115), prefices=c("Main code", "Subcode"))
 dats_gr <- generateRandomHierData(2, seeds=c(20140116, 20140117), levs=c(3,6,17), addText=FALSE)
 dats_bar <- generateRandomHierData(2, seeds=c(20140127, 20140128), levs=c(3, 9, 22))
 

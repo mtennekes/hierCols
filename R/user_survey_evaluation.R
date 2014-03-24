@@ -1,6 +1,9 @@
 ### survey evaluation
 us <- read.csv("user_survey/survey_evaluation.txt", header=TRUE, sep="\t", stringsAsFactors=FALSE)
 
+FC <- "Main Branch Colors"
+TC <- "Tree Colors"
+
 
 id <- rep(0, nrow(us))
 id[which(us$vraag!="")] <- 1
@@ -29,21 +32,21 @@ ev_ind1 <- c(8:10, 24:26)
 ev_ind2 <- 17:19
 
 s[fc_ind] <- lapply(s[fc_ind], function(x){
-    names(x)[2:3] <- c("First Colors", "Tree Colors")
+    names(x)[2:3] <- c(FC, TC)
     x
 })
 s[tc_ind] <- lapply(s[tc_ind], function(x){
     x <- x[, c(1,3,2)]
-    names(x)[2:3] <- c("First Colors", "Tree Colors")
+    names(x)[2:3] <- c(FC, TC)
     x
 })
 s[ev_ind1] <- lapply(s[ev_ind1], function(x){
-    x[,1] <- factor(c("First Colors", "Tree Colors", "Indifferent"), levels=c("First Colors", "Tree Colors", "Indifferent"))
+    x[,1] <- factor(c(FC, TC, "Indifferent"), levels=c(FC, TC, "Indifferent"))
     x
 })
 s[ev_ind2] <- lapply(s[ev_ind2], function(x){
     x <- x[c(2, 1, 3), ]
-    x[,1] <- factor(c("First Colors", "Tree Colors", "Indifferent"), levels=c("First Colors", "Tree Colors", "Indifferent"))
+    x[,1] <- factor(c(FC, TC, "Indifferent"), levels=c(FC, TC, "Indifferent"))
     x
 })
 
@@ -80,7 +83,7 @@ t[c(3, 6, 12, 15)] <- mapply(FUN=function(x, a){
     y <- aggregate(x[, -1], by=list(grp), sum)
     names(y) <- c("Correct", "FC", "TC")
     if (nrow(y)==1) y <- rbind(y, data.frame(Correct=2, "FC"=0, "TC"=0))
-    names(y) <- c("Correct", "First Colors", "Tree Colors")
+    names(y) <- c("Correct", FC, TC)
     y
 }, t[c(3, 6, 12, 15)], ans2, SIMPLIFY=FALSE)
 
@@ -124,8 +127,8 @@ u$viz <- factor(c(rep("Graph", 4), rep("Treemap", 4), rep("Bar chart", 2)),
 u$Dataset <- factor(c(1,1,2,2,1,1,2,2,1,2), levels=2:1)#c(1,1,2,2,4,4,3,3,5,6)
 #u$Dataset <- factor(c(1,1,2,2,4,4,3,3,5,6))
 u$VD <- factor(paste0(u$viz, ", dataset", u$Dataset))
-qrel <- "Ques. about relations"
-qoff <- "Ques. about offspring"
+qrel <- "Question about relations"
+qoff <- "Question about offspring"
 
 u$read <- factor(c(rep(c(qrel, qoff), 4), rep(qrel, 2)), levels=c(qrel, qoff))
 
@@ -134,8 +137,8 @@ uFC <- u[,-c(2, 4, 6, 8)]
 uTC <- u[,-c(1, 3, 5, 7)]
 names(uFC)[1:4] <- c("Value", "SE", "lb", "ub")
 names(uTC)[1:4] <- c("Value", "SE", "lb", "ub")
-uFC$method <- factor("First Colors", levels=c("First Colors", "Tree Colors"))
-uTC$method <- factor("Tree Colors", levels=c("First Colors", "Tree Colors"))
+uFC$method <- factor(FC, levels=c(FC, TC))
+uTC$method <- factor(TC, levels=c(FC, TC))
 u <- rbind(uFC, uTC)
 
 require(ggplot2)
@@ -203,15 +206,15 @@ v <- do.call(rbind, v)
 v2 <- aggregate(v$Value, by=v[, c("antwoord", "Viz", "Subject")], FUN=function(x)sum(x)/2)
 
 v3 <- v2
-v3$antwoord <- factor(as.character(v3$antwoord), levels=c("Indifferent", "First Colors", "Tree Colors"))
+v3$antwoord <- factor(as.character(v3$antwoord), levels=c("Indifferent", FC, TC))
 
 v3$Viz <- factor(as.character(v3$Viz), levels=rev(levels(v3$Viz)))
 
 
-v3pos <- v3[v3$antwoord!="First Colors", ]
+v3pos <- v3[v3$antwoord!=FC, ]
 v3pos$x[v3pos$antwoord=="Indifferent"] <- v3pos$x[v3pos$antwoord=="Indifferent"] / 2
 
-v3neg <- v3[v3$antwoord!="Tree Colors", ]
+v3neg <- v3[v3$antwoord!=TC, ]
 v3neg$x[v3neg$antwoord=="Indifferent"] <- v3neg$x[v3neg$antwoord=="Indifferent"] / 2
 v3neg$x <- -v3neg$x 
 
@@ -220,14 +223,20 @@ levels(v3neg$antwoord)
 
 v3posText <- v3pos
 v3posText$label <- paste0(ifelse(v3posText$antwoord=="Indifferent", round(v3pos$x*2), round(v3pos$x)), "%")
-v3posText$x[v3posText$antwoord=="Tree Colors"] <- v3posText$x[v3posText$antwoord=="Tree Colors"]/2 + v3posText$x[v3posText$antwoord=="Indifferent"]
+v3posText$x[v3posText$antwoord==TC] <- v3posText$x[v3posText$antwoord==TC]/2 + v3posText$x[v3posText$antwoord=="Indifferent"]
 v3posText$x[v3posText$antwoord=="Indifferent"] <- 0
 
 v3negText <- v3neg
 v3negText$label <- paste0(-round(v3neg$x), "%")
 v3negText$label[v3negText$antwoord=="Indifferent"] <- ""
-v3negText$x[v3negText$antwoord=="First Colors"] <- v3negText$x[v3negText$antwoord=="First Colors"]/2 + v3negText$x[v3negText$antwoord=="Indifferent"]
+v3negText$x[v3negText$antwoord==FC] <- v3negText$x[v3negText$antwoord==FC]/2 + v3negText$x[v3negText$antwoord=="Indifferent"]
 v3negText$x[v3negText$antwoord=="Indifferent"] <- 0
+
+swap12 <- function(x) {
+    y <- as.integer(x)
+    y[y!=3] <- 3-y[y!=3]
+    y
+}
 
 
 (g2 <- ggplot() + aes(Viz, x, fill=antwoord, order=antwoord) +
@@ -236,7 +245,7 @@ v3negText$x[v3negText$antwoord=="Indifferent"] <- 0
      geom_text(data=v3posText, aes(label=label), size=3) +
      geom_text(data=v3negText, aes(label=label), size=3) +
      scale_x_discrete("") +
-    scale_fill_manual(values=pal, "Preference") + 
+    scale_fill_manual(values=pal[c(2,1,3)], "Preference", breaks=c(FC, "Indifferent", TC)) + 
     scale_y_continuous(name = "",
                        labels = paste0(seq(-80, 80, 20), "%"),
                        limits = c(-80, 80),
@@ -309,12 +318,12 @@ uT <- u[,-2]
 names(uT)[2] <- "value"
 uF <- u[,-3]
 names(uF)[2] <- "value"
-uT$method <- factor("Tree Colors", levels=c("First Colors", "Tree Colors"))
-uF$method <- factor("First Colors", levels=c("First Colors", "Tree Colors"))
+uT$method <- factor(TC, levels=c(FC, TC))
+uF$method <- factor(FC, levels=c(FC, TC))
 u <- rbind(uT, uF)
 
 u2 <- ddply(u, .(antwoord, viz, method), function(x)mean(x$value))
-u2$subject <- "Help"
+u2$subject <- "Colors helped"
 
 levels(u2$antwoord) <- c("SD", "D", "N", "A", "SA")
 
@@ -348,6 +357,6 @@ g3 <- g3 + theme(legend.position="none")
 scale=1.5
 pdf("./plots/user_study_results_mod2.pdf", width=5*scale, height=3*scale)
 grid.arrange(arrangeGrob(grob, g3, ncol=2, widths=c(4.25/6, 1.75/6)), 
-             arrangeGrob(legend, ncol=2, widths=c(1/6, 5/6)),
+             arrangeGrob(legend, ncol=2, widths=c(1.5/6, 4.5/6)),
              ncol=1, heights=c(5/6, 1/6))
 dev.off()

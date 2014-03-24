@@ -245,7 +245,7 @@ form a gradual hue circle with only small hue gaps between branches, which are c
 
 \subsubsection{Hue fraction}\label{secf}
 
-The fraction $H_{frac}$ is needed to introduce a `hue gap' between nodes with a different parent. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. If $H_{frac}=0$, the hue ranges are diminished to single hue points, which implies that each main branch is assinged a constant hue. On the other end of the extreme, if $H_{frac}=1$, the full hue range is available at each hierarchical layer, which makes leaf nodes easier to distinguish, but harder to take apart from leaf nodes of other branches.
+The fraction $f$ is needed to introduce a `hue gap' between nodes with a different parent. This choice is a trade-off between discriminating different main branches and discriminating different leaf nodes. If $f=0$, the hue ranges are diminished to single hue points, which implies that each main branch is assigned a constant hue. On the other end of the extreme, if $f=1$, the full hue range is available at each hierarchical layer, which makes leaf nodes easier to distinguish, but harder to take apart from leaf nodes of other branches. However for a radial or linear layout this can be alleviated by using permutation and reversal.
 
 \begin{figure}[tb]
   \centering
@@ -253,7 +253,7 @@ The fraction $H_{frac}$ is needed to introduce a `hue gap' between nodes with a 
   \caption{Graphs with different fraction values.}\label{fig:graphf}
 \end{figure}
 
-The choice of $f$ depends on several aspects, such as the application, the size and dimensions of the hierarchical data, and on the used visualization method. In Figures~\ref{fig:graphf} a graph with a Fruchterman-Reingold layout~\cite{Fruchterman91} is shown with different values of $H_{frac}$. For such explicit tree visualizations, high values of $H_{frac}$ can be chosen to discriminate the leaf nodes without loosing tough of the global tree structure which is clearly visible, also without Tree Colors. Even values of (or close to) $1.00$ are appropriate here. To be on the save side, we suggest $H_{frac}=0.75$ for explicit tree visualizations as a guideline.
+The choice of $f$ depends on several aspects, such as the application, the size and dimensions of the hierarchical data, and on the used visualization method. In Figures~\ref{fig:graphf} a graph with a Fruchterman-Reingold layout~\cite{Fruchterman91} is shown with different values of ${f}$. For such explicit tree visualizations, high values of ${f}$ can be chosen to discriminate the leaf nodes without loosing tough of the global tree structure which is clearly visible, also without Tree Colors. Even values of (or close to) $1.00$ are appropriate here. To be on the save side, we suggest $f=0.75$ for explicit tree visualizations as a guideline.
 
 \begin{figure}[tb]
   \centering
@@ -262,12 +262,11 @@ The choice of $f$ depends on several aspects, such as the application, the size 
 \end{figure}
 
 
-For implicit tree visualizations where the tree structure is not clearly visible without colors, lower values of $H_{frac}$ are more suitable. To illustrate this, a treemap with different values of $H_{frac}$ is depicted in Figure~\ref{fig:treemapf}. We applied the ordered treemap layout~\cite{Bederson2002} for these treemaps. For $H_{frac}=0.75$ and especially $H_{frac}=1.00$, it is difficult to grasp the global tree structure immediately; the main categories A and C are hard to take apart as well as the categories B and D. Therefore we suggest $H_{frac}=0.50$ as a rule of thumb for implicit tree visualizations.
-
+For implicit tree visualizations where the tree structure is not clearly visible without colors, lower values of $f$ are more suitable. This is illustrated with a treemap and different values of $f$ in Figure~\ref{fig:treemapf}. We applied the ordered treemap layout~\cite{Bederson2002} for these treemaps. For $f=0.75$ and especially $f=1.00$, it is difficult to quickly see the global tree structure; the main categories A and C are hard to take apart as well as the categories B and D. Therefore we suggest $f=0.50$ as a rule of thumb for implicit tree visualizations.
 
 \subsection{Chroma and luminance values}
 
-In order to show depth in the tree, we use bright colors for nodes high in the tree and dark colors for nodes lower in the tree. The intuition behind this approach is that dark colors are often assiciated by humans with high particle densities. In most tree representations, the density of nodes will increase with the depth of the tree. Therefore, we let luminance decrease linearly with depth.  We set the default luminance value for the first (highest) layer below the root as $L_1=70$. For the other layers $i=2,\ldots, d$, where $d$ is the depth of the tree, the luminance value is defined as
+To show depth of a node, we use bright colors for nodes high in the tree and dark colors for nodes lower in the tree. The intuition behind this approach is that dark colors are often associated by humans with high particle densities. In most tree representations, the density of nodes will increase with the depth of the tree. Therefore, we let luminance decrease linearly with depth.  We set the default luminance value for the first (highest) layer below the root as $L_1=70$. For the other layers $i=2,\ldots, d$, where $d$ is the depth of the tree, the luminance value is defined as
 \begin{equation}
 L_i=(i-1)\beta^L + L_1,
 \end{equation}

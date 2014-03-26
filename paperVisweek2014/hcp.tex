@@ -547,28 +547,16 @@ The interpretation of the graphs was experienced easier with Tree Colors except 
 
 
 \section{Discussion}~\label{secdisc}
-%* hue value mapping to 2d space
-%* leaf nodes darker or brighter?
-%* user study indicative, but not more
-%* 
 
-We proposed a method to create color palettes for tree structured data. In our opinion, this method improves both hierarchical and non-hierarchical vizualisations methods when the tree structure of the data plays a role in the analysis. Tree Colors satisfy the three properties that we described in Section~\ref{secintro}, namely that 1) all colors of a hierarchical color scheme should be unique, 2) the colors should reflect the tree structure in terms of parent-child relationships, and 3) hierarchical depth should be encoded in color. 
+We proposed a method to create color palettes for tree structured data. In our opinion, this method improves both hierarchical and non-hierarchical vizualisations methods when the tree structure of the data plays a role in the analysis. Tree Colors satisfy the three properties that we described in Section 1, namely that 1) all colors of a hierarchical color scheme should be unique, 2) the colors should reflect the tree structure in terms of parent-child relationships, and 3) hierarchical depth should be encoded in color. 
 
 The conducted user study indicated that Tree Colors are often prefered over standard qualitative color palettes, that we called Main Branch Colors. Respondents read the graph, an explicit tree visualization method, slighly better with Tree Colors. Furthermore, the experienced help from Tree Colors was greater than from Main Branch Colors when applied to graphs.
 
 However, some respondents had trouble to read treemaps with Tree Colors properly. One of the reasons is that people are not familiar with treemaps, making treemaps with Tree Colors even more complex. However, this is not the main explanation since Tree Colors should emphasize the tree structure that is already present in the treemap. Another, more valid argument is that permutation and reversals of hue ranges is developed in particular for linear and radial layouts. In these layouts, the hue values of adjacent nodes are discriminated, and even more when they have different parents. However, when the nodes are plotted in a two-dimensional space without explicit tree structure, such as treemaps, adjacent nodes may get indistinguishable colors, or even worse, siblings may unjustly be clustered. The latter happens when the plotted position of the siblings coincides with the assigned hue values. For further research, it is worthwile to improve the permutation and reversal method when Tree Colors are applied to treemaps and other two-dimensional visualization method with an implicit tree structure.
 
 
-
-%In our opinion, the proposed method to create hierarchical color palettes improves statistical visualizations, both hierarchically and non-hierarchically structured. The pre-condition that colors in the same hierarchical layer should be similar in terms of colorfulness and brightness it satisfied. This property is especially important in statistical visualizations, since they aim to visualize data as objectively as possible. The downside of the proposed method is that some leaf node colors will still be hard to distinguish.
-
-%We recommend a user study to evaluate the obtained hierarchical color palettes when applied in various statistical visualizations. The main aim of this user study would be to find out whether hierarchical palettes are useful in statistical analysis.
-
-
-%% if specified like this the section will be committed in review mode
 \acknowledgments{
-The authors wish to thank their collegues at Statistics Netherlands who participated in the user survey ...}
-% Marco Puts, Mattijn Morren, Jessica Solcer, Jelke Bethlehem, Ger Snijkers, 
+The authors wish to thank their collegues at Statistics Netherlands who participated in the user survey. Also special thanks to Marco Puts, Mattijn Morren, Jessica Solcer, Jelke Bethlehem, and Ger Snijkers for their useful suggestions.}
 
 \bibliographystyle{abbrv}
 %%use following if all content of bibtex file should be shown

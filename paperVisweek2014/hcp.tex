@@ -148,12 +148,12 @@ We present a method to map tree structures to colors from the Hue-Chroma-Luminan
 \firstsection{Introduction}\label{secintro}
 
 \maketitle
-Data are often hierarchically structured. For example business data are typically broken down by economic activity and demographic data by geographic region. Visual exploration of such data should use the underlying hierarchical structure. Several data visualization methods are useful for this task, for instance treemaps
-\cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the hierarchical structure would be very useful in supporting visual analysis.
+Data are often hierarchically structured. For example business data are typically broken down by economic activity and demographic data by geographic region. Several visual exploration methods of such data use the underlying hierarchical structure, for instance treemaps
+\cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the hierarchical structure would be very useful in supporting their visual analysis.
 
 Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should not introduce perceptual bias by suggesting non-existent order or proximity. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
 
-Although many tree visualizations are proposed in literature \cite{schulz2011}, most of them use color to a small extent. A visualization technique that uses color as a major attribute is the InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned different hue values. The color of a parent node is derived by averaging the colors of its children, where larger branches have more weight. An implicit effect of this method is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches. Hierarchical color schemes are also applied to the Hyperbolic Wheel \cite{lam2012}, an exploration tool for hierarchical data.  These color schemes are abstracted from the Hue-Saturation-Lightness (HSL) space, where brightness decreases proportional from root to leaf nodes, and where child nodes inherit the hue values from their parent nodes and add small hue values to distinct them from their siblings. However, hue values of nodes in the same hierarchical layer may be overlapping.
+Although many tree visualizations are proposed in literature \cite{schulz2011}, most of them use color to a small extent. A visualization technique that uses color as a major attribute is InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned different hue values. The color of a parent node is derived by averaging the colors of its children, where larger branches have more weight. An implicit effect of this method is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches. Hierarchical color schemes are also applied to the Hyperbolic Wheel \cite{lam2012}, an exploration tool for hierarchical data.  These color schemes are abstracted from the Hue-Saturation-Lightness (HSL) space, where brightness decreases proportional from root to leaf nodes, and where child nodes inherit the hue values from their parent nodes and add small hue values to distinct them from their siblings. However, hue values of nodes in the same hierarchical layer may be overlapping.
 
 In our opinion, a good hierarchical color scheme should have at least have the following properties. First it should assign a unique and distinct (as possible) color to each node of the tree, since each node is a different category. The second property is that the assigned colors should reflect the tree structure: a node should have a similar color to its parent and, by transitivity, its children and siblings.
 Third and last the hierarchical depth of a node should be encoded in its color. 
@@ -329,10 +329,10 @@ and
 \midrule
 Hue start 				& $H_{start}$ &0 to 360  & 0      \\
 Hue end   				& $H_{end}$ & 0 to 360 & 360       \\
-Hue fraction 				& $H_f$	& 0 to 1 & 0.75 (explicit) \\
+Hue fraction 				& $f$	& 0 to 1 & 0.75 (explicit) \\
 					&	&	 & 0.50 (implicit) \\
-Hue permutations 			& $H_{perm}$ &Boolean & TRUE      \\
-Hue reverse   			& $H_{rev}$ & Boolean  & TRUE      \\
+Hue permutations 			& \texttt{perm} & boolean & TRUE      \\
+Hue reverse   			& \texttt{rev} & boolean  & TRUE      \\
 Luminance first level value 	& $L_1$	& 0 to 100  & 70      \\
 Luminance slope value 		& $\beta^L$ &       & -10       \\
 Chroma first level value 		& $C_1$ &  0 to 100  & 60       \\
@@ -389,7 +389,7 @@ In Figure~\ref{fig:graphFRApp}, the NACE codes of the sector G, wholesale and re
   \caption{Graph of all wholesale and retail trade NACE codes produced by the Fruchterman-Reingold layout algorithm}\label{fig:graphFRApp}
 \end{figure}
 
-Figure~\ref{fig:graphKKApp} shows the same graph with a different layout using the Kamada-Kawai algorithm~\cite{Kamada89}. In comparison to the Figure~\ref{fig:graphFRApp}, the leaf nodes are all forced more outwards by the Kamada-Kawai algorithm. This may clarify the tree structure better, but at the cost of possible artifacts. In this case there are the two crossed edges, namely 465-4651 and 464-4643. The Tree Colors of the corresponding nodes help to discriminate the two local branches that overlap each other.
+Figure~\ref{fig:graphKKApp} shows the same graph with a different layout using the Kamada-Kawai algorithm~\cite{Kamada89}. In comparison to the Figure~\ref{fig:graphFRApp}, the leaf nodes are more clustered in space by the Kamada-Kawai algorithm. This may clarify the tree structure better, but at the cost of possible artifacts. In this case there are two crossed edges, namely 465-4651 and 464-4643. The Tree Colors of the corresponding nodes help to discriminate the two local branches that overlap in layout.
 
 \begin{figure}[tb]
   \centering
@@ -411,9 +411,9 @@ In Figure~\ref{fig:treemapApp}, the net turnover of the Dutch wholesale and reta
 
 \subsection{Regional classifications}
 Many publications in official statistics are broken down by region, especially regarding demographics.
-In many situations, thematic maps are useful as a data visualization tool for spacial statistics, in particular choropleths and cartograms. However, non-spatial visualization methods are often sufficient for the task at hand. In those cases, the geographic location of the regions is less important for the analysis than the comparison of some specific target variable between regions. Tree Colors can improve the discrimination between the regions in a subtle may.
+In many situations, thematic maps are useful as a data visualization tool for spatial statistics, in particular choropleths and cartograms. However, non-cartographic methods are often sufficient for the task at hand. In those cases, the geographic location of the regions is less important for the analysis than the comparison of some specific target variable between regions. Tree Colors can improve the discrimination between the regions in a subtle may.
 
-In Figure~\ref{fig:barApp} a bar chart created with the R package ggplot2~\cite{ggplot2} is depicted of the Dutch population broken down by its twelve provinces. For comparing the populations to each other, a bar chart is a good working horse, since length is perceived quite accurately~\cite{Mackinlay1986}. We applied Tree Colors to add information about the geographic location of the provinces. Typically, the provinces are grouped by the country parts north, east, west, and south. We use those country parts as the first hierarchical layer, and the provinces themselves as the second hierarchical layer. The obtained Tree Colors discriminate the provinces while grouping the provinces by country code. To enhance the groupings, the vertical space between any two adjacent bars that represent provinces in different country parts is slightly increased.
+In Figure~\ref{fig:barApp} a bar chart created with the R package ggplot2~\cite{ggplot2} is shown of the Dutch population broken down by twelve provinces. For comparing the populations to each other, a bar chart is a good working horse, since length is perceived quite accurately~\cite{Mackinlay1986}. We applied Tree Colors to add information about the geographical layout of the provinces. Typically, the provinces are grouped by the cardinal directions north, east, west, and south. We we use those directions as the first hierarchical layer, and the provinces themselves as the second hierarchical layer the obtained Tree Colors discriminate the provinces while grouping them their cardinal directions. To enhance groupings, the vertical space between any two adjacent bars that represent provinces in different directions is slightly increased.
 
 \begin{figure}[tb]
   \centering
@@ -426,7 +426,9 @@ In Figure~\ref{fig:barApp} a bar chart created with the R package ggplot2~\cite{
 
 
 \section{User study}~\label{secuser}
-A user survey is conducted to evaluate our proposed method. We let participants compare Tree Colors (TC) to Main Branch Colors (MBC). MBC is a qualitative color scale that assigns distinct qualitative colors to the children of the root and gives their offspring the same color as their parent.
+A user survey is conducted to evaluate our proposed method. We let participants compare Tree Colors (TC) to Main Branch Colors (MBC). MBC is a qualitative color scale that assigns distinct qualitative colors to the children of the root and gives their offspring the same color as their parent. The colors for MBC are taken from the qualitative ColorBrewer palettes~\cite{brewer03}, which are user tested and popular in cartography and statistical visualizations, so they provide a good benchmark for Tree Colors. An alternative would have been testing
+against a Tree Colors palette with $f=0$, but such palettes are not in common 
+use and testing three colors chemes would have complicated the user survey.
 
 \subsection{User survey setup}~\label{secusersetup}
 The survey was taken by employees of Statistics Netherlands. Although no specific 
@@ -437,10 +439,11 @@ approximately equally divided.
 Many people have a color vision deficiency, which clearly effects the perception of Tree Colors. 
 Although Tree Colors were not developed with color blindness in mind, it is important to know whether 
 a respondent has a color vision deficiency. First, we directly asked the respondents 
-whether they are (partially) color blind. Respondents who did no know the answer were tested for 
+whether they are (partially) color blind. Respondents who did no know the answer
+to that question were tested for 
 color blindness using the Ishihara test~\cite{ishihara}. 
 
-Three visualization methods were used in the survey, namely the (directed) graph, the treemap and the bar chart. For each of the three methods, respondents received questions for two charts of two different datasets, one with Tree Colors and one with Main Branch Colors, which are qualitative color palettes that are assigned to the first hierarchical layer. The colors form these palettes are taken from ColorBrewer palettes~\cite{brewer03}, which are popular in cartography and statistical visualizations.
+Three visualization methods were used in the survey, namely the (directed) graph, the treemap and the bar chart. For each of the three methods, respondents received questions for two charts of two different datasets, one with Tree Colors and one with Main Branch Colors. 
 
 \begin{figure}[tb]
   \centering
@@ -450,7 +453,7 @@ Three visualization methods were used in the survey, namely the (directed) graph
 
 \end{figure}
 
-In order to exclude the effects of all other aesthetics but color as much as possible, we distributed two different versions of the survey. Each respondent was randomly assigned to one of the version. The difference between the two versions was that the datasets for the MBC and TC questions were swapped. Therefore, each chart was tested with both color schemes but in different groups. A graph, a treemap and a bar chart that were included in the surveys are depicted in Figure~\ref{fig:graphSvy},~\ref{fig:treemapSvy}, and~\ref{fig:barSvy} respectively. An overview of the charts used in the two versions of the questionnaire is provided in Table~\ref{table:ques}.
+In order to exclude the effects of all other aesthetics but color as much as possible, we distributed two different versions of the survey. Each respondent was randomly assigned to one version. The two versions differed in that the datasets for the MBC and TC questions were swapped. Therefore, each chart was tested with both color schemes but in different groups. A graph, a treemap and a bar chart that were included in the surveys are depicted in Figure~\ref{fig:graphSvy},~\ref{fig:treemapSvy}, and~\ref{fig:barSvy} respectively. An overview of the charts used in the two versions of the questionnaire is provided in Table~\ref{table:ques}.
 
 \begin{table}[tb]
 \begin{footnotesize}
@@ -515,7 +518,7 @@ Finally, respondent were given the possibility to write down comments or suggest
 
 We recruited 95 respondents with normal color vision and 10 respondents with a color vision deficiency.
 
-The results of the reading questions are summarized in the left part of Figure~\ref{fig:user1}. Per dataset the percentages of correct answers, that is, from a data structure point of view, are depicted as orange points for the Main Branch Colors and as green points for the Tree Colors. For each percentage, the corresponding $95\%$ confidence interval is depicted as a line. The right part of Figure~\ref{fig:user1} shows per visualization method the distribution of answers to the question whether colors help in answering the reading questions.
+The results of the reading questions are summarized in the left part of Figure~\ref{fig:user1}. Per dataset the percentages of correct answers, that is, from a data structure point of view, are shown in orange for the Main Branch Colors and in green for the Tree Colors. For each percentage, the corresponding $95\%$ confidence interval is depicted as a line. The right part of Figure~\ref{fig:user1} shows per visualization method the distribution of answers to the question whether colors help in answering the reading questions.
 
 Of all three visualization methods, the reading questions regarding the graphs received the highest percentages of correct answers for both color schemes. The reason is the questions are fairly easy to answer by the explicit tree layouts of graphs. The Tree Colors score slightly better on the relationship questions. The questions about the offspring resulted in 100\% scores for all four color scheme - dataset combinations. As for the graphs, respondents experienced more help from Tree Colors than from Main Branch Colors.
 
@@ -550,7 +553,7 @@ The interpretation of the graphs was experienced easier with Tree Colors except 
 
 We proposed a method to create color palettes for tree structured data. In our opinion, this method improves both hierarchical and non-hierarchical vizualisations methods when the tree structure of the data plays a role in the analysis. Tree Colors satisfy the three properties that we described in Section 1, namely that 1) all colors of a hierarchical color scheme should be unique, 2) the colors should reflect the tree structure in terms of parent-child relationships, and 3) hierarchical depth should be encoded in color. 
 
-The conducted user study indicated that Tree Colors are often prefered over standard qualitative color palettes, that we called Main Branch Colors. Respondents read the graph, an explicit tree visualization method, slighly better with Tree Colors. Furthermore, the experienced help from Tree Colors was greater than from Main Branch Colors when applied to graphs.
+The conducted user study indicated that Tree Colors are often prefered over standard qualitative color palettes, that we called Main Branch Colors. Respondents read the graph, an explicit tree visualization method, slightly better with Tree Colors. Furthermore, the experienced help from Tree Colors was greater than from Main Branch Colors when applied to graphs.
 
 However, some respondents had trouble to read treemaps with Tree Colors properly. One of the reasons is that people are not familiar with treemaps, making treemaps with Tree Colors even more complex. However, this is not the main explanation since Tree Colors should emphasize the tree structure that is already present in the treemap. Another, more valid argument is that permutation and reversals of hue ranges is developed in particular for linear and radial layouts. In these layouts, the hue values of adjacent nodes are discriminated, and even more when they have different parents. However, when the nodes are plotted in a two-dimensional space without explicit tree structure, such as treemaps, adjacent nodes may get indistinguishable colors, or even worse, siblings may unjustly be clustered. The latter happens when the plotted position of the siblings coincides with the assigned hue values. For further research, it is worthwile to improve the permutation and reversal method when Tree Colors are applied to treemaps and other two-dimensional visualization method with an implicit tree structure.
 

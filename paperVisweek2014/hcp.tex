@@ -288,7 +288,7 @@ In Figure~\ref{fig:lc} a table of colors are depicted for various chroma and lum
   \caption{Colors palettes for different pairs of $L$ and $C$.}\label{fig:lc2}
 \end{figure}
 
-For different pairs of $C$ and $L$, color palettes with a fixed hue range from 120 and 360 are depicted in Figure~\ref{fig:lc2}. Among the bright color palettes (with $L=70$) the saturation level of $C=60$ is sufficient to discriminate the colors easily. For the dark color paletetes (with $L=30$), saturation values of $C=80$ or higher are not superfluous, especially because the assigned hue range is often very narrow for nodes low in the tree.
+For different pairs of $C$ and $L$, color palettes with a fixed hue range from 120 and 360 are depicted in Figure~\ref{fig:lc2}. Among the bright color palettes (with $L=70$) the saturation level of $C=60$ is sufficient to discriminate the colors easily. For the dark color palettes (with $L=30$), saturation values of $C=80$ or higher are not superfluous, especially because the assigned hue range is often very narrow for nodes low in the tree.
 
 Therefore, we propose to increase $C$ with depth. Let $C_1=60$ be the chroma value for the first layer. For layer $i=2,\ldots, d$ the chroma value is defined as
 \begin{equation}
@@ -298,7 +298,7 @@ where the slope parameter is set to $\beta^C=5$ by default. The chroma value for
 
 So per hierarchical layer $i$, we have specified a fixed pair of $L_i$ and $C_i$ based on the parameters $L_1$, $\beta^L$, $C_1$, and $\beta^C$. For the default values of these parameters, we depicted the pairs with a fixed hue values between 120 and 360 in Figure~\ref{fig:lc3}.
 
-Although we propose default parameter values for luminance and chroma, the choice of these values depends on the number of hierchical layers in the data, and on which layer the attention is focused. The default parameter values provide colors that are well distinguishable within the first three layers. Therefore, they are particularly useful for datasets up to three hierarchical layers. However, when only leaf nodes of the third layer are visualized, such as in treemaps of data that have a complete tree structure of depth three, a higher $L_1$ value may be prefered. Also, when the dataset contains five of more layers a higher value of $L_1$ may also be prefered. In these cases, we suggest $L_1$ to be 80 or even 90. In order to prevent colors that become too saturated, we suggest $C_1$ to be 55 or 50 in this situation. However, when more discrimination among the colors is needed, higher values of $C_1$ may be chosen.
+Although we propose default parameter values for luminance and chroma, the choice of these values depends on the number of hierarchical layers in the data, and on which layer the attention is focused. The default parameter values provide colors that are well distinguishable within the first three layers. Therefore, they are particularly useful for data sets up to three hierarchical layers. However, when only leaf nodes of the third layer are visualized, such as in treemaps of data that have a complete tree structure of depth three, a higher $L_1$ value may be preferred. Also, when the data set contains five of more layers a higher value of $L_1$ may also be preferred. In these cases, we suggest $L_1$ to be 80 or even 90. In order to prevent colors that become too saturated, we suggest $C_1$ to be 55 or 50 in this situation. However, when more discrimination among the colors is needed, higher values of $C_1$ may be chosen.
 
 \begin{figure}[tb]
   \centering
@@ -310,7 +310,7 @@ Although we propose default parameter values for luminance and chroma, the choic
 
 \subsection{Parameter overview}
 
-An overview of all parameters that are used in the described method is provided in Table~\ref{table:param}. Due to the ranges of $[0, 100]$, the luminance and chroma parameters are restricted to the following contraints:
+An overview of all parameters that are used in the described method is provided in Table~\ref{table:param}. Due to the ranges of $[0, 100]$, the luminance and chroma parameters are restricted to the following constraints:
 \begin{equation}
 0 \leq (d-1)\beta^L + L_1 \leq 100
 \end{equation}
@@ -428,7 +428,7 @@ In Figure~\ref{fig:barApp} a bar chart created with the R package ggplot2~\cite{
 \section{User study}~\label{secuser}
 A user survey is conducted to evaluate our proposed method. We let participants compare Tree Colors (TC) to Main Branch Colors (MBC). MBC is a qualitative color scale that assigns distinct qualitative colors to the children of the root and gives their offspring the same color as their parent. The colors for MBC are taken from the qualitative ColorBrewer palettes~\cite{brewer03}, which are user tested and popular in cartography and statistical visualizations, so they provide a good benchmark for Tree Colors. An alternative would have been testing
 against a Tree Colors palette with $f=0$, but such palettes are not in common 
-use and testing three colors chemes would have complicated the user survey.
+use and testing three colors schemes would have complicated the user survey.
 
 \subsection{User survey setup}~\label{secusersetup}
 The survey was taken by employees of Statistics Netherlands. Although no specific 
@@ -453,7 +453,7 @@ Three visualization methods were used in the survey, namely the (directed) graph
 
 \end{figure}
 
-In order to exclude the effects of all other aesthetics but color as much as possible, we distributed two different versions of the survey. Each respondent was randomly assigned to one version. The two versions differed in that the datasets for the MBC and TC questions were swapped. Therefore, each chart was tested with both color schemes but in different groups. A graph, a treemap and a bar chart that were included in the surveys are depicted in Figure~\ref{fig:graphSvy},~\ref{fig:treemapSvy}, and~\ref{fig:barSvy} respectively. An overview of the charts used in the two versions of the questionnaire is provided in Table~\ref{table:ques}.
+In order to exclude the effects of all other aesthetics but color as much as possible, we distributed two different versions of the survey. Each respondent was randomly assigned to one version. The two versions differed in that the data sets for the MBC and TC questions were swapped. Therefore, each chart was tested with both color schemes but in different groups. A graph, a treemap and a bar chart that were included in the surveys are depicted in Figure~\ref{fig:graphSvy},~\ref{fig:treemapSvy}, and~\ref{fig:barSvy} respectively. An overview of the charts used in the two versions of the questionnaire is provided in Table~\ref{table:ques}.
 
 \begin{table}[tb]
 \begin{footnotesize}
@@ -494,7 +494,7 @@ The three visualization methods represent three levels of hierarchical explicitn
 
 \end{figure}
 
-All datasets used in the survey are hierarchically structured with three hierarchical layers. The 
+All data sets used in the survey are hierarchically structured with three hierarchical layers. The 
 labels of the data points are randomized letters, such that respondents can not extract information 
 about the hierarchy from the printed labels.
 
@@ -551,15 +551,14 @@ The interpretation of the graphs was experienced easier with Tree Colors except 
 
 \section{Discussion}~\label{secdisc}
 
-We proposed a method to create color palettes for tree structured data. In our opinion, this method improves both hierarchical and non-hierarchical vizualisations methods when the tree structure of the data plays a role in the analysis. Tree Colors satisfy the three properties that we described in Section 1, namely that 1) all colors of a hierarchical color scheme should be unique, 2) the colors should reflect the tree structure in terms of parent-child relationships, and 3) hierarchical depth should be encoded in color. 
+We proposed a method to create color palettes for tree structured data. In our opinion, this method improves both hierarchical and non-hierarchical visualizations methods when the tree structure of the data plays a role in the analysis. Tree Colors satisfy the three properties that we described in Section 1, namely that 1) all colors of a hierarchical color scheme should be unique, 2) the colors should reflect the tree structure in terms of parent-child relationships, and 3) hierarchical depth should be encoded in color. 
 
-The conducted user study indicated that Tree Colors are often prefered over standard qualitative color palettes, that we called Main Branch Colors. Respondents read the graph, an explicit tree visualization method, slightly better with Tree Colors. Furthermore, the experienced help from Tree Colors was greater than from Main Branch Colors when applied to graphs.
+The conducted user study indicated that Tree Colors are often preferred over standard qualitative color palettes, that we called Main Branch Colors. Respondents read the graph, an explicit tree visualization method, slightly better with Tree Colors. Furthermore, the experienced help from Tree Colors was greater than from Main Branch Colors when applied to graphs.
 
-However, some respondents had trouble to read treemaps with Tree Colors properly. One of the reasons is that people are not familiar with treemaps, making treemaps with Tree Colors even more complex. However, this is not the main explanation since Tree Colors should emphasize the tree structure that is already present in the treemap. Another, more valid argument is that permutation and reversals of hue ranges is developed in particular for linear and radial layouts. In these layouts, the hue values of adjacent nodes are discriminated, and even more when they have different parents. However, when the nodes are plotted in a two-dimensional space without explicit tree structure, such as treemaps, adjacent nodes may get indistinguishable colors, or even worse, siblings may unjustly be clustered. The latter happens when the plotted position of the siblings coincides with the assigned hue values. For further research, it is worthwile to improve the permutation and reversal method when Tree Colors are applied to treemaps and other two-dimensional visualization method with an implicit tree structure.
-
+However, some respondents had more difficulty to read treemaps with Tree Colors then with Main Branch Colors. One of the reasons is that people are not familiar with treemaps, making treemaps with Tree Colors even more complex. However, this is not the main explanation since Tree Colors should emphasize the tree structure that is already present in the treemap. Another, more valid argument is that permutation and reversals of hue ranges is developed in particular for linear and radial layouts. In these layouts, the hue values of adjacent nodes are discriminated, and even more when they have different parents. However, when the nodes are plotted in a two-dimensional space without explicit tree structure, such as treemaps, adjacent rectangles may get indistinguishable colors, or even worse, siblings unjustly seem to be clustered. The latter happens when the plotted position of the siblings coincides with the assigned hue values. For further research, it is worthwhile to improve the permutation and reversal method when Tree Colors are applied to treemaps and other two-dimensional visualization method with an implicit tree structure.
 
 \acknowledgments{
-The authors wish to thank their collegues at Statistics Netherlands who participated in the user survey. Also special thanks to Marco Puts, Mattijn Morren, Jessica Solcer, Jelke Bethlehem, and Ger Snijkers for their useful suggestions.}
+The authors wish to thank their colleagues at Statistics Netherlands who participated in the user survey. Also special thanks to Marco Puts, Martijn Morren, Jessica Solcer, Jelke Bethlehem, and Ger Snijkers for their useful suggestions.}
 
 \bibliographystyle{abbrv}
 %%use following if all content of bibtex file should be shown

@@ -1,41 +1,41 @@
 vraag	antwoord	V1	V2
-1	nee	55	40
+1	nee	58	40
 	gedeeltelijk	0	0
 	ja	0	0
 2A1	JK	2	0
-	JP	50	38
+	JP	53	38
 	JC	1	1
 	JKP	1	0
 	JKPC	1	0
 	J_x	0	1
-2A2	G_QRMKF	55	40
+2A2	G_QRMKF	58	40
 2A3	1	29	10
-	2	12	8
+	2	14	8
 	3	6	8
-	4	6	12
+	4	7	12
 	5	2	2
 2B1	KJ	1	0
 	KA	0	2
-	KL	53	36
+	KL	56	36
 	KJL	0	1
 	KJAL	1	0
 	K_x	0	1
-2B2	B_OQ	55	40
+2B2	B_OQ	58	40
 2B3	1	10	16
 	2	11	9
 	3	10	7
-	4	19	8
+	4	22	8
 	5	4	1
 2mooi	F1	8	17
-	F2	43	15
+	F2	46	15
 	maaktnietuit	4	9
 2inter	F1	4	7
-	F2	33	9
+	F2	36	9
 	maaktnietuit	18	24
 2over	F1	21	28
-	F2	30	5
+	F2	33	5
 	maaktnietuit	4	7
-3A1	HZ_AF	47	28
+3A1	HZ_AF	50	28
 	HZ_SD	4	6
 	HZ_KL	0	1
 	HZ_SX	0	2
@@ -47,7 +47,7 @@ vraag	antwoord	V1	V2
 3A2	SA_2	1	1
 	SA_3	1	1
 	SA_4	0	0
-	SA_5	47	37
+	SA_5	50	37
 	SA_6	0	0
 	SA_8	1	0
 	SA_11	1	0
@@ -58,64 +58,65 @@ vraag	antwoord	V1	V2
 	2	8	5
 	3	5	8
 	4	28	21
-	5	12	3
+	5	15	3
 3B1	JM_HD	2	2
 	JM_EP	3	1
 	JM_EN	3	5
-	JM_PQ	43	31
+	JM_EPEN	1	0
+	JM_PQ	45	31
 	JM_HDPQ	1	1
 	JM_HDEPPQ	3	0
 3B2	AJ_2	0	1
 	AJ_5	0	11
 	AJ_6	1	0
-	AJ_7	49	27
-	AJ_8	1	0
+	AJ_7	51	27
+	AJ_8	2	0
 	AJ_18	4	1
 3B3	1	3	2
 	2	9	3
 	3	5	8
-	4	33	20
+	4	36	20
 	5	5	7
-3mooi	F1	33	12
+3mooi	F1	36	12
 	F2	16	24
 	maaktnietuit	6	4
-3inter	F1	20	14
-	F2	22	18
+3inter	F1	22	14
+	F2	23	18
 	maaktnietuit	13	8
-3over	F1	18	7
-	F2	36	26
+3over	F1	19	7
+	F2	38	26
 	maaktnietuit	1	7
-4A1	UT_NF	15	9
+4A1	UT_NF	16	9
 	UT_XX	8	1
 	UT_EV	2	25
 	UT_GG	1	2
 	UT_EVGG	0	1
 	UT_XXEV	0	1
-	UT_XXEVGG	28	0
+	UT_XXEVGG	30	0
 	UT_NFEV	0	1
 	UT_NFXX	1	0
-4A2	1	6	5
+4A2	1	7	5
 	2	15	4
 	3	4	4
-	4	17	16
-	5	13	11
+	4	18	16
+	5	14	11
 4B1	MX_QT	1	1
-	MX_IV	42	11
+	MX_IV	44	11
 	MX_DR	1	7
-	MX_IB	10	8
+	MX_IB	11	8
 	MX_x	1	0
 	MX_QTIVDR	0	13
 4B2	1	11	6
 	2	12	6
 	3	4	3
-	4	19	17
-	5	9	9
-4mooi	F1	34	13
-	F2	15	20
+	4	21	17
+	5	10	9
+4mooi	F1	36	13
+	F2	16	20
 	maaktnietuit	6	7
-4inter	F1	25	5
-	F2	14	18
-	maaktnietuit	15	17
-4over	F1	41	21
-	F2	10	9
+4inter	F1	26	5
+	F2	15	18
+	maaktnietuit	16	17
+4over	F1	43	21
+	F2	11	9
 	maaktnietuit	4	10

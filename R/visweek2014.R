@@ -126,7 +126,7 @@ PDF("plots/HCPgraph.pdf", width=6, height=6, useDingbats=FALSE, e={
     treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=10, vertex.label.dist=.5, palette.HCL.options=palette.HCL.options, directed=FALSE, vertex.label.family="URWHelvetica")
 })
 
-
+# permutaions and reversals turned off
 PDF("plots/HCPgraph2.pdf", width=6, height=3.5, useDingbats=FALSE, e={
     par(mfrow=c(1,2))
     set.seed(20140203)
@@ -135,6 +135,13 @@ PDF("plots/HCPgraph2.pdf", width=6, height=3.5, useDingbats=FALSE, e={
     treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=12, vertex.label.cex=.6, vertex.label.dist=.6, palette.HCL.options=c(palette.HCL.options, list(hue_perm=FALSE)), directed=FALSE, vertex.label.family="URWHelvetica")
 })
 
+
+# additive and subtractive methods
+PDF("plots/HCPgraph3.pdf", width=6, height=6, useDingbats=FALSE, e={
+    set.seed(20140203)
+    #treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.layout=igraph::layout.auto,vertex.size=4, palette.HCL.options=palette.HCL.options)
+    treegraph(dat, index=c("index1", "index2", "index3"), show.labels=TRUE, vertex.size=10, vertex.label.dist=.5, palette.HCL.options=c(palette.HCL.options, list(luminance=40, luminance_slope=10, chroma=75, chroma_slope=-5)), directed=FALSE, vertex.label.family="URWHelvetica")
+})
 
 #####################################################################################
 #######

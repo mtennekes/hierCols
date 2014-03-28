@@ -1,5 +1,6 @@
 ### survey evaluation
 us <- read.csv("user_survey/survey_evaluation.txt", header=TRUE, sep="\t", stringsAsFactors=FALSE)
+#us <- read.csv("user_survey/survey_evaluation_color_blind.txt", header=TRUE, sep="\t", stringsAsFactors=FALSE)
 
 FC <- "Main Branch Colors"
 TC <- "Tree Colors"

@@ -118,6 +118,15 @@ PDF("plots/hcl_method2.pdf", width=8, height=8.4, e={
     })
 })
 
+## replicate first subplot for color blindness 
+png("plots/hcl_normal.png", width=840, height=840, res=600, pointsize=4)
+cat(convertHeight(unit(1,"npc"), "inch", valueOnly=TRUE), "\n",
+    convertWidth(unit(1,"npc"), "inch", valueOnly=TRUE), "\n")
+drawHCL(gridsize=gridsize, marks=c(0, 120, 240),
+        marks.dashed=c(rep(F, sum(dat$l==1))), lwd=.5)
+dev.off()
+
+
 
 ## 
 PDF("plots/HCPgraph.pdf", width=6, height=6, useDingbats=FALSE, e={

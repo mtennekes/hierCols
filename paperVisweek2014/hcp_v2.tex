@@ -42,8 +42,8 @@
 %\usepackage[T1]{fontenc}
 \usepackage{xcolor}
 \definecolor{cornellred}{rgb}{0.7, 0.11, 0.11}
-\newcommand{\E}{\textcolor{cornellred}{\textbf{EDWIN}}}
-\newcommand{\M}{\textcolor{blue}{\textbf{MARTIJN}}}
+\newcommand{\E}{\textcolor{cornellred}{\textbf{TO DO Edwin}}}
+\newcommand{\M}{\textcolor{blue}{\textbf{TO DO Martijn}}}
 \newcommand{\changedE}[1]{\textcolor{cornellred}{#1}}
 \newcommand{\changedM}[1]{\textcolor{blue}{#1}}
 
@@ -372,12 +372,22 @@ Chroma slope value 		& $\beta^C$ &     & 5   & -5    \\
 \caption{Parameters of the Tree Colors method.}\label{table:param}
 \end{table}
 
-\subsection{\changedM{Color vision deficiency}}
+\subsection{Color vision deficiency}
 Although Tree Colors were not developed with color blindness in mind, it is important to know whether Tree Colors could be perceived adequately by people with a color vision deficiency, because there are many such people~\cite{birch12}.
 
-Color vision deficiency is caused by the disfunctioning of one of the three type of cone cells by which people normally perceive colors. The three type of cone cells correspond one to one to the perception of the three primary colors red, green, and blue. People with normal color vision, trichromats, perceive any color as a mixture of the three types of cone cells, whereas people with a non-functional type of cone cell, dichromats, use a mixture of the two remaining types of cone cells to perceive colors. People with a partly disfunctional type of cone cell are called anomalous trichromats. They require more light of the corresponding primary color wave length in order to perceive colors normally.
+Color vision deficiency is caused by the disfunctioning of one of the three type of cone cells by which people normally perceive colors. The three type of cone cells correspond one to one to the perception of the three primary colors red, green, and blue. People with normal color vision, trichromats, perceive any color as a mixture of the three types of cone cells, whereas people with a non-functional type of cone cell, dichromats, use a mixture of the two remaining types of cone cells to perceive colors. People with a partly disfunctional type of cone cell are called anomalous trichromats. They require more light of the corresponding primary color wavelength in order to perceive colors normally.
 
-People with color vision deficiency cannot easily differentiate colors with different hue values. Especially distiction of colors in the red and green areas are often problematic for them. If this would be the only obstacle for them to use Tree Colors, a straightforward solution would be to adjust the Tree Colors method such these difficult hue ranges are omitted. However, there is a more fundamental problem for people with color vision deficiency. Since the adaption of colors by cone cells is approximately logarithmical rather than linear, a disfunctional type of cone cell will result in losing the perptual properties of the HCL color space. In other words, people with a color vision deficiency will not perceive colors with different hue values, and contant chroma and luminance values as equally bright. \martijn
+People with color vision deficiency cannot easily differentiate colors with different hue values. Especially distinction of colors in the red and green areas are often problematic for them. If this would be the only obstacle for them to use Tree Colors, a straightforward solution would be to adjust the Tree Colors method by omitting these difficult hue ranges. However, there is a more fundamental problem for people with color vision deficiency. Since the adaption of colors by cone cells is approximately logarithmical rather than linear, a disfunctional type of cone cell will result in losing the perceptual properties of the HCL color space. In other words, people with a color vision deficiency will not perceive colors with different hue values and constant luminance and chroma values as equally bright and saturated. 
+
+Figure~\ref{fig:colblind} shows how people with color vision deficiency would probably see the full hue cycle depicted in Figure~\ref{fig:wheel}(a). These simulated plot are created with free software tool Chrometric~\cite{chrometric}. The left-hand side plot shows how the full hue circle is seen by anomalous trichromats with deuteranomaly, the most common type of color vision deficiency, where colors of medium-wavelength (greenish) colors are not perceived well. Although all hue values seem to be distinguishable, the colors do not seem to be equally bright and saturated. The plot on the right-hand side is seen by dichromats with protanopia, where the long-wavelength (reddish) colors are not perceived. Not only the diversity of hue values is reduced to, the colors clearly have a large variation of brightness and saturation.
+
+
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=3in]{hcl_deuteranomaly_protanopia.png}
+  \caption{Simulation of how persons with deuteranomaly (left) and protanopia (right) see the full hue circle.}\label{fig:colblind}
+\end{figure}
 
 
 \section{Software}
@@ -592,8 +602,7 @@ However, some participants had more difficulty to read treemaps with Tree Colors
 
 Further, we would like to remark that although the HCL color has well defined perceptual properties, the total range of hue values is not perceived perfectly linear, especially around non-primary colors. This could introduce certain artifacts in the resulting color schemes. For instance, the blue node U in Figure~\ref{fig:graphSvy} (right) seems to be more distinct from its parent Y than its siblings I, G, and B. Such artifacts could be overcome by rotating the total hue range with the parameters $H_{start}$ and $H_{end}$.
 
-Unfortunately, the Tree Colors method does not provide color schemes that are adequately perceived by people with color vision deficiency, since the perceptual properties of the HCL color space are lost on which the Tree Colors method is build on. 
-
+Unfortunately, Tree Colors are not adequately perceived by people with color vision deficiency, since the range of distuiguishable hue values is reduced and colors with a constant luminance and chroma value may vary in perceived brightness and saturation. There are no straightforward solutions at hand to adjust the Tree Colors method for people with color vision deficiency Moreover, designing fixed qualitative color schemes for such people is already far from trivial~\cite{okabe02}. Further research is needed to develop hierarchical color schemes for people with color vision deficiency. From a practical point of view, we suggest to use color vision deficiency proof qualitative color schemes proposed in literature~\cite{okabe02, brewer03} as Main Branch Colors for people with color vision deficiency.
 
 \acknowledgments{
 The authors wish to thank their colleagues at Statistics Netherlands who participated in the user study. Also special thanks to Marco Puts, Martijn Morren, Jessica Solcer, Jelke Bethlehem, and Ger Snijkers for their useful suggestions.}

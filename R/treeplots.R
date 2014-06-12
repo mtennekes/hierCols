@@ -38,7 +38,7 @@ drawtree <- function(dat, color, show.labels=FALSE, rootlabel="", vertex.size=3,
 }
 
 
-drawHCL <- function(gridsize=1e3, C=60, L=80, r=c(0.6, 0.8), cuts=NULL, marks=NULL, marks.dashed=FALSE, labels=NULL, marks.r=c(0.4, 0.8), labels.r=0.5, marks.labels.r=0.88, marks.labels.cex=0.8, labels.cex=0.8) {
+drawHCL <- function(gridsize=1e3, C=60, L=80, r=c(0.6, 0.8), cuts=NULL, marks=NULL, marks.dashed=FALSE, labels=NULL, marks.r=c(0.4, 0.8), labels.r=0.5, marks.labels.r=0.88, marks.labels.cex=0.8, labels.cex=0.8, lwd=1) {
     #grid.newpage()
     n <- gridsize
     
@@ -92,7 +92,7 @@ drawHCL <- function(gridsize=1e3, C=60, L=80, r=c(0.6, 0.8), cuts=NULL, marks=NU
         
         id <- rep(1:length(mr), each=2)
         lty <- ifelse(marks.dashed, "dashed", "solid")
-        grid.polyline(x=x, y=y, id=id, gp=gpar(lty=lty))
+        grid.polyline(x=x, y=y, id=id, gp=gpar(lty=lty, lwd=lwd))
         
     }
     if (!missing(labels)) {

@@ -44,8 +44,8 @@
 \definecolor{cornellred}{rgb}{0.7, 0.11, 0.11}
 \newcommand{\E}{\textcolor{cornellred}{\textbf{EDWIN}}}
 \newcommand{\M}{\textcolor{blue}{\textbf{MARTIJN}}}
-\newcommand{\changedE}[1]{\textcolor{cornellred}{\textbf{#1}}}
-\newcommand{\changedM}[1]{\textcolor{blue}{\textbf{#1}}}
+\newcommand{\changedE}[1]{\textcolor{cornellred}{#1}}
+\newcommand{\changedM}[1]{\textcolor{blue}{#1}}
 
 %% We encourage the use of mathptmx for consistent usage of times font
 %% throughout the proceedings. However, if you encounter conflicts
@@ -158,7 +158,7 @@ We present a method to map tree structures to colors from the Hue-Chroma-Luminan
 
 \maketitle
 Data are often hierarchically structured. For example business data are typically broken down by economic activity and demographic data by geographic region. Several visual exploration methods of such data use the underlying hierarchical structure, for instance treemaps
-\cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the hierarchical structure would be very useful in supporting their visual analysis. \changedM{Such palettes could clearify the hierarchical structure of the data. Although this structure is often encoded in the layout, the use of hierarchical colors palettes makes the use of a hierarchical layout less necessary.}
+\cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the hierarchical structure would be very useful in supporting their visual analysis. \changedM{Such palettes could clearify the hierarchical structure of the data. Although this structure is often encoded in the layout, the use of hierarchical colors palettes could make the use of a hierarchical layout less necessary.}
 
 Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should minimize perceptual bias by preventing the suggestion of non-existent order or proximity. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
 
@@ -372,7 +372,16 @@ Chroma slope value 		& $\beta^C$ &     & 5   & -5    \\
 \caption{Parameters of the Tree Colors method.}\label{table:param}
 \end{table}
 
+\subsection{\changedM{Color vision deficiency}}
+Although Tree Colors were not developed with color blindness in mind, it is important to know whether Tree Colors could be perceived adequately by people with a color vision deficiency, because there are many such people~\cite{birch12}.
 
+Color vision deficiency is caused by the disfunctioning of one of the three type of cone cells by which people normally perceive colors. The three type of cone cells correspond one to one to the perception of the three primary colors red, green, and blue. People with normal color vision, trichromats, perceive any color as a mixture of the three types of cone cells, whereas people with a non-functional type of cone cell, dichromats, use a mixture of the two remaining types of cone cells to perceive colors. People with a partly disfunctional type of cone cell are called anomalous trichromats. They require more light of the corresponding primary color wave length in order to perceive colors normally.
+
+The first problem that people with color vision deficiency have, is that they cannot easily differentiate colors with different hue values. Especially distiction in the red and green areas are often problematic for them. More importantly, 
+
+<not only hue values are indistuiguishable...>
+
+Since the adaption of colors by cone cells is approximately logarithmical rather then linear, a disfunctional type of cone cell will result in losing the perptual properties of the HCL color space. In other words, people with a color vision deficiency will not perceive colors with the different hue values, but contant chroma and luminance values as equally bright.
 
 
 \section{Software}
@@ -550,7 +559,7 @@ The percentages of correct answers for the treemaps were lower than for the node
 
 As for the bar charts, the majority of the participants did not observe the underlying data hierarchy when the Main Branch Colors were applied. Apparently, the spacing between the bars did not stand out clearly in comparison to other aesthetics such as color and length. For example, the question that belongs to Figure~\ref{fig:treemapBar}(left) was which labels are most similar to UT, where the possible answers are NF, XX, EV, and GG. Almost 52\% of the participants chose the labels that belong to the same main branch, XX, EV and GG, and therefore only used color to answer the question. Another 28\% only used length to answer the question, since they answered NF. Only 3\% of the participants answered EV, which is given the data hierarchy the correct answer. When Tree Colors were applied, see Figure~\ref{fig:barSvy}(right), none of the participants checked XX, EV and GG, 23\% chose the equal-length bar NF, and 63\% answered EV correctly. By the broadly defined question, it would be a very weak argument to claim the success of Tree Colors on this large difference. However, in our opinion it does indicate that Tree Colors are a valuable attribute to visualize a hierarchical data structure in non-hierarchical plots such as bar charts, line charts, and area charts.
 
-The evaluation questions are summarized in Figure~\ref{fig:user2}. In general, participants liked both color schemes equally, where Tree Colors were favored for node-link diagrams.
+The three evaluation questions are summarized in Figure~\ref{fig:user2} \changedM{with a diverging stacked bar chart.} In general, the participants liked both color schemes equally, although Tree Colors were favored for node-link diagrams.
 
 The charts with Main Branch Colors provided the best overview for the majority of the participants. This result is not surprising, since a good overview is obtained by discriminating the main branches. 
 Recall that the hue fraction, $f$, is a trade-off between discrimination of the main branched and discrimination of the leaf nodes. Notice that Tree Colors with $f=0$ are identical to Main Branch Colors, where only the applied color palette differs.

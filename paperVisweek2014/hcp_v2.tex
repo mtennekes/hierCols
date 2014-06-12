@@ -39,7 +39,7 @@
 \usepackage{afterpage}
 
 
-\usepackage[T1]{fontenc}
+%\usepackage[T1]{fontenc}
 \usepackage{xcolor}
 \definecolor{cornellred}{rgb}{0.7, 0.11, 0.11}
 \newcommand{\E}{\textcolor{cornellred}{\textbf{EDWIN}}}
@@ -377,11 +377,7 @@ Although Tree Colors were not developed with color blindness in mind, it is impo
 
 Color vision deficiency is caused by the disfunctioning of one of the three type of cone cells by which people normally perceive colors. The three type of cone cells correspond one to one to the perception of the three primary colors red, green, and blue. People with normal color vision, trichromats, perceive any color as a mixture of the three types of cone cells, whereas people with a non-functional type of cone cell, dichromats, use a mixture of the two remaining types of cone cells to perceive colors. People with a partly disfunctional type of cone cell are called anomalous trichromats. They require more light of the corresponding primary color wave length in order to perceive colors normally.
 
-The first problem that people with color vision deficiency have, is that they cannot easily differentiate colors with different hue values. Especially distiction in the red and green areas are often problematic for them. More importantly, 
-
-<not only hue values are indistuiguishable...>
-
-Since the adaption of colors by cone cells is approximately logarithmical rather then linear, a disfunctional type of cone cell will result in losing the perptual properties of the HCL color space. In other words, people with a color vision deficiency will not perceive colors with the different hue values, but contant chroma and luminance values as equally bright.
+People with color vision deficiency cannot easily differentiate colors with different hue values. Especially distiction of colors in the red and green areas are often problematic for them. If this would be the only obstacle for them to use Tree Colors, a straightforward solution would be to adjust the Tree Colors method such these difficult hue ranges are omitted. However, there is a more fundamental problem for people with color vision deficiency. Since the adaption of colors by cone cells is approximately logarithmical rather than linear, a disfunctional type of cone cell will result in losing the perptual properties of the HCL color space. In other words, people with a color vision deficiency will not perceive colors with different hue values, and contant chroma and luminance values as equally bright. \martijn
 
 
 \section{Software}
@@ -467,9 +463,8 @@ demographic characteristics are asked, the participants typically have at least 
 quantitative sciences. Furthermore all employees are aged from 18 to 65 years old, and gender is 
 approximately equally divided.
 
-Many people have a color vision deficiency, which clearly effects the perception of Tree Colors. 
-Although Tree Colors were not developed with color blindness in mind, it is important to know whether 
-a participant has a color vision deficiency. First, we directly asked the participants 
+In order to know whether 
+a participant has a color vision deficiency, we directly asked the participants 
 whether they are (partially) color blind. Participants who did no know the answer
 to that question were tested for 
 color blindness using the Ishihara test~\cite{ishihara}. 
@@ -548,7 +543,7 @@ Finally, participants were given the possibility to write down comments or sugge
 
 \subsection{User study results}~\label{secuserres}
 
-We recruited 98 participants with normal color vision and 10 participants with a color vision deficiency. From the people with normal color vision, 58 participants received Version 1 of the questionnaire and 40 Version 2.
+We recruited 98 participants with normal color vision and 10 participants with a color vision deficiency. From the people with normal color vision, 58 participants received Version 1 of the questionnaire and 40 Version 2. \changedM{Among those with a color vision deficiency, 4 participants received Version 1 and 6 participants Version 2.}
 
 The results of the reading questions are summarized in the left part of Figure~\ref{fig:user1}. Per dataset the percentages of correct answers, that is, from a data structure point of view, are shown in orange for the Main Branch Colors and in green for the Tree Colors. For each percentage, the corresponding $95\%$ confidence interval is depicted as a line. The right part of Figure~\ref{fig:user1} shows per visualization method the distribution of answers to the question whether colors help in answering the reading questions.
 
@@ -580,7 +575,7 @@ Recall that the hue fraction, $f$, is a trade-off between discrimination of the 
 
 The interpretation of the node-link diagrams was experienced easier with Tree Colors except for the treemaps. This could be explained by level of difficulty of the visualization methods. Both node-link diagram and bar chart are easy to read visualization methods that the vast majority of the participants are familiar with. Therefore, people are able to see the benefits of the additional information that the Tree Colors provide over Main Branch Colors. However, treemaps are still largely unknown by the participants. Additional information provided by the applied color scheme could therefore be a little confusing.
 
-By the small number of participants with a color deficiency, 10, we were unable to draw conclusions from their responses.
+\changedM{By the small number of participants with a color deficiency, 10, we were unable to make statistical claims from their responses.}
 
 
 \section{Discussion}~\label{secdisc}
@@ -595,7 +590,9 @@ The conducted user study indicated that Tree Colors are often preferred over sta
 
 However, some participants had more difficulty to read treemaps with Tree Colors then with Main Branch Colors. One of the reasons is that people are not familiar with treemaps, making treemaps with Tree Colors even more complex. However, this is probably not the main explanation since Tree Colors should emphasize the tree structure that is already present in the treemap. Another, more valid argument is that permutation and reversals of hue ranges is developed particularly for linear and radial layouts. In these layouts, the hue values of adjacent nodes are discriminated, and even more when they have different parents. However, when the nodes are plotted in a two-dimensional space without explicit tree structure, such as treemaps, adjacent rectangles may get indistinguishable colors, or even worse, siblings unjustly seem to be clustered. The latter happens when the plotted position of the siblings coincides with the assigned hue values. For further research, it is worthwhile to improve the permutation and reversal method when Tree Colors are applied to treemaps and other two-dimensional visualization methods with an implicit tree structure.
 
-Finally, we would like to remark that although the HCL color has well defined perceptual properties, the total range of hue values is not perceived perfectly linear, especially around non-primary colors. This could introduce certain artifacts in the resulting color schemes. For instance, the blue node U in Figure~\ref{fig:graphSvy} (right) seems to be more distinct from its parent Y than its siblings I, G, and B. Such artifacts could be overcome by rotating the total hue range with the parameters $H_{start}$ and $H_{end}$.
+Further, we would like to remark that although the HCL color has well defined perceptual properties, the total range of hue values is not perceived perfectly linear, especially around non-primary colors. This could introduce certain artifacts in the resulting color schemes. For instance, the blue node U in Figure~\ref{fig:graphSvy} (right) seems to be more distinct from its parent Y than its siblings I, G, and B. Such artifacts could be overcome by rotating the total hue range with the parameters $H_{start}$ and $H_{end}$.
+
+Unfortunately, the Tree Colors method does not provide color schemes that are adequately perceived by people with color vision deficiency, since the perceptual properties of the HCL color space are lost on which the Tree Colors method is build on. 
 
 
 \acknowledgments{

@@ -123,8 +123,8 @@ t2[read_id] <- lapply(t2[read_id], function(x){
 
 
 u <- as.data.frame(do.call(rbind, t2[read_id]), row.names = NA)
-u$viz <- factor(c(rep("Graph", 4), rep("Treemap", 4), rep("Bar chart", 2)),
-                levels=c("Graph", "Treemap", "Bar chart"))
+u$viz <- factor(c(rep("Node-link diagram", 4), rep("Treemap", 4), rep("Bar chart", 2)),
+                levels=c("Node-link diagram", "Treemap", "Bar chart"))
 u$Dataset <- factor(c(1,1,2,2,1,1,2,2,1,2), levels=2:1)#c(1,1,2,2,4,4,3,3,5,6)
 #u$Dataset <- factor(c(1,1,2,2,4,4,3,3,5,6))
 u$VD <- factor(paste0(u$viz, ", dataset", u$Dataset))
@@ -151,6 +151,10 @@ require(plyr)
 pal <- brewer.pal(3, "RdYlGn")
 
 pal <- brewer.pal(6, "Dark2")[c(2,6,5)]
+library(tabplot)
+tabPal <- tablePalettes()
+pal <- tabPal$qual$Set1[c(1, 5, 4)]
+
 
 #pal[2] <- "#AAAAAA"
 
@@ -185,7 +189,7 @@ dev.off()
 ev_ind <- sort(c(ev_ind1, ev_ind2))
 
 v <- t[ev_ind]
-Viz <- c(rep("Graph", 3), rep("Treemap", 3), rep("Bar chart", 3))
+Viz <- c(rep("Node-link diagram", 3), rep("Treemap", 3), rep("Bar chart", 3))
 Subject <- rep(c("Prettiness", "Interpretation", "Overview"), 3)
 v <- mapply(function(x, v, s) {
     x1 <- x[, -3]
@@ -307,12 +311,12 @@ ggsave("./plots/user_study_results2.pdf", g2, width=4, height=2.5, scale=1.7)
 
 u <- t[c(4, 7, 13, 16, 21, 23)]
 u <- mapply(function(x, n, v) {
-    x$viz <- factor(n, levels=c("Graph", "Treemap", "Bar chart"))
+    x$viz <- factor(n, levels=c("Node-link diagram", "Treemap", "Bar chart"))
     x$version <- factor(v, levels=1:2)
     x[[2]] <- x[[2]]/sum(x[[2]])*100
     x[[3]] <- x[[3]]/sum(x[[3]])*100
     x        
-}, u, rep(c("Graph", "Treemap", "Bar chart"), each=2), c(1, 2, 1, 2, 1, 2), SIMPLIFY=FALSE)
+}, u, rep(c("Node-link diagram", "Treemap", "Bar chart"), each=2), c(1, 2, 1, 2, 1, 2), SIMPLIFY=FALSE)
 
 u <- do.call(rbind, u)
 uT <- u[,-2]

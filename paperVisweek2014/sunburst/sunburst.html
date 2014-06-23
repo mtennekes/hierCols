@@ -44,7 +44,7 @@ d3.json("sunburst.json", function(error, root) {
       .data(partition.nodes(root))
     .enter().append("path")
       .attr("d", arc)
-      .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
+      .style("fill", function(d) { return d.color /*color((d.children ? d : d.parent).name);*/ })
       .on("click", click);
  
   function click(d) {

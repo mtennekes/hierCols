@@ -105,7 +105,7 @@ Edwin de Jonge, Statistics Netherlands. E-mail: e.dejonge@cbs.nl.
 
 %% Abstract section.
 \abstract{
-We present a method to map tree structures to colors from the Hue-Chroma-Luminance color model, which is known for its well balanced perceptual properties. The Tree Colors method can be tuned with several parameters, whose effect on the resulting color palette is discussed in detail. We provide a free and open source implementation with sensible parameter defaults. Categorical data are very common in statistical graphics, and often these categories form a classification tree. We evaluate applying Tree Colors to tree structured data with a survey on a large group of users from a national statistical institute. Our user study suggests that tree color schemes are useful, not only for improving hierarchical visualizations such as treemaps and node-link diagrams, but also for unveiling tree structure in non-hierarchical visualizations. \changedE{Remarkably we find that the tree color scheme does not improve detection of parent-child relations in tree maps.}
+We present a method to map tree structures to colors from the Hue-Chroma-Luminance color model, which is known for its well balanced perceptual properties. The Tree Colors method can be tuned with several parameters, whose effect on the resulting color palette is discussed in detail. We provide a free and open source implementation with sensible parameter defaults. Categorical data are very common in statistical graphics, and often these categories form a classification tree. We evaluate applying Tree Colors to tree structured data with a survey on a large group of users from a national statistical institute. Our user study suggests that tree color schemes are useful, not only for improving hierarchical visualizations such as node-link diagrams, but also for unveiling tree structure in non-hierarchical visualizations. \changedE{Remarkably we find that the tree color scheme performs comparable to a standard color scheme and does not improve detection of parent-child relations in tree maps.}
 
 %Color is an important means to display categorical data in statistical graphics. Categories are often hierarchically structured in a classification tree, but most color palettes do not take this hierarchy into account. We present a method to map tree structures to colors from the Hue-Chroma-Luminance (HCL) color model. The HCL color space is known for its well balanced perceptual properties. Our study suggest that hierarchical qualitative color palettes are very useful, not only for improving standard hierarchical visualizations such as graphs and treemaps, but also for showing tree structures in non-hierarchical visualizations.
 } % end of abstract
@@ -158,7 +158,7 @@ We present a method to map tree structures to colors from the Hue-Chroma-Luminan
 
 \maketitle
 Data are often hierarchically structured. For example business data are typically broken down by economic activity and demographic data by geographic region. Several visual exploration methods of such data use the underlying hierarchical structure, for instance treemaps
-\cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the hierarchical structure would be very useful in supporting their visual analysis. \changedM{Such palettes could clarify the hierarchical structure of the data. Although this structure is often encoded in the layout, the use of hierarchical colors palettes could make the use of a hierarchical layout less necessary.} \changedE{Such palettes could clarify the chosen layout by emphasizing the tree structure of the data}.
+\cite{shneiderman1992,tennekes2011b}. Color palettes reflecting the hierarchical structure would be very useful in supporting their visual analysis. \changedM{Such palettes could clarify the hierarchical structure of the data. Although this structure is often encoded in the layout, the use of hierarchical colors palettes could make the use of a hierarchical layout less necessary.} \changedE{Such palettes could clarify the chosen layout by emphasizing the tree structure of the data: this makes it possible to relax a tree layout of a node-link diagram, having more space to place the nodes.}
 
 Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should minimize perceptual bias by preventing the suggestion of non-existent order or proximity. The selection of color palettes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color palettes are used, while for ordinal data, such as level of urbanization, sequential or diverging palettes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color palettes, to the best of our knowledge.
 
@@ -178,8 +178,18 @@ This paper is outlined as follows. In Section~\ref{secmethod} we describe the pr
 
 \section{Related work}
 \changedE{
-Although many tree visualizations are proposed in literature \cite{schulz2011}, most of them use color to a small extent. A visualization technique that uses color as a major attribute is InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned different hue values. The color of a parent node is derived by averaging the colors of its children, where larger branches have more weight. An implicit effect of this method is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches. Hierarchical color schemes are also applied to the Hyperbolic Wheel \cite{lam2012}, an exploration tool for hierarchical data.  These color schemes are abstracted from the Hue-Saturation-Lightness (HSL) space, where brightness decreases proportional from root to leaf nodes, and where child nodes inherit the hue values from their parent nodes and add small hue values to distinct them from their siblings. However, hue values of nodes in the same hierarchical layer may be overlapping.
+Several websites contain examples of visualizations that use color to encode tree structure. For example newsmap.jp 
+\cite{newsmap} aggregates news and presents a tree map of news to its users. The rectangle colors of the newsmap 
+indicate news type. IBM's Many Eyes \cite{manyeyes} also contains color schemes for treemaps that take hierarchy 
+into account. While there seems to be a need for tree color schemes, to the best of our knowledge no guidelines or 
+description are given in literature for constructing such palettes.
 }
+
+\changedE{
+Most tree visualizations proposed in literature \cite{schulz2011} use color to a small extent. A visualization technique that uses color as a major attribute is InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned different hue values. The color of a parent node is derived by averaging the colors of its children, where larger branches have more weight. An implicit effect of this method is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches. 
+Hierarchical color schemes are also applied to the Hyperbolic Wheel \cite{lam2012}, an exploration tool for hierarchical data.  These color schemes are abstracted from the Hue-Saturation-Lightness (HSL) space, where brightness decreases proportional from root to leaf nodes, and where child nodes inherit the hue values from their parent nodes and add small hue values to distinct them from their siblings. However, hue values of nodes in the same hierarchical layer may be overlapping.
+}
+%}
 
 \section{Method}\label{secmethod}
 Our method maps a tree structure on colors in HCL space, which is a transformation of the CIELUV color space, such that it reflects the hierarchical properties of the tree. We use the hue parameter $H$, with range [0, 360], for the tree structure, where the hue of each child node resembles the hue of its parent. The chroma and luminance parameters $C$ and $L$, both with range [0, 100], are used to discriminate the different hierarchical levels.
@@ -213,7 +223,7 @@ The root of a tree starts with hue range $r=[H_{start}=0, H_{end}=360]$:
 \item divide $r$ in $N$ equal parts $r_i$ with $i=1,\ldots,N$;
 \item if \texttt{perm} then permute the $r_i$'s;
 \item if \texttt{rev} then reverse the even-numbered $r_i$'s;
-\item reduce each $r_i$ by keeping it middle fraction $f$;
+\item reduce each $r_i$ by keeping its middle fraction $f$;
 \item for each child node $v_i$ DO AssignHue($v_i$, $r_i$, $f$, \texttt{perm}, \texttt{rev}).
 \end{enumerate}
 \end{enumerate}
@@ -235,7 +245,6 @@ ranges are by default (\texttt{perm=true}) permuted among the siblings.
 
 
 \changedM{The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. The permuted order is determined by equally spreading the siblings on a circle in the original order, and to pick the siblings at angles of 0 modulo 144 degrees. Notice that the difference of any two adjacent siblings in $[1, 3, 5, 2, 4]$ is exactly $2/5 * 360=144$ degrees, also between the last and the first sibling. For the cases where the number of siblings is not a multiple of five, the modulo angle is rounded down to the next sibling. It may occur that a sibling is picked twice while others have not yet been picked, for instance when 360 is a multiple of the rounded modulo angle. In these cases, the next sibling is picked and the process continues with the same picking angle. To illustrate this method, consider six siblings that are placed at 60 degrees from each other on a circle. The modulo angle will be rounded down to 120. Since this is a multiple of 360, the fourth sibling is picked at an angle of 60 instead of 0 degrees. Hence the picking angles in this case will be 0, 120, 240, 60, 180 and 300 degrees. For the three and four siblings case we use the permutations $[1, 3, 2]$ and $[1, 3, 2, 4]$ respectively to prevent a perceptual order of the siblings in these cases.}
-
 
 
 The permutations for three to twelve siblings for a hue range between 120 (green) and 240 (blue) are depicted in Figure~\ref{fig:perm}. Note that the order of the five-siblings case, which is [1, 3, 5, 2, 4], is the position of the siblings A, B, C, D, and E respectively. Therefore, the permutation of them is A, D, B, E, and C. 
@@ -590,7 +599,7 @@ Recall that the hue fraction, $f$, is a trade-off between discrimination of the 
 
 The interpretation of the node-link diagrams was experienced easier with Tree Colors except for the treemaps. This could be explained by level of difficulty of the visualization methods. Both node-link diagram and bar chart are easy to read visualization methods that the vast majority of the participants are familiar with. Therefore, people are able to see the benefits of the additional information that the Tree Colors provide over Main Branch Colors. However, treemaps are still largely unknown by the participants. Additional information provided by the applied color scheme could therefore be a little confusing.
 
-\changedM{By the small number of participants with a color deficiency, 10, we were unable to make statistical claims from their responses.}
+\changedM{By the small number of participants with a color deficiency, ($n=10$), we were unable to make statistical claims from their responses.} \changedE{But what are the results?}
 
 
 \section{Discussion}~\label{secdisc}
@@ -603,7 +612,7 @@ As for the hierarchical depth, we proposed a linear relation of depth with both 
 
 \changedM{The conducted user study in which Tree Colors are compared to standard qualitative color palettes, which we called Main Branch Colors, did not result in a clear victory for either of them. However, the user study provided some insightful results that could be useful for further research.}
 
-\changedM{Although most participants answered the questions regarding the node-link diagrams correctly for both color schemes, a large part of them found Tree Colors more helpful and could better interpret node-link diagrams with Tree Colors than with Main Branch colors. As a consequence, using Tree Colors for node-link diagrams could make a hierarchical layout of the nodes less necessary, therefore creating extra space for the placements of nodes and labels.}
+\changedM{Although most participants answered the questions regarding the node-link diagrams correctly for both color schemes, a large part of them found Tree Colors more helpful and could better interpret node-link diagrams with Tree Colors than with Main Branch colors. As a consequence, using Tree Colors for node-link diagrams could make a hierarchical layout of the nodes less strict, therefore creating extra space for the placements of nodes and labels.}
 
 Some participants had more difficulty to read treemaps with Tree Colors than with Main Branch Colors. One of the reasons is that people are not familiar with treemaps, making treemaps with Tree Colors even more complex. However, this is probably not the main explanation since Tree Colors should emphasize the tree structure that is already present in the treemap. Another, more valid argument is that permutation and reversals of hue ranges is developed particularly for linear and radial layouts. In these layouts, the hue values of adjacent nodes are discriminated, and even more when they have different parents. However, when the nodes are plotted in a two-dimensional space without explicit tree structure, such as treemaps, adjacent rectangles may get indistinguishable colors, or even worse, siblings unjustly seem to be clustered. The latter happens when the plotted position of the siblings coincides with the assigned hue values. For further research, it is worthwhile to improve the permutation and reversal method when Tree Colors are applied to treemaps and other two-dimensional visualization methods with an implicit tree structure.
 

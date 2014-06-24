@@ -153,7 +153,7 @@ pal <- brewer.pal(3, "RdYlGn")
 pal <- brewer.pal(6, "Dark2")[c(2,6,5)]
 library(tabplot)
 tabPal <- tablePalettes()
-pal <- tabPal$qual$Set1[c(1, 5, 4)]
+pal <- tabPal$qual$Set1[c(1, 5, 2)]
 
 
 #pal[2] <- "#AAAAAA"

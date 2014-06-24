@@ -8,10 +8,19 @@
 \begin{letter}{InfoVis 2014 \\ dr. M. Tory, University of Victoria \\ dr. J. Heer, University of Washington \\ prof. H. Hauser, University of Bergen}
 \opening{Dear dr. Tory, dr. Heer, and prof. Hauser,}
 
-We would like to thank you for the conditionally acceptance of our manuscript for publication in the IEEE TVCG. Furthermore, we would like express our thankfulness towards the reviewers whose profound and insightful feedback enabled us to improve our manuscript substantially. In this letter, we summarize the changes we have made to the manuscript.
+We would like to thank you for the conditionally acceptance of our manuscript for publication in the IEEE TVCG. Furthermore, we would like express our thankfulness towards the reviewers whose profound and constructive feedback enabled us to improve our manuscript substantially.
 
+We have fixed all grammatical issues, typos, and confusing terminology addressed by the reviewers, including the supplementary documents. Obviously, we rechecked to the whole document carefully on remaining grammatical and presentation issues. We also took care of the formatting requirements.
 
-First, we had fixed all grammatical issues and typos addressed by the reviewers. Obviously, we rechecked to the whole document carefully on remaining grammatical errors and typos.
+In the appendices (on the next pages), we summarize the changes we have made to the manuscript other than the grammatical issues and typos. We improved the manuscript on all eight points listed by the primary reviewer in The Summary Review. Those changes are described in Appendix A. In Appendix B, we describe the remaining changes we have made.
+
+Again, we thank the reviewers for their constructive and careful comments. We hope that the revised manuscript is accepted for publication.
+
+\closing{Sincerely,}
+
+\ps
+\newpage
+\noindent{\large \textbf{Appendix A}} \\
 
 We have improved the paper regarding all main issues listed by the primary reviewer (Review 2):
 
@@ -25,13 +34,21 @@ We have improved the paper regarding all main issues listed by the primary revie
 \item[Presentation problems] We took care of all presentation problems addressed by Review 2.
 \end{description}
 
-Below we describe the other changes we have made:
+\newpage
+\noindent{\large \textbf{Appendix B}} \\
+
+The other changes we have made are the following:
 
 \begin{description}
 \item[Picking angle] We described the permutation step of the algorimth better, and illustrated it with a short example (section 3.1.1, paragraph 2). The reason to chose 144 degrees over the golden angle of 137,5 degrees is that, contrary to the blog post addressed by Review 1, the angle is rounded down to the next sibling. In the case of 5 siblings, the golden angle will be rounded down to 72, resulting in the unwanted permutation order of [1, 2, 3, 4, 5]. Notice that in most cases the golden angle and the angle of 144 degrees will be rounded down to the same angle.
 \item[Scalability] In section 7, last paragraph, we discussed to what extend Tree Colors are usefull for larger datasets, which is questioned by Review 2 and Review 4.
 \item[User study evaluation charts] In accordance with Review 3, we improved the color scheme used in the user study evaluation charts (Figure 20 and 21). We used the proposed color scheme by Okabe and Ito (2002) that is designed for people with low color vision. Reviewer 1 was confused by Figure 21. In section 6.2, paragraph 6, we described this figure as a diverging stacked bar chart. Since this type of chart is very common for preference and Likert scales, we did not explain it any further.
 \item[Variety of visualization approaches] As suggested by Review 3, we improved the case study by adding a different hierarchical visualization approach. We added a sunburst diagram, a radial icicle plot, that distributes the space better than the layered icicle plot (i.e., there is more space available for the numerous leaf nodes). To satisfy the page limits, we placed this sunburst diagram in Figure 14, replacing node-link diagram with the Kamada-Kawai layout.
+\end{description}
+
+Finally, we have made some minor changes:
+\begin{description}
+\item[Color \textit{schemes} or \textit{palettes}] We noticed that we had used both \textit{color palette(s)} and \textit{color scheme(s)} throughout the manuscript. To be consistent, we changed all instancens of \textit{color palette(s)} to \textit{color scheme(s)}, which is in line with the manuscript title.
 \end{description}
 
 
@@ -42,6 +59,6 @@ Below we describe the other changes we have made:
 
 
 
-\closing{Sincerely,}
+
 \end{letter}
 \end{document}

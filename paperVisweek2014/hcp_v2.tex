@@ -426,14 +426,18 @@ The node-link diagrams in this paper are also created with the \texttt{treemap} 
 
 \changedM{In this section, we discuss the application of Tree Colors to tree visualizations with real-world statistical data.}
 
-\subsection{Econommic activity}
+\subsection{Economic activity}
 
 National statistics on business enterprises are often published per economic sector. Economic sectors are typically structured hierarchically. For instance, the class of bakeries may have a parent class food manufacturers, which in turn is a child of the class of manufacturers. All member states of the European Union use same classification system of economic activity, namely the \textit{Nomenclature statistique des activit\'es \'economiques dans la Communaut\'e europ\'eenne} (NACE) system~\cite{nace}. This system has 21 main economic sectors and consists of four hierarchical layers.
 
-In Figure~\ref{fig:graphFRApp}, the NACE labels of the sector G, wholesale and retail trade, are depicted by a node-link diagram with the Fruchterman-Reingold layout algortihm~\cite{Fruchterman91}. In our opinion, Tree Colors help to clarify the tree structure.
+In Figure~\ref{fig:graphFRApp}, the NACE labels of the sector G, wholesale and retail trade, are depicted by a node-link diagram with the Fruchterman-Reingold layout algortihm~\cite{Fruchterman91}. \changedE{Other layout algorithms e.g. Kamada-Kawai~\cite{Kamada89} typically better express tree structure but at the cost of having less space per node. Using Tree colors allows for a more spaced-out layout scheme by expressing tree structure in color. Our color scheme helps to balance between space per node and expressing tree structure.
+}
+%In our opinion, Tree Colors help to clarify the tree structure.
 
-
-Figure~\ref{fig:graphKKApp} shows the same diagram with a different layout using the Kamada-Kawai algorithm~\cite{Kamada89}. In comparison to the Figure~\ref{fig:graphFRApp}, the leaf nodes are more clustered in space by the Kamada-Kawai algorithm. This may clarify the tree structure better, but at the cost of possible artifacts. In this case there are two crossed edges, namely 465-4652 and 464-4643. The Tree Colors of the corresponding nodes help to discriminate the two local branches that overlap in layout.
+\changedE{
+Figure~\ref{fig:sunburst} shows the same data set in a sunburst layout~\ref{} with tree colors in which the size of the arcs corresponds to turnover. Typically a sunburst plot, which is a radial version of a layer icicle plot\ref{}, repeats the same qualitative color scheme for child nodes: sibling nodes have different colors, but their children use the same color palette. This makes siblings more distinct, but counters the tree structure. In contrast tree colors better show the structure of the data.
+}
+%Figure~\ref{fig:graphKKApp} shows the same diagram with a different layout using the Kamada-Kawai algorithm~\cite{Kamada89}. In comparison to the Figure~\ref{fig:graphFRApp}, the leaf nodes are more clustered in space by the Kamada-Kawai algorithm. This may clarify the tree structure better, but at the cost of possible artifacts. In this case there are two crossed edges, namely 465-4652 and 464-4643. The Tree Colors of the corresponding nodes help to discriminate the two local branches that overlap in layout.
 
 \begin{figure}[t]
   \centering
@@ -442,10 +446,16 @@ Figure~\ref{fig:graphKKApp} shows the same diagram with a different layout using
 \end{figure}
 
 
+%\begin{figure}[!b]
+%  \centering
+%  \includegraphics[width=3.5in]{Gbusiness_KK.pdf}
+%  \caption{Node-link diagram of all wholesale and retail trade NACE labels produced by the Kamada-Kawai layout algorithm}\label{fig:graphKKApp}
+%\end{figure}
+
 \begin{figure}[!b]
   \centering
-  \includegraphics[width=3.5in]{Gbusiness_KK.pdf}
-  \caption{Node-link diagram of all wholesale and retail trade NACE labels produced by the Kamada-Kawai layout algorithm}\label{fig:graphKKApp}
+  \includegraphics[width=3.5in]{sunburst/sunburst.pdf}
+  \caption{Sunburst diagram with tree color scheme.}\label{fig:sunburst}
 \end{figure}
 
 One of the largest European statistics that uses the NACE system are the Structural Business Statistics (SBS) that cover industry, construction, trade, and services. The main target variables are turnover, number of persons employed, total purchases, and financial result. These statistics are produced for the entire European Union. However, the applied production method which include data collection, editing, analyses and estimation may vary from country to country, depending on the budget, legislation, and the availability of administrative data sources such as tax data and the chamber of commerce. As for the Netherlands, data from small enterprises, i.e., less than 10 employees, are taken directly from tax administrations, data from medium enterprises (up to 50 employees) are taken from a sample survey, and data from large enterprises (50 employees or more) are taken from a full sample survey~\cite{cbsSBS}.

@@ -12,12 +12,6 @@ path {
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
 
-function computeTextRotation(d) {
-  var angle = x(d.x + d.dx / 2) - Math.PI / 2;
-  return angle / Math.PI * 180;
-}
-
-
 var width = 960,
     height = 700,
     radius = Math.min(width, height) / 2;
@@ -56,13 +50,21 @@ d3.json("sunburst.json", function(error, root) {
       .on("click", click);
       
   var text = g.append("text")
-      .attr("x", function(d) { return y(d.y); })
-      .attr("dx", "6") // margin
-      .attr("dy", ".35em") // vertical-align
+      .attr("x", function(d) { if (d.name == "G"){return 0} else return y(d.y + d.dy/2); })
+      //.attr("dx", "5") // margin
+      //.attr("dy", ".35em") // vertical-align
+      .attr("fill-opacity", "0.8")
+      .attr("font-size", "12")
+      .style("text-anchor", "middle")
       .text(function(d) { return d.name; });
      
-  
-  text.attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; });
+function computeTextRotation(d) {
+  var angle = x(d.x + d.dx / 2) - Math.PI / 2;
+  return angle / Math.PI * 180;
+}
+
+  text.filter(function(d){return d.name != "G"})
+  .attr("transform", function(d) { return "rotate(" + computeTextRotation(d) + ")"; });
 
 function click(d) {
  text.transition().attr("opacity", 0);

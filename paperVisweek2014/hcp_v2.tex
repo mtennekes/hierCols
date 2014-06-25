@@ -105,7 +105,7 @@ Edwin de Jonge, Statistics Netherlands. E-mail: e.dejonge@cbs.nl.
 
 %% Abstract section.
 \abstract{
-We present a method to map tree structures to colors from the Hue-Chroma-Luminance color model, which is known for its well balanced perceptual properties. The Tree Colors method can be tuned with several parameters, whose effect on the resulting color schemes is discussed in detail. We provide a free and open source implementation with sensible parameter defaults. Categorical data are very common in statistical graphics, and often these categories form a classification tree. We evaluate applying Tree Colors to tree structured data with a survey on a large group of users from a national statistical institute. Our user study suggests that tree color schemes are useful, not only for improving hierarchical visualizations such as node-link diagrams, but also for unveiling tree structure in non-hierarchical visualizations. \changedM{Remarkably we find that Tree Colors do not improve detection of parent-child relations in treemaps in comparison to standard color schemes.} %\changedE{Remarkably we find that the tree color scheme performs comparable to a standard color scheme and does not improve detection of parent-child relations in tree maps.}
+We present a method to map tree structures to colors from the Hue-Chroma-Luminance color model, which is known for its well balanced perceptual properties. The Tree Colors method can be tuned with several parameters, whose effect on the resulting color schemes is discussed in detail. We provide a free and open source implementation with sensible parameter defaults. Categorical data are very common in statistical graphics, and often these categories form a classification tree. We evaluate applying Tree Colors to tree structured data with a survey on a large group of users from a national statistical institute. Our user study suggests that tree color schemes are useful, not only for improving hierarchical visualizations such as node-link diagrams, but also for unveiling tree structure in non-hierarchical visualizations. Remarkably we find that Tree Colors do not improve detection of parent-child relations in treemaps in comparison to standard color schemes. %\changedE{Remarkably we find that the tree color scheme performs comparable to a standard color scheme and does not improve detection of parent-child relations in tree maps.}
 
 %Color is an important means to display categorical data in statistical graphics. Categories are often hierarchically structured in a classification tree, but most color palettes do not take this hierarchy into account. We present a method to map tree structures to colors from the Hue-Chroma-Luminance (HCL) color model. The HCL color space is known for its well balanced perceptual properties. Our study suggest that hierarchical qualitative color palettes are very useful, not only for improving standard hierarchical visualizations such as graphs and treemaps, but also for showing tree structures in non-hierarchical visualizations.
 } % end of abstract
@@ -160,7 +160,7 @@ We present a method to map tree structures to colors from the Hue-Chroma-Luminan
 Data are often hierarchically structured. For example business data are typically broken down by economic activity and demographic data by geographic region. Several visual exploration methods of such data use the underlying hierarchical structure, for instance treemaps
 \cite{shneiderman1992,tennekes2011b}. Color schemes reflecting the hierarchical structure would be very useful in supporting their visual analysis. 
 %\changedM{Such palettes could clarify the hierarchical structure of the data. Although this structure is often encoded in the layout, the use of hierarchical colors palettes could make the use of a hierarchical layout less necessary.} \changedE{Such palettes could clarify the chosen layout by emphasizing the tree structure of the data: this makes it possible to relax a tree layout of a node-link diagram, having more space to place the nodes.} 
-\changedM{Such color schemes could clarify the chosen layout by emphasizing the tree structure of the data. For node-link diagrams, this makes it possible to relax a tree layout, having more space to place the nodes and labels.}
+Such color schemes could clarify the chosen layout by emphasizing the tree structure of the data. For node-link diagrams, this makes it possible to relax a tree layout, having more space to place the nodes and labels.
 
 Assigning colors to categories is far from trivial. On the one hand, qualitative colors should be distinct, but on the other hand they should minimize perceptual bias by preventing the suggestion of non-existent order or proximity. The selection of color schemes for categorical data first depends on the type of data. For nominal data, such as gender or nationality, qualitative color schemes are used, while for ordinal data, such as level of urbanization, sequential or diverging color schemes are used \cite{brewer03, zeileis2009}. However, for hierarchical categories there are no specific guidelines for selecting color schemes, to the best of our knowledge.
 
@@ -169,28 +169,25 @@ Assigning colors to categories is far from trivial. On the one hand, qualitative
 %Third and last the hierarchical depth of a node should be encoded in its color.
  
 %\changedE{Our desired tree color scheme should have the following properties. First it is a qualitative color scheme that assigns a unique and distinct color to each node of the tree with no perceived order in nodes \cite{brewer03, zeileis2009}. Second, to encode parent-child relations, the color of each node is similar to its parent. Third and last, the depth of a node is reflected in the color of a node. By transitivity the last two properties result in similar colors for siblings.}
-\changedM{We have designed a hierarchical color scheme with the following properties in mind. First it is a qualitative color scheme that assigns a unique and distinct color to each node of the tree with no perceived order in nodes \cite{brewer03, zeileis2009}. Second, to encode parent-child relations, the color of each node is similar to its parent. Third and last, the depth of a node is reflected in the color of a node. By transitivity the last two properties result in similar colors for siblings.}
+We have designed a hierarchical color scheme with the following properties in mind. First it is a qualitative color scheme that assigns a unique and distinct color to each node of the tree with no perceived order in nodes \cite{brewer03, zeileis2009}. Second, to encode parent-child relations, the color of each node is similar to its parent. Third and last, the depth of a node is reflected in the color of a node. By transitivity the last two properties result in similar colors for siblings.
 
 The color schemes that are generated by our proposed method are called Tree Colors. To ensure well
 balanced perceptual properties, we use the Hue-Chroma-Luminance (HCL) space, a transformation of the CIELUV color space, that is designed with the aim to control human color perception~\cite{ihaka2003}. Colors with different hue values are perceptually uniform in colorfulness and brightness, which does not hold for the popular Hue-Saturation-Value (HSV) and HSL color spaces~\cite{zeileis2009}.
 
-\changedM{We evaluated the Tree Colors method with a user study by comparing it to a color scheme with a distinct colors for each main branch of the tree. The results of this study provided evidence that Tree Colors can be effective in tree visualizations, especially in tree structured node-link diagrams. However, the results regarding two dimensional visualizations are mixed, and therefore additional research in this area is needed}
+We evaluated the Tree Colors method with a user study by comparing it to a color scheme with a distinct colors for each main branch of the tree. The results of this study provided evidence that Tree Colors can be effective in tree visualizations, especially in tree structured node-link diagrams. However, the results regarding two dimensional visualizations are mixed, and therefore additional research in this area is needed
 
 This paper is outlined as follows. In Section~\ref{secmethod} we describe the proposed method. We provide several applications of statistical graphics that use Tree Colors in Section~\ref{secapplication}. The conducted user study is described in Section~\ref{secuser}. We conclude with a discussion in Section~\ref{secdisc}.
 
 \section{Related work}
-\changedE{
 Several websites contain examples of visualizations that use color to encode tree structure. For example newsmap.jp 
 \cite{newsmap} aggregates news and presents a tree map of news to its users. The rectangle colors of the newsmap 
 indicate news type. IBM's Many Eyes \cite{manyeyes} also contains color schemes for treemaps that take hierarchy 
 into account. While there seems to be a need for tree color schemes, to the best of our knowledge no guidelines or 
 description are given in literature for constructing such color schemes.
-} \E
+\E : \textbf{comparison with Tree Colors}
 
-\changedE{
 Most tree visualizations proposed in literature \cite{schulz2011} use color to a small extent. A visualization technique that uses color as a major attribute is InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned different hue values. The color of a parent node is derived by averaging the colors of its children, where larger branches have more weight. An implicit effect of this method is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches. 
 Hierarchical color schemes are also applied to the Hyperbolic Wheel \cite{lam2012}, an exploration tool for hierarchical data.  These color schemes are abstracted from the Hue-Saturation-Lightness (HSL) space, where brightness decreases proportional from root to leaf nodes, and where child nodes inherit the hue values from their parent nodes and add small hue values to distinct them from their siblings. However, hue values of nodes in the same hierarchical layer may be overlapping.
-}
 %}
 
 \section{Method}\label{secmethod}
@@ -236,9 +233,9 @@ The root of a tree starts with hue range $r=[H_{start}=0, H_{end}=360]$:
   \caption{Assignment of hue values.}\label{fig:wheel}
 \end{figure}
 
-This algorithm is illustrated in Figure~\ref{fig:wheel}. In (a) the full hue range (for a constant $C=60$ and $L=70$)  is split in three equal parts, since the root node has three children. \changedM{Of each part, only the middle fractions ($f$, with a default value of 0.75) are kept in (b) and assigned to A, B, and C. For example, from the part between 0 to 120 degrees, only the $120*0.75=90$ degrees in the middle, so from 15 to 105 degrees, are kept and assigned to A.} In (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
+This algorithm is illustrated in Figure~\ref{fig:wheel}. In (a) the full hue range (for a constant $C=60$ and $L=70$)  is split in three equal parts, since the root node has three children. Of each part, only the middle fractions ($f$, with a default value of 0.75) are kept in (b) and assigned to A, B, and C. For example, from the part between 0 to 120 degrees, only the $120*0.75=90$ degrees in the middle, so from 15 to 105 degrees, are kept and assigned to A. In (c) and (d) these steps are recursively taken for the deepest two hierarchical layers.
 
-\subsubsection{Hue permutations and reversals}
+\subsubsection{Hue permutations and reversals}\label{sechueperm}
 
 In most hierarchical structures, there is no order between siblings. 
 When the nodes in such structure are plotted in a linear or radial layout, 
@@ -246,7 +243,7 @@ the colors of the siblings should not introduce a perceptual order. Therefore, t
 ranges are by default (\texttt{perm=true}) permuted among the siblings. 
 
 
-\changedM{The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. The permuted order is determined by equally spreading the siblings on a circle in the original order, and to pick the siblings at angles of 0 modulo 144 degrees. Notice that the difference of any two adjacent siblings in $[1, 3, 5, 2, 4]$ is exactly $2/5 * 360=144$ degrees, also between the last and the first sibling. For the cases where the number of siblings is not a multiple of five, the modulo angle is rounded down to the next sibling. It may occur that a sibling is picked twice while others have not yet been picked, for instance when 360 is a multiple of the rounded modulo angle. In these cases, the next sibling is picked and the process continues with the same picking angle. To illustrate this method, consider six siblings that are placed at 60 degrees from each other on a circle. The modulo angle will be rounded down to 120. Since this is a multiple of 360, the fourth sibling is picked at an angle of 60 instead of 0 degrees. Hence the picking angles in this case will be 0, 120, 240, 60, 180 and 300 degrees. For the three and four siblings case we use the permutations $[1, 3, 2]$ and $[1, 3, 2, 4]$ respectively to prevent a perceptual order of the siblings in these cases.}
+The used permutation order is based on the five-elements-permutation $[1, 3, 5, 2, 4]$. The permuted order is determined by equally spreading the siblings on a circle in the original order, and to pick the siblings at angles of 0 modulo 144 degrees. Notice that the difference of any two adjacent siblings in $[1, 3, 5, 2, 4]$ is exactly $2/5 * 360=144$ degrees, also between the last and the first sibling. For the cases where the number of siblings is not a multiple of five, the modulo angle is rounded down to the next sibling. It may occur that a sibling is picked twice while others have not yet been picked, for instance when 360 is a multiple of the rounded modulo angle. In these cases, the next sibling is picked and the process continues with the same picking angle. To illustrate this method, consider six siblings that are placed at 60 degrees from each other on a circle. The modulo angle will be rounded down to 120. Since this is a multiple of 360, the fourth sibling is picked at an angle of 60 instead of 0 degrees. Hence the picking angles in this case will be 0, 120, 240, 60, 180 and 300 degrees. For the three and four siblings case we use the permutations $[1, 3, 2]$ and $[1, 3, 2, 4]$ respectively to prevent a perceptual order of the siblings in these cases.
 
 
 The permutations for three to twelve siblings for a hue range between 120 (green) and 240 (blue) are depicted in Figure~\ref{fig:perm}. Note that the order of the five-siblings case, which is [1, 3, 5, 2, 4], is the position of the siblings A, B, C, D, and E respectively. Therefore, the permutation of them is A, D, B, E, and C. 
@@ -274,6 +271,8 @@ form a gradual hue circle with only small hue gaps between branches, which are c
 
 \end{figure}
 
+
+The permutations and reversals of hue ranges is developed particularly for visualization methods in which sibling nodes are arranged linearly or radially. However, when sibling nodes are arranged differently, for instance in treemaps, the coloring of sibing nodes may appear random. Therefore, adjacent nodes might get indistinguishable colors in such visualizations.
 
 \subsubsection{Hue fraction}\label{secf}
 
@@ -392,16 +391,16 @@ Chroma slope value 		& $\beta^C$ &     & 5   & -5    \\
 \caption{Parameters of the Tree Colors method.}\label{table:param}
 \end{table}
 
-\subsection{\changedM{Color vision deficiency}}
-\changedM{Although Tree Colors were not developed with color blindness in mind, it is important to know whether Tree Colors could be perceived adequately by people with a color vision deficiency, because there are many such people~\cite{birch12}.}
+\subsection{Color vision deficiency}
+Although Tree Colors were not developed with color blindness in mind, it is important to know whether Tree Colors could be perceived adequately by people with a color vision deficiency, because there are many such people~\cite{birch12}.
 
-\changedM{People with normal color vision, called trichromates, perceive colors by three classes of cone opsins, the L-, S-, and L-cone opsins, that have absorption peaks at short (bluish), medium (greenish),  respectively long (reddish) wavelengths. Colorblind people only have two classes of cone opsins, and are therefore called dichromats. It may also occur that people have all three classes of cone opsins, but that the absorption peaks of two of them are shifted closer together than normal. Those people, called anomalous trichromats, are able to see the full color spectrum, but have difficulty distinguishing particular colors.}
+People with normal color vision, called trichromates, perceive colors by three classes of cone opsins, the L-, S-, and L-cone opsins, that have absorption peaks at short (bluish), medium (greenish),  respectively long (reddish) wavelengths. Colorblind people only have two classes of cone opsins, and are therefore called dichromats. It may also occur that people have all three classes of cone opsins, but that the absorption peaks of two of them are shifted closer together than normal. Those people, called anomalous trichromats, are able to see the full color spectrum, but have difficulty distinguishing particular colors.
 
 %Color vision deficiency is caused by the disfunctioning of one of the three type of cone cells by which people normally perceive colors. The three type of cone cells correspond one to one to the perception of the three primary colors red, green, and blue. People with normal color vision, trichromats, perceive any color as a mixture of the three types of cone cells, whereas people with a non-functional type of cone cell, dichromats, use a mixture of the two remaining types of cone cells to perceive colors. People with a partly disfunctional type of cone cell are called anomalous trichromats. They require more light of the corresponding primary color wavelength in order to perceive colors normally.
 
-\changedM{People with color vision deficiency cannot easily differentiate colors with different hue values. Especially distinction between reddish and greenish colors are often problematic for them. If this would be the only obstacle for them to use Tree Colors, a straightforward solution would be to adjust the Tree Colors method by omitting these problematic hue ranges. However, there is a more fundamental problem for people with color vision deficiency. Since the adaption of colors by cone opsins is approximately logarithmic rather than linear, dichromacy or anomalous trichromacy will result in losing the perceptual properties of the HCL color space. In other words, people with a color vision deficiency may not perceive colors with different hue values and constant luminance and chroma values as equally bright and saturated.}
+People with color vision deficiency cannot easily differentiate colors with different hue values. Especially distinction between reddish and greenish colors are often problematic for them. If this would be the only obstacle for them to use Tree Colors, a straightforward solution would be to adjust the Tree Colors method by omitting these problematic hue ranges. However, there is a more fundamental problem for people with color vision deficiency. Since the adaption of colors by cone opsins is approximately logarithmic rather than linear, dichromacy or anomalous trichromacy will result in losing the perceptual properties of the HCL color space. In other words, people with a color vision deficiency may not perceive colors with different hue values and constant luminance and chroma values as equally bright and saturated.
 
-\changedM{Figure~\ref{fig:colblind} shows how people with color vision deficiency would probably see the full hue cycle depicted in Figure~\ref{fig:wheel}(a). These simulated plot are created with free software tool Chrometric~\cite{chrometric}. The left-hand side plot shows how the full hue circle is seen by anomalous trichromats with deuteranomaly, the most common type of color vision deficiency, where colors of medium wavelength (greenish) colors are not perceived well. Although all hue values seem to be distinguishable, the colors do not seem to be perceived equally bright and saturated. The plot on the right-hand side is seen by dichromats with protanopia, where the long wavelength (reddish) colors are not perceived. Not only the diversity of hue values is reduced, the colors also have a large variation in brightness and saturation.} 
+Figure~\ref{fig:colblind} shows how people with color vision deficiency would probably see the full hue cycle depicted in Figure~\ref{fig:wheel}(a). These simulated plot are created with free software tool Chrometric~\cite{chrometric}. The left-hand side plot shows how the full hue circle is seen by anomalous trichromats with deuteranomaly, the most common type of color vision deficiency, where colors of medium wavelength (greenish) colors are not perceived well. Although all hue values seem to be distinguishable, the colors do not seem to be perceived equally bright and saturated. The plot on the right-hand side is seen by dichromats with protanopia, where the long wavelength (reddish) colors are not perceived. Not only the diversity of hue values is reduced, the colors also have a large variation in brightness and saturation.
 
 \begin{figure}[tb]
   \centering
@@ -413,11 +412,9 @@ Chroma slope value 		& $\beta^C$ &     & 5   & -5    \\
 
 \section{Software}
 
-The Tree Colors method is implemented in the \texttt{treemap} package~\cite{treemap} of the statistical software environment R~\cite{r2013} and can be downloaded from The Comprehensive R Archive Network (CRAN). All treemaps in this paper are created directly with this package, without post-processing. The implemented layout algorithms are the ordered treemap layout algorithm (pivot by size)~\cite{Bederson2002} and the squarified treemap layout algorithm~\cite{bruls99}. By default, Tree Colors are used to emphasize the hierarchical structure of the data. However, the color attribute can also be used for a second variable or to compare two hierarchical datasets~\cite{tennekes2011b}. 
+The Tree Colors method is implemented in the \texttt{treemap} package~\cite{treemap} of the statistical software environment R~\cite{r2013} and can be downloaded from The Comprehensive R Archive Network (CRAN). All treemaps in this paper are created directly with this package, without post-processing. The implemented layout algorithms are the ordered treemap layout algorithm (pivot by size)~\cite{Bederson2002} and the squarified treemap layout algorithm~\cite{bruls99}. By default, Tree Colors are used to emphasize the hierarchical structure of the data. However, the color attribute can also be used for a second variable or to compare two hierarchical datasets~\cite{tennekes2011b}. The node-link diagrams in this paper are also created with the \texttt{treemap} package. The layout of the nodes are processed with the dependency package \texttt{igraph}~\cite{igraph}.
 
-The node-link diagrams in this paper are also created with the \texttt{treemap} package. The layout of the nodes are processed with the dependency package \texttt{igraph}~\cite{igraph}.
-
-\changedM{To visualize Tree Colors and to tune its parameters the \texttt{treemap} package contains an interactive tool called \texttt{treecolors}. With this tool, users can create random tree structured data, and experiment with the parameters. Four visualizations can be shown}: two node-link diagrams (Reingold-Tilford and Fruchterman-Reingold), a treemap and a bar chart. It also provides a table of the data that includes the color values in hexadecimal format and the HCL values of all tree nodes.
+To visualize Tree Colors and to tune its parameters, the \texttt{treemap} package contains an interactive tool called \texttt{treecolors}. With this tool, users can create random tree structured data, and experiment with the parameters. Four visualizations can be shown: two node-link diagrams (Reingold-Tilford and Fruchterman-Reingold), a treemap and a bar chart. It also provides a table of the data that includes the color values in hexadecimal format and the HCL values of all tree nodes.
 
 
 %\afterpage{\clearpage}
@@ -425,25 +422,29 @@ The node-link diagrams in this paper are also created with the \texttt{treemap} 
 
 \section{Applications}\label{secapplication}
 
-\changedM{In this section, we discuss the application of Tree Colors to tree visualizations with real-world statistical data.}
+In this section, we discuss the application of Tree Colors to tree visualizations with real-world statistical data.
 
 \subsection{Economic activity}
 
-National statistics on business enterprises are often published per economic sector. Economic sectors are typically structured hierarchically. For instance, the class of bakeries may have a parent class food manufacturers, which in turn is a child of the class of manufacturers. All member states of the European Union use same classification system of economic activity, namely the \textit{Nomenclature statistique des activit\'es \'economiques dans la Communaut\'e europ\'eenne} (NACE) system~\cite{nace}. This system has 21 main economic sectors and consists of four hierarchical layers.
+The \textit{Nomenclature statistique des activit\'es \'economiques dans la Communaut\'e europ\'eenne} (NACE)~\cite{nace} is a classification system of economic activicy that is often used for national statistics on business enterprises. In Figure~\ref{fig:graphFRApp}, the NACE labels of the sector G, wholesale and retail trade, are depicted by a node-link diagram with the Fruchterman-Reingold layout algortihm~\cite{Fruchterman91}. Other layout algorithms, e.g. Kamada-Kawai~\cite{Kamada89}, typically better express the tree structure but at the cost of having less space per node. Using Tree colors allows for a more spaced-out layout scheme by expressing tree structure in color.
 
-In Figure~\ref{fig:graphFRApp}, the NACE labels of the sector G, wholesale and retail trade, are depicted by a node-link diagram with the Fruchterman-Reingold layout algortihm~\cite{Fruchterman91}. \changedE{Other layout algorithms e.g. Kamada-Kawai~\cite{Kamada89} typically better express tree structure but at the cost of having less space per node. Using Tree colors allows for a more spaced-out layout scheme by expressing tree structure in color. Our color scheme helps to balance between space per node and expressing tree structure.
-}
-%In our opinion, Tree Colors help to clarify the tree structure.
+%National statistics on business enterprises are often published per economic sector. Economic sectors are typically structured hierarchically. For instance, the class of bakeries may have a parent class food manufacturers, which in turn is a child of the class of manufacturers. All member states of the European Union use same classification system of economic activity, namely the \textit{Nomenclature statistique des activit\'es \'economiques dans la Communaut\'e europ\'eenne} (NACE) system~\cite{nace}. This system has 21 main economic sectors and consists of four hierarchical layers.
 
-\changedE{
-Figure~\ref{fig:sunburst} shows the same data set in a sunburst layout~\ref{} with tree colors in which the size of the arcs corresponds to turnover. Typically a sunburst plot, which is a radial version of a layer icicle plot\ref{}, repeats the same qualitative color scheme for child nodes: sibling nodes have different colors, but their children use the same color palette. This makes siblings more distinct, but counters the tree structure. In contrast tree colors better show the structure of the data.
-}
+Figure~\ref{fig:sunburst} shows the net turnover of the Dutch wholesale and retail trade enterprises in 2011~\cite{cbsSBS} in a sunburst layout~\ref{} with Tree Colors. The angle of the arcs corresponds to net turnover. Typically a sunburst plot, which is a radial version of a layer icicle plot\ref{}, repeats the same qualitative color scheme for child nodes: sibling nodes have different colors, but their children use the same color scheme. This makes siblings more distinct, but counters the tree structure. In contrast, Tree Colors better show the structure of the data.
+
+
+In Figure~\ref{fig:treemapApp}, the same dataset is visualized by a treemap. The Tree Colors of the non-leaf nodes are used for the text label
+ backgrounds. Notice that the colors of the third NACE layer nodes, for instance the pink colored 466, are brighter than the colors of the other leaf nodes. The depth of leaf nodes is more difficult to observe in treemaps than in other visualization methods such as a sunburst diagram, apart from the used color schemes.
+
+
+% The number of digits in the category names represent the hierarchical layer. Each of the three main branches of this sector (45, 46 and 47) clearly has a distinct hue range. Furthermore, some leaf nodes, for instance the pink colored 466, are a brighter than others, because they represent the third rather than the fourth NACE layer.}
+
 %Figure~\ref{fig:graphKKApp} shows the same diagram with a different layout using the Kamada-Kawai algorithm~\cite{Kamada89}. In comparison to the Figure~\ref{fig:graphFRApp}, the leaf nodes are more clustered in space by the Kamada-Kawai algorithm. This may clarify the tree structure better, but at the cost of possible artifacts. In this case there are two crossed edges, namely 465-4652 and 464-4643. The Tree Colors of the corresponding nodes help to discriminate the two local branches that overlap in layout.
 
 \begin{figure}[t]
   \centering
   \includegraphics[width=3.5in]{Gbusiness_FR.pdf}
-  \caption{Node-link diagram of all wholesale and retail trade NACE labels produced by the Fruchterman-Reingold layout algorithm}\label{fig:graphFRApp}
+  \caption{Node-link diagram of all wholesale and retail trade NACE labels produced by the Fruchterman-Reingold layout algorithm.}\label{fig:graphFRApp}
 \end{figure}
 
 
@@ -456,26 +457,26 @@ Figure~\ref{fig:sunburst} shows the same data set in a sunburst layout~\ref{} wi
 \begin{figure}[!b]
   \centering
   \includegraphics[width=3.5in]{sunburst/sunburst.pdf}
-  \caption{Sunburst diagram with tree color scheme.}\label{fig:sunburst}
+  \caption{Sunburst diagram with Tree Colors.\E \textbf{: adjust labels}}\label{fig:sunburst}
 \end{figure}
 
-One of the largest European statistics that uses the NACE system are the Structural Business Statistics (SBS) that cover industry, construction, trade, and services. The main target variables are turnover, number of persons employed, total purchases, and financial result. These statistics are produced for the entire European Union. However, the applied production method which include data collection, editing, analyses and estimation may vary from country to country, depending on the budget, legislation, and the availability of administrative data sources such as tax data and the chamber of commerce. As for the Netherlands, data from small enterprises, i.e., less than 10 employees, are taken directly from tax administrations, data from medium enterprises (up to 50 employees) are taken from a sample survey, and data from large enterprises (50 employees or more) are taken from a full sample survey~\cite{cbsSBS}.
+%One of the largest European statistics that uses the NACE system are the Structural Business Statistics (SBS) that cover industry, construction, trade, and services. The main target variables are turnover, number of persons employed, total purchases, and financial result. These statistics are produced for the entire European Union. However, the applied production method which include data collection, editing, analyses and estimation may vary from country to country, depending on the budget, legislation, and the availability of administrative data sources such as tax data and the chamber of commerce. As for the Netherlands, data from small enterprises, i.e., less than 10 employees, are taken directly from tax administrations, data from medium enterprises (up to 50 employees) are taken from a sample survey, and data from large enterprises (50 employees or more) are taken from a full sample survey~\cite{cbsSBS}.
 
 %In current practice, the SBS data are analysed separately per main economic sector, since for each sector domain specific knowledge is required.
 
-In Figure~\ref{fig:treemapApp}, the net turnover of the Dutch wholesale and retail trade enterprises in 2011 is visualized by a treemap. The Tree Colors of the non-leaf nodes are used for the text label backgrounds. The number of digits in the category names represent the hierarchical layer. Each of the three main branches of this sector (45, 46 and 47) clearly has a distinct hue range. Furthermore, some leaf nodes, for instance the pink colored 466, are a brighter than others, because they represent the third rather than the fourth NACE layer.
+
 
 \begin{figure}[!t]
   \centering
   \includegraphics[width=3.5in]{TMbusiness.pdf}
-  \caption{Turnover among Dutch wholesale and retail trade enterprises in 2011}\label{fig:treemapApp}
+  \caption{Turnover among Dutch wholesale and retail trade enterprises in 2011 \M \textbf{: check colors and sizes (consistancy with other plots}}\label{fig:treemapApp}
 \end{figure}
 
 \subsection{Regional classifications}
 Many publications in official statistics are broken down by region, especially regarding demographics.
-In many situations, thematic maps are useful as a data visualization tool for spatial statistics, in particular choropleths and cartograms. However, non-cartographic methods are often sufficient for the task at hand. In those cases, the geographic location of the regions is less important for the analysis than the comparison of some specific target variable between regions. Tree Colors can improve the discrimination between the regions in a subtle may.
+In many situations, thematic maps are useful as a data visualization tool for spatial statistics, in particular choropleths and cartograms. However, non-cartographic methods are often sufficient for the task at hand. In those cases, the geographic location of the regions is less important for the analysis than the comparison of some specific target variable between regions. Tree Colors can improve the discrimination between the regions in a subtle way.
 
-In Figure~\ref{fig:barApp} a bar chart created with the R package ggplot2~\cite{ggplot2} is shown of the Dutch population broken down by twelve provinces. For comparing the populations to each other, a bar chart is a good working horse, since length is perceived quite accurately~\cite{Mackinlay1986}. We applied Tree Colors to add information about the geographical layout of the provinces. Typically, the provinces are grouped by the cardinal directions north, east, west, and south. We use those directions as the first hierarchical layer, and the provinces themselves as the second hierarchical layer the obtained Tree Colors discriminate the provinces while grouping them their cardinal directions. To enhance groupings, the vertical space between any two adjacent bars that represent provinces in different directions is slightly increased.
+In Figure~\ref{fig:barApp} a bar chart, created with the R package ggplot2~\cite{ggplot2}, is shown of the Dutch population broken down by twelve provinces. For comparing the populations to each other, a bar chart is a good working horse, since length is perceived quite accurately~\cite{Mackinlay1986}. We applied Tree Colors to add information about the geographical layout of the provinces. Typically, the provinces are grouped by the cardinal directions north, east, west, and south. We use those directions as the first hierarchical layer, and the provinces themselves as the second hierarchical layer. The obtained Tree Colors discriminate the provinces while grouping them by cardinal direction. To enhance groupings, the vertical space between any two adjacent bars that represent provinces in different cardinal directions is slightly increased.
 
 \begin{figure}[!b]
   \centering
@@ -487,24 +488,21 @@ In Figure~\ref{fig:barApp} a bar chart created with the R package ggplot2~\cite{
 
 
 \section{User study}~\label{secuser}
-A user study was conducted to evaluate our proposed method. We let participants compare Tree Colors to Main Branch Colors. Main Branch Colors form a qualitative color scale that assigns distinct qualitative colors to the children of the root and gives their offspring the same color as their parent. The colors are taken from the qualitative ColorBrewer color schemes~\cite{brewer03}, which are user tested and popular in cartography and statistical visualizations, so they provide a good benchmark for Tree Colors. An alternative would have been testing
+A user study has been conducted to evaluate our proposed method. We let participants compare Tree Colors to Main Branch Colors. Main Branch Colors form a qualitative color scale that assigns distinct qualitative colors to the children of the root and gives their offspring the same color as their parent. The colors are taken from the qualitative ColorBrewer color schemes~\cite{brewer03}, which are user tested and popular in cartography and statistical visualizations, and hence provide a good benchmark for Tree Colors. An alternative would have been testing
 against a Tree Colors scheme with $f=0$, but such color schemes are not in common 
 use and testing three colors schemes would have complicated the user study.
 
 \subsection{Questionnaire setup}~\label{secusersetup}
-The questionnaire was taken by employees of our office. %for review only. (Statistics Netherlands.)
-Although no specific 
-demographic characteristics are asked, the participants typically have at least a bachelor's degree in 
+The questionnaire was taken by employees of Statistics Netherlands. Although no specific 
+demographic characteristics were asked, the participants typically have at least a bachelor's degree in 
 quantitative sciences. Furthermore all employees are aged from 18 to 65 years old, and gender is 
-approximately equally divided.
-
-\changedM{In order to know whether 
-a participant has a color vision deficiency,} we directly asked the participants 
+approximately equally divided. In order to know whether 
+a participant has a color vision deficiency, we directly asked the participants 
 whether they are (partially) color blind. Participants who did no know the answer
 to that question were tested for 
-color blindness using the Ishihara test~\cite{ishihara}. 
+color vision deficiency using the Ishihara test~\cite{ishihara}. 
 
-Three visualization methods were used in the questionnaire, namely the node-link diagram, the treemap and the bar chart. For each of the three methods, participants received questions for two charts of two different datasets, one with Tree Colors and one with Main Branch Colors. 
+Three visualization methods were used in the questionnaire, namely the node-link diagram, the treemap, and the bar chart. For each of the three methods, participants received questions for two charts of two different datasets, one with Tree Colors and one with Main Branch Colors. 
 
 \begin{figure}[tb]
   \centering
@@ -514,7 +512,7 @@ Three visualization methods were used in the questionnaire, namely the node-link
 
 \end{figure}
 
-In order to exclude the effects of all other aesthetics but color as much as possible, we distributed two different versions of the questionnaire. Each participant was randomly assigned to one version. The two versions differed in that the datasets for the Main Branch Colors and Tree Colors questions were swapped. Therefore, each chart was tested with both color schemes but in different groups. A node-link diagram, a treemap, and a bar chart that were included in the questionnaires are depicted in Figure~\ref{fig:graphSvy},~\ref{fig:treemapSvy}, and~\ref{fig:barSvy} respectively. An overview of the charts used in the two versions of the questionnaire is provided in Table~\ref{table:ques}.
+In order to exclude the effects of all other aesthetics but color as much as possible, we distributed two different versions of the questionnaire. Each participant was randomly assigned to one version. For the two versions, the datasets for the Main Branch Colors and Tree Colors questions were swapped. Therefore, each chart was tested with both color schemes but in different groups. A node-link diagram, a treemap, and a bar chart that were included in the questionnaires are depicted in Figure~\ref{fig:graphSvy},~\ref{fig:treemapSvy}, and~\ref{fig:barSvy} respectively. An overview of the charts used in the two versions of the questionnaire is provided in Table~\ref{table:ques}. We alternated the used color schemes per visualization method in order to prevent a repeating systematic pattern in the questionnaire. Unfortunately, it was not possible to invert the alternating schemes, since this would require two extra versions of the questionnaire.
 
 \begin{table}[!htb]
 \begin{footnotesize}
@@ -536,8 +534,7 @@ Bar chart & Tree Colors & Dataset 6 & Dataset 5\\
 \caption{Overview of charts in the questionnaire}\label{table:ques}
 \end{table}
 
-We alternated the used color schemes per visualization method in order to prevent a repeating systematic pattern in the questionnaire. Unfortunately, it was not possible to invert the alternating schemes, since this would require two extra versions of the questionnaire. 
-
+ 
 The three visualization methods represent three levels of hierarchical explicitness. The node-link diagram clearly is an explicit tree visualization by the layout of the nodes and by the edges, which are depicted as directed arcs pointed from the root node. The treemap is an implicit visualization method, in which the hierarchical structure is less clear in comparison to the node-link diagram. Except from color, the hierarchical structure is represented by the nesting of the rectangles, the thickness of the rectangle lines, and by the label fonts. The bar chart is in essence a non-hierarchical visualization method. However, the bar charts that were included in the questionnaire contained beside color an extra subtle hierarchical element in the spacing between the bars. The bars represent the leaf nodes of the tree structure and the amount of spacing between two bars is determined by the degree of relationship.
 
 \begin{figure}[tb]
@@ -560,7 +557,7 @@ The three visualization methods represent three levels of hierarchical explicitn
 \end{figure}
 
 All datasets used in the questionnaire are hierarchically structured with three hierarchical layers. The 
-labels of the data points are randomized letters, such that participants can not extract information 
+labels of the data points are randomized letters, such that participants were not able to extract information 
 about the hierarchy from the printed labels.
 
 The questionnaire contained reading and evaluation questions. Per chart, participants got one or two reading questions and one evaluation question:
@@ -580,39 +577,60 @@ Finally, participants were given the possibility to write down comments or sugge
 
 \subsection{User study results}~\label{secuserres}
 
-We recruited 98 participants with normal color vision and 10 participants with a color vision deficiency. From the people with normal color vision, 58 participants received Version 1 of the questionnaire and 40 Version 2. \changedM{Among those with a color vision deficiency, 4 participants received Version 1 and 6 participants Version 2.}
+We recruited 98 participants with normal color vision and 10 participants with a color vision deficiency. From the people with normal color vision, 58 participants received Version 1 of the questionnaire and 40 Version 2. Among those with a color vision deficiency, 4 participants received Version 1 and 6 participants Version 2.
 
-The results of the reading questions are summarized in the left part of Figure~\ref{fig:user1}. Per dataset the percentages of correct answers, that is, from a data structure point of view, are shown in orange for the Main Branch Colors and in green for the Tree Colors. For each percentage, the corresponding $95\%$ confidence interval is depicted as a line. The right part of Figure~\ref{fig:user1} shows per visualization method the distribution of answers to the question whether colors help in answering the reading questions.
+The results of the reading questions are summarized in the left part of Figure~\ref{fig:user1}. Per dataset the percentages of correct answers, that is, from a data structure point of view, are shown in orange for the Main Branch Colors and in blue for the Tree Colors. For each percentage, the corresponding $95\%$ confidence interval is depicted as a line. The right part of Figure~\ref{fig:user1} shows per visualization method the distribution of answers to the question whether colors had helped in answering the reading questions.
 
-Of all three visualization methods, the reading questions regarding the node-link diagrams received the highest percentages of correct answers for both color schemes. The reason is the questions are fairly easy to answer by the explicit tree layouts of the node-link diagrams. The Tree Colors score slightly better on the relationship questions. The questions about the offspring resulted in 100\% scores for all four color-scheme--dataset combinations. As for the node-link diagrams, participants experienced more help from Tree Colors than from Main Branch Colors.
+Of all three visualization methods, the reading questions regarding the node-link diagrams received the highest percentages of correct answers for both color schemes. The reason is the questions were fairly easy to answer by the explicit tree layouts of the node-link diagrams. The questions about the offspring resulted in 100\% scores for all four color-scheme--dataset combinations. As for the node-link diagrams, participants experienced more help from Tree Colors than from Main Branch Colors.
+
+The percentages of correct answers for the treemaps were lower than for the node-link diagrams. One reason could be that people are not familiar with treemaps; it turned out the many participants also took into account other aesthetics of the rectangles, in particular aspect ratio and area size, for answering the questions. Although the percentages of correct answers between both color schemes are comparable, the Main Branch Colors scored almost significantly better than the Tree Colors on the questions about the number of sub-labels for Dataset 4. This could be caused by the limitation that hue permutations and reversals were not designed for two-dimensional visulazation methods. For treemaps, two adjacent rectangles may therefore get indistuinguishable hue values, such as  sub-labels PA and BU in Figure~\ref{fig:treemapSvy} (left).
 
 
-The percentages of correct answers for the treemaps were lower than for the node-link diagrams. It turned out the many participants also took into account other aesthetics of the rectangles, in particular aspect ratio and area size, for answering the questions. The Tree Colors scored better the Main Branch Colors on the relationship question for Dataset 3. However, the scores on this question were identical for Dataset 4. This difference may be caused by the different color scheme instances that were applied. The Main Branch Colors scored better than the Tree Colors on the questions about the number of sub-labels. A possible explanation of this result could be that participants clustered the sub-labels colors by hue. For instance, for Figure~\ref{fig:treemapSvy} (left) participants were asked how many sub-labels Main label AJ has. The correct answer is 7, while one out of four participants thought the correct answer is 5. Probably, participants considered sub-labels PA and BU to be part of a different main label than the other 5 sub-labels. The amount of help that participants got from the applied colors was similar for Tree Colors and Main Branch Colors.
+%The Tree Colors scored better the Main Branch Colors on the relationship question for Dataset 3. However, the scores on this question were identical for Dataset 4. This difference may be caused by the different color scheme instances that were applied. The Main Branch Colors scored better than the Tree Colors on the questions about the number of sub-labels. A possible explanation of this result could be that participants clustered the sub-labels colors by hue. For instance, for Figure~\ref{fig:treemapSvy} (left) participants were asked how many sub-labels Main label AJ has. The correct answer is 7, while one out of four participants thought the correct answer is 5. Probably, participants considered sub-labels PA and BU to be part of a different main label than the other 5 sub-labels. The amount of help that participants got from the applied colors was similar for Tree Colors and Main Branch Colors.
 
-As for the bar charts, the majority of the participants did not observe the underlying data hierarchy when the Main Branch Colors were applied. Apparently, the spacing between the bars did not stand out clearly in comparison to other aesthetics such as color and length. For example, the question that belongs to Figure~\ref{fig:barSvy} (left) was which labels are most similar to UT, where the possible answers are NF, XX, EV, and GG. Almost 52\% of the participants chose the labels that belong to the same main branch, XX, EV and GG, and therefore only used color to answer the question. Another 28\% only used length to answer the question, since they answered NF. Only 3\% of the participants answered EV, which is given the data hierarchy the correct answer. When Tree Colors were applied, see Figure~\ref{fig:barSvy} (right), none of the participants checked XX, EV and GG, 23\% chose the equal-length bar NF, and 63\% answered EV correctly. By the broadly defined question, it would be a very weak argument to claim the success of Tree Colors on this large difference. However, in our opinion it does indicate that Tree Colors are a valuable attribute to visualize a hierarchical data structure in non-hierarchical plots such as bar charts, line charts, and area charts.
+As for the bar charts, the majority of the participants did not observe the underlying data hierarchy when the Main Branch Colors were applied. Apparently, the spacing between the bars did not stand out clearly in comparison to other aesthetics such as color and length. For example, the question that belongs to Figure~\ref{fig:barSvy} (left) was which labels are most similar to UT, where the answers options are NF, XX, EV, and GG. Almost 52\% of the participants chose the labels that belong to the same main branch, XX, EV and GG, and therefore only used color to answer the question. Another 28\% only used length to answer the question, since they answered NF. Only 3\% of the participants answered EV, which is given the data hierarchy the correct answer. When Tree Colors were applied, see Figure~\ref{fig:barSvy} (right), none of the participants checked XX, EV, and GG, 23\% chose the equal-length bar NF, and 63\% answered EV correctly. This result indicates that Tree Colors can be a valuable attribute to visualize a hierarchical data structure in non-hierarchical plots such as bar charts, line charts, and area charts.
 
-The three evaluation questions are summarized in Figure~\ref{fig:user2} \changedM{with a diverging stacked bar chart.} In general, the participants liked both color schemes equally, although Tree Colors were favored for node-link diagrams.
 
-The charts with Main Branch Colors provided the best overview for the majority of the participants. This result is not surprising, since a good overview is obtained by discriminating the main branches. 
-Recall that the hue fraction, $f$, is a trade-off between discrimination of the main branched and discrimination of the leaf nodes. Notice that Tree Colors with $f=0$ are identical to Main Branch Colors, where only the applied color schemes differs.
+%By the broadly defined question, it would be a very weak argument to claim the success of Tree Colors on this large difference. However, in our opinion it does indicate that Tree Colors are a valuable attribute to visualize a hierarchical data structure in non-hierarchical plots such as bar charts, line charts, and area charts.
+
+The three evaluation questions are summarized in Figure~\ref{fig:user2} with a diverging stacked bar chart. In general, the participants liked both color schemes equally, although Tree Colors were favored for node-link diagrams.
+
+The charts with Main Branch Colors provided the best overview for the majority of the participants. This result is not surprising, since a good overview is obtained by discriminating the main branches. Recall that Tree Colors can be adjusted with parameter $f$ in order to better discriminate main branches, and therefore getting a better overview at the expense of the discrimintaion of leaf nodes.
 
 \begin{figure}[tb]
   \centering
 	\includegraphics[width=3.5in]{user_study_results_mod2.pdf}
-  \caption{Results of reading questions}\label{fig:user1}
+  \caption{Results of the reading questions}\label{fig:user1}
 \end{figure}
 
 
 \begin{figure}[tb]
   \centering
 	\includegraphics[width=3.5in]{user_study_results2.pdf}
-  \caption{Results of evaluation questions}\label{fig:user2}
+  \caption{Results of the evaluation questions}\label{fig:user2}
 \end{figure}
 
-The interpretation of the node-link diagrams was experienced easier with Tree Colors except for the treemaps. This could be explained by level of difficulty of the visualization methods. Both node-link diagram and bar chart are easy to read visualization methods that the vast majority of the participants are familiar with. Therefore, people are able to see the benefits of the additional information that the Tree Colors provide over Main Branch Colors. However, treemaps are still largely unknown by the participants. Additional information provided by the applied color scheme could therefore be a little confusing.
 
-\changedM{By the small number of participants with a color deficiency, ($n=10$), we were unable to make statistical claims from their responses. } 
+%The interpretation of the node-link diagrams was experienced easier with Tree Colors except for the treemaps. This could be explained by level of difficulty of the visualization methods. Both node-link diagram and bar chart are easy to read visualization methods that the vast majority of the participants are familiar with. Therefore, people are able to see the benefits of the additional information that the Tree Colors provide over Main Branch Colors. However, treemaps are still largely unknown by the participants. Additional information provided by the applied color scheme could therefore be a little confusing.
 
+The results of the user study regarding the 10 participants with color vision deficiency are summarized in Table~\ref{table:userCB}. By the small number of these participants, we were unable to make statistical claims from their responses. In line with the participants with normal color vision, most of them (64\%) experienced a better overview with Main Branch Colors than with Tree Colors (15\%).
+
+\begin{table}[!htb]
+\begin{footnotesize}
+\begin{center}
+\begin{tabular}{llllll}
+\toprule
+& \multicolumn{2}{l}{Node-link diagram} & \multicolumn{2}{l}{Treemap} & Bar chart\\
+& relations & offspring & relations & offspring & relations\\
+\midrule
+M. B. C. & 7 & 10 & 5 & 10 & 0\\
+Tree Colors & 7 & 10 & 5 & 6 & 3\\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{footnotesize}
+\caption{Numbers of correct answers to the reading questions asked to the 10 participants with color vision deficiency.}\label{table:userCB}
+\end{table}
 
 \section{Discussion}~\label{secdisc}
 
@@ -622,20 +640,22 @@ Although the choice to use hue to discriminate between different branches is str
 
 As for the hierarchical depth, we proposed a linear relation of depth with both luminance and chroma. By default we used the subtractive color method where luminance decreases and chroma increases with depth. The opposite holds for the additive color method that can be used alternatively. Further research on the preferences and usefulness of both methods is recommended.
 
-\changedM{The conducted user study in which Tree Colors are compared to standard qualitative color schemes, which we called Main Branch Colors, did not result in a clear victory for either of them. However, the user study provided some insightful results that could be useful for further research.}
 
-\changedM{Although most participants answered the questions regarding the node-link diagrams correctly for both color schemes, a large part of them found Tree Colors more helpful and could better interpret node-link diagrams with Tree Colors than with Main Branch colors. As a consequence, using Tree Colors for node-link diagrams could make a hierarchical layout of the nodes less strict, therefore creating extra space for the placements of nodes and labels.}
+For explicit tree visualizations such as node-link diagrams, the conducted user study suggests that Tree Colors can be a useful enhancement. Although most participants answered the questions regarding the node-link diagrams correctly for both color schemes, a large part of them found Tree Colors more helpful and found node-link diagrams with Tree Colors better to interpret than with Main Branch colors. As a consequence, using Tree Colors for node-link diagrams could relax a hierarchical layout of the nodes, therefore spacing-out the placements of nodes and labels.
 
-Some participants had more difficulty to read treemaps with Tree Colors than with Main Branch Colors. One of the reasons is that people are not familiar with treemaps, making treemaps with Tree Colors even more complex. However, this is probably not the main explanation since Tree Colors should emphasize the tree structure that is already present in the treemap. Another, more valid argument is that permutation and reversals of hue ranges is developed particularly for linear and radial layouts. In these layouts, the hue values of adjacent nodes are discriminated, and even more when they have different parents. However, when the nodes are plotted in a two-dimensional space without explicit tree structure, such as treemaps, adjacent rectangles may get indistinguishable colors, or even worse, siblings unjustly seem to be clustered. The latter happens when the plotted position of the siblings coincides with the assigned hue values. For further research, it is worthwhile to improve the permutation and reversal method when Tree Colors are applied to treemaps and other two-dimensional visualization methods with an implicit tree structure.
 
-\changedM{More advanced user studies may reveal more insightful differences between Tree Colors and other tree coloring methods when applied to tree visualizations. 
-It would be worthwile to analyse response times~\cite{wang06} which could reveal differences between the effectiveness of both color schemes, and to conduct eye tracking experiments~\cite{burch11}, which could provide insight in how well the participants understand the visualized tree structure for different color schemes.}
+%The conducted user study in which Tree Colors are compared to standard qualitative color schemes, which we called Main Branch Colors, did not result in statistically significant differences. However, the user study provided some insightful results that could be useful for further research.
+
+As mentioned in Section~\ref{sechueperm}. The coloring of sibling nodes is designed for layouts in which sibling nodes are arranged linearly or radially. For two-dimensional visualization methods such as treemaps, two adjacent siblings can therefore get indistinguishable colors, which was also the case in the user study example. For further research, it is worthwhile to improve the permutation and reversal method for such visualization methods. Approaches to similar problems, such as the coloring of edges in a graph~\cite{Jianu09} may be useful.
+
+More advanced user studies may reveal more insightful differences between Tree Colors and other tree coloring methods when applied to tree visualizations. 
+It would be worthwile to analyse response times~\cite{wang06} which could reveal differences between the effectiveness of both color schemes, and to conduct eye tracking experiments~\cite{burch11}, which could provide insight in how well the participants understand the visualized tree structure for different color schemes.
 
 We would like to remark that although the HCL color has well defined perceptual properties, the total range of hue values is not perceived perfectly linear, especially around non-primary colors. This could introduce certain artifacts in the resulting color schemes. For instance, the blue node U in Figure~\ref{fig:graphSvy} (right) seems to be more distinct from its parent Y than its siblings I, G, and B. Such artifacts could be overcome by rotating the total hue range with the parameters $H_{start}$ and $H_{end}$.
 
-\changedM{Unfortunately, Tree Colors are not adequately perceived by people with color vision deficiency, since the range of distinguishable hue values is reduced and colors with a constant luminance and chroma value may vary in perceived brightness and saturation. There are no straightforward solutions at hand to adjust the Tree Colors method for people with color vision deficiency Moreover, designing fixed qualitative color schemes for such people is already far from trivial~\cite{okabe02}. Further research is needed to develop hierarchical color schemes for people with color vision deficiency. From a practical point of view, we suggest to use color vision deficiency proof qualitative color schemes proposed in literature~\cite{okabe02, brewer03} as Main Branch Colors for people with color vision deficiency.}
+Unfortunately, Tree Colors are not adequately perceived by people with color vision deficiency, since the range of distinguishable hue values is reduced and colors with a constant luminance and chroma value may vary in perceived brightness and saturation. There are no straightforward solutions at hand to adjust the Tree Colors method for people with color vision deficiency Moreover, designing fixed qualitative color schemes for such people is already far from trivial~\cite{okabe02}. Further research is needed to develop hierarchical color schemes for people with color vision deficiency. From a practical point of view, we suggest to use color vision deficiency proof qualitative color schemes proposed in literature~\cite{okabe02, brewer03} as Main Branch Colors for people with color vision deficiency.
 
-\changedM{Although Tree Colors can be generated for hierarchical datasets of any size, it is still unknown how effective they are for large hierarchical datasets, both in terms of depth as in average number of siblings per node. For deep hierarchical datasets, the luminance and chroma ranges could be enlarged, and the slope parameters $\beta^{L}$ and $\beta^{C}$ could be made smaller. With both adjustments, the distinction between colors of different hierarchical layers is reduced. For hierarchical dataset with many siblings per node, the available hue range have to be split by a large number, resulting is less distinctive colors. However, with carefully tuned parameters, Tree Colors may be effective for particular analytics with large hierarchical datasets. Evaluation of Tree Colors for large datasets is recommended.}
+Although Tree Colors can be generated for hierarchical datasets of any size, it is still unknown how effective they are for large hierarchical datasets, both in terms of depth as in average number of siblings per node. For deep hierarchical datasets, the luminance and chroma ranges could be enlarged, and the slope parameters $\beta^{L}$ and $\beta^{C}$ could be made smaller. With both adjustments, the distinction between colors of different hierarchical layers is reduced. For hierarchical dataset with many siblings per node, the available hue range have to be split by a large number, resulting is less distinctive colors. However, with carefully tuned parameters, Tree Colors may be effective for particular analytics with large hierarchical datasets. Evaluation of Tree Colors for large datasets is recommended.
 
 
 \acknowledgments{

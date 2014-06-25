@@ -185,7 +185,7 @@ Several websites contain examples of visualizations that use color to encode tre
 indicate news type. IBM's Many Eyes \cite{manyeyes} also contains color schemes for treemaps that take hierarchy 
 into account. While there seems to be a need for tree color schemes, to the best of our knowledge no guidelines or 
 description are given in literature for constructing such color schemes.
-}
+} \E
 
 \changedE{
 Most tree visualizations proposed in literature \cite{schulz2011} use color to a small extent. A visualization technique that uses color as a major attribute is InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned different hue values. The color of a parent node is derived by averaging the colors of its children, where larger branches have more weight. An implicit effect of this method is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches. 
@@ -393,20 +393,21 @@ Chroma slope value 		& $\beta^C$ &     & 5   & -5    \\
 \end{table}
 
 \subsection{\changedM{Color vision deficiency}}
-Although Tree Colors were not developed with color blindness in mind, it is important to know whether Tree Colors could be perceived adequately by people with a color vision deficiency, because there are many such people~\cite{birch12}.
+\changedM{Although Tree Colors were not developed with color blindness in mind, it is important to know whether Tree Colors could be perceived adequately by people with a color vision deficiency, because there are many such people~\cite{birch12}.}
 
-People with normal color vision, called trichromates, perceive colors by three classes of cone opsins, the L-, S-, and L-cone opsins, that have absorption peaks at short (bluish), medium (greenish),  respectively long (reddish) wavelengths. Colorblind people only have two classes of cone opsins, and are therefore called dichromats. It may also occur that people have all three classes of cone opsins, but that the absorption peaks of two of them are shifted closer together than normal. Those people, called anomalous trichromats, are able to see the full color spectrum, but have difficulty distinguishing particular colors.
+\changedM{People with normal color vision, called trichromates, perceive colors by three classes of cone opsins, the L-, S-, and L-cone opsins, that have absorption peaks at short (bluish), medium (greenish),  respectively long (reddish) wavelengths. Colorblind people only have two classes of cone opsins, and are therefore called dichromats. It may also occur that people have all three classes of cone opsins, but that the absorption peaks of two of them are shifted closer together than normal. Those people, called anomalous trichromats, are able to see the full color spectrum, but have difficulty distinguishing particular colors.}
 
 %Color vision deficiency is caused by the disfunctioning of one of the three type of cone cells by which people normally perceive colors. The three type of cone cells correspond one to one to the perception of the three primary colors red, green, and blue. People with normal color vision, trichromats, perceive any color as a mixture of the three types of cone cells, whereas people with a non-functional type of cone cell, dichromats, use a mixture of the two remaining types of cone cells to perceive colors. People with a partly disfunctional type of cone cell are called anomalous trichromats. They require more light of the corresponding primary color wavelength in order to perceive colors normally.
 
-People with color vision deficiency cannot easily differentiate colors with different hue values. Especially distinction of colors in the red and green areas are often problematic for them. If this would be the only obstacle for them to use Tree Colors, a straightforward solution would be to adjust the Tree Colors method by omitting these difficult hue ranges. However, there is a more fundamental problem for people with color vision deficiency. Since the adaption of colors by cone opsins is approximately logarithmic rather than linear, dichromacy or anomalous trichromacy will result in losing the perceptual properties of the HCL color space. In other words, people with a color vision deficiency will not perceive colors with different hue values and constant luminance and chroma values as equally bright and saturated. 
+\changedM{People with color vision deficiency cannot easily differentiate colors with different hue values. Especially distinction between reddish and greenish colors are often problematic for them. If this would be the only obstacle for them to use Tree Colors, a straightforward solution would be to adjust the Tree Colors method by omitting these problematic hue ranges. However, there is a more fundamental problem for people with color vision deficiency. Since the adaption of colors by cone opsins is approximately logarithmic rather than linear, dichromacy or anomalous trichromacy will result in losing the perceptual properties of the HCL color space. In other words, people with a color vision deficiency may not perceive colors with different hue values and constant luminance and chroma values as equally bright and saturated.}
 
-Figure~\ref{fig:colblind} shows how people with color vision deficiency would probably see the full hue cycle depicted in Figure~\ref{fig:wheel}(a). These simulated plot are created with free software tool Chrometric~\cite{chrometric}. The left-hand side plot shows how the full hue circle is seen by anomalous trichromats with deuteranomaly, the most common type of color vision deficiency, where colors of medium wavelength (greenish) colors are not perceived well. Although all hue values seem to be distinguishable, the colors do not seem to be equally bright and saturated. The plot on the right-hand side is seen by dichromats with protanopia, where the long wavelength (reddish) colors are not perceived. Not only the diversity of hue values is reduced to, the colors clearly have a large variation of brightness and saturation.
+\changedM{Figure~\ref{fig:colblind} shows how people with color vision deficiency would probably see the full hue cycle depicted in Figure~\ref{fig:wheel}(a). These simulated plot are created with free software tool Chrometric~\cite{chrometric}. The left-hand side plot shows how the full hue circle is seen by anomalous trichromats with deuteranomaly, the most common type of color vision deficiency, where colors of medium wavelength (greenish) colors are not perceived well. Although all hue values seem to be distinguishable, the colors do not seem to be perceived equally bright and saturated. The plot on the right-hand side is seen by dichromats with protanopia, where the long wavelength (reddish) colors are not perceived. Not only the diversity of hue values is reduced, the colors also have a large variation in brightness and saturation.} 
 
 \begin{figure}[tb]
   \centering
-  %\includegraphics[width=3in]{hcl_deuteranomaly_protanopia.png}
-  \caption{Simulation of how persons with deuteranomaly (left) and protanopia (right) see the full hue circle.}\label{fig:colblind}
+ %\includegraphics[width=3in]{hcl_deuteranomaly_protanopia.png}
+ \includegraphics[width=3.5in]{HCPgraph2.pdf}
+  \caption{Simulation of how persons with deuteranomaly (left) and protanopia (right) see the full hue circle.\M}\label{fig:colblind}
 \end{figure}
 
 
@@ -483,7 +484,6 @@ In Figure~\ref{fig:barApp} a bar chart created with the R package ggplot2~\cite{
   \caption{Dutch population in 2012 per province}\label{fig:barApp}
 
 \end{figure}
-
 
 
 \section{User study}~\label{secuser}
@@ -611,7 +611,7 @@ Recall that the hue fraction, $f$, is a trade-off between discrimination of the 
 
 The interpretation of the node-link diagrams was experienced easier with Tree Colors except for the treemaps. This could be explained by level of difficulty of the visualization methods. Both node-link diagram and bar chart are easy to read visualization methods that the vast majority of the participants are familiar with. Therefore, people are able to see the benefits of the additional information that the Tree Colors provide over Main Branch Colors. However, treemaps are still largely unknown by the participants. Additional information provided by the applied color scheme could therefore be a little confusing.
 
-\changedM{By the small number of participants with a color deficiency, ($n=10$), we were unable to make statistical claims from their responses.} \changedE{But what are the results?}
+\changedM{By the small number of participants with a color deficiency, ($n=10$), we were unable to make statistical claims from their responses. } 
 
 
 \section{Discussion}~\label{secdisc}

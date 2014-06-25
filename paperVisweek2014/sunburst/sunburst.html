@@ -52,9 +52,14 @@ d3.json("sunburst.json", function(error, root) {
   var text = g.append("text")
       .attr("x", function(d) { if (d.name == "G"){return 0} else return y(d.y + d.dy/2); })
       //.attr("dx", "5") // margin
-      //.attr("dy", ".35em") // vertical-align
+      .attr("dy", ".35em") // vertical-align
       .attr("fill-opacity", "0.8")
-      .attr("font-size", "14")
+      .attr("font-size", function(d){ 
+        if (d.name.length==1) return 40;
+        if (d.name.length==2) return 32;
+        if (d.name.length==3) return 26;
+        return 20;
+      })
       .style("text-anchor", "middle")
       .text(function(d) { return d.name; });
      

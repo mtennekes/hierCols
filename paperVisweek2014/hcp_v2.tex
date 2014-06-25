@@ -181,11 +181,13 @@ This paper is outlined as follows. In Section~\ref{secmethod} we describe the pr
 
 \section{Related work}
 Several websites contain examples of visualizations that use color to encode tree structure. For example newsmap.jp 
-\cite{newsmap} aggregates news and presents a tree map of news to its users. The rectangle colors of the newsmap 
-indicate news type. IBM's Many Eyes \cite{manyeyes} also contains color schemes for treemaps that take hierarchy 
-into account. While there seems to be a need for tree color schemes, to the best of our knowledge no guidelines or 
+\cite{newsmap} aggregates news and presents a tree map of news to its users. 
+\changedE{The color of each news item indicates one of seven news types. Although a treemap the newsmap.jp color scheme is not hierarchical. Each news type has a fixed hue value, and the colors within a news type differ in chroma and luminance to make the rectangles more distinct and attractive. In contrast when using Tree Colors sibling nodes have different hues but equal luminance and chroma}.
+IBM's Many Eyes \cite{manyeyes} \changedE{uses HSV color schemes for treemaps that take groups into account. The colors vary in hue but all have equal saturation and value. Nodes within a group have similar hue values. This is comparable to Tree Colors, but the Many Eyes color scheme is restricted to one grouping and thus not hierarchical. Furthermore  instead of HSV Tree Colors uses the perception based HCL color space model, keeping Chroma and Luminance for sibling nodes equal.
+}
+While there seems to be a need for tree color schemes, to the best of our knowledge no guidelines or 
 description are given in literature for constructing such color schemes.
-\E : \textbf{comparison with Tree Colors}
+%\E : \textbf{comparison with Tree Colors}
 
 Most tree visualizations proposed in literature \cite{schulz2011} use color to a small extent. A visualization technique that uses color as a major attribute is InterRing \cite{yang2002}, a navigation tool with a radial layout. The leaf nodes are assigned different hue values. The color of a parent node is derived by averaging the colors of its children, where larger branches have more weight. An implicit effect of this method is that colors of higher hierarchical levels are less saturated, except for one-child-per-parent branches. 
 Hierarchical color schemes are also applied to the Hyperbolic Wheel \cite{lam2012}, an exploration tool for hierarchical data.  These color schemes are abstracted from the Hue-Saturation-Lightness (HSL) space, where brightness decreases proportional from root to leaf nodes, and where child nodes inherit the hue values from their parent nodes and add small hue values to distinct them from their siblings. However, hue values of nodes in the same hierarchical layer may be overlapping.

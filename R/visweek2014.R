@@ -182,6 +182,11 @@ PDF("plots/TMbusiness.pdf", width=9, height=7, e={
     treemap(subset(d, subset=N1 == "G Wholesale and retail trade"), index=c("N2", "N3", "N4"), vSize="emp2010", overlap.labels=.25, bg.labels=255, title="", palette.HCL.options=palette.HCL.optionsImp, ymod.labels=c(.1,0,0), fontfamily.labels="URWHelvetica") 
 })
 
+PDF("plots/TMbusiness2.pdf", width=9, height=7, e={
+    treemap(subset(d, subset=N1 == "G Wholesale and retail trade"), index=c("N2", "N3", "N4"), vSize="turn2010", overlap.labels=.25, bg.labels=255, title="", palette.HCL.options=palette.HCL.optionsImp, ymod.labels=c(.1,0,0), fontfamily.labels="URWHelvetica") 
+})
+
+
 
 dG <- subset(d, subset=N1 == "G Wholesale and retail trade" & depth>1)
 set.seed(20140307)

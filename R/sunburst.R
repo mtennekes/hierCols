@@ -17,7 +17,7 @@ to_list <- function(data, palette, depth=1){
     unname(l)
 }
 
-tp <- treepalette(dG, paste0("n", 2:5))
+tp <- treepalette(dG, paste0("n", 2:5), palette.HCL.options=palette.HCL.optionsImp)
 tp$id <- NA
 tp$id <- as.character(tp$id)
 for (depth in paste0("n", 5:2)){

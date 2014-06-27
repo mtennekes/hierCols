@@ -278,7 +278,7 @@ PDF("plots/Treemaps_hue.pdf", width=10, height=10, e={
     
     ir <- ic <- 1
     for (i in 1:length(fs)) {
-        treemap(dat, index=names(dat)[1:(ncol(dat)-1)], vSize="x", palette.HCL.options=list(hue_fraction=fs[i]), vp=vplayout(ir,ic), title=paste("Fraction =", fs_format[i]), overlap=0.1, bg.labels=255, fontfamily.labels="URWHelvetica", fontfamily.title="URWHelvetica")
+        treemap(dat, index=names(dat)[1:(ncol(dat)-1)], vSize="x", palette.HCL.options=list(hue_fraction=fs[i]), vp=vplayout(ir,ic), title=paste("Hue fraction =", fs_format[i]), overlap=0.1, bg.labels=255, fontfamily.labels="URWHelvetica", fontfamily.title="URWHelvetica")
         ic <- ic + 1
         if (ic > nc) {
             ic <- 1
@@ -293,7 +293,7 @@ PDF("plots/Graph_hue.pdf", width=8, height=8, useDingbats=FALSE, e={
     for (i in 1:length(fs)) {
         set.seed(20140212)
         treegraph(dat2, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.layout=igraph::layout.auto, vertex.size=10, vertex.label.dist=0.6,palette.HCL.options=list(hue_fraction=fs[i]), mai=c(.2,.2,.2,.2), vertex.label.family="URWHelvetica")
-        title(paste("\n                               Fraction =", fs_format[i]), font.main=1, family="URWHelvetica")
+        title(paste("\n                                         Hue fraction =", fs_format[i]), font.main=1, family="URWHelvetica")
     }
 })
 

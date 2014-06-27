@@ -248,8 +248,8 @@ swap12 <- function(x) {
 (g2 <- ggplot() + aes(Viz, x, fill=antwoord, order=antwoord) +
     geom_bar(data=v3pos, stat="identity") +
     geom_bar(data=v3neg, stat="identity") +
-     geom_text(data=v3posText, aes(label=label), size=3) +
-     geom_text(data=v3negText, aes(label=label), size=3) +
+     geom_text(data=v3posText, aes(label=label), size=3, family="URWHelvetica") +
+     geom_text(data=v3negText, aes(label=label), size=3, family="URWHelvetica") +
      scale_x_discrete("") +
     scale_fill_manual(values=pal[c(2,1,3)], "Preference", breaks=c(FC, "Indifferent", TC)) + 
     scale_y_continuous(name = "",
@@ -363,8 +363,8 @@ g3 <- g3 + theme(legend.position="none")
 
 
 scale=1.5
-PDF("./plots/user_study_results_mod2.pdf", width=5*scale, height=3*scale, useDingbats=FALSE)
+PDF("./plots/user_study_results_mod2.pdf", width=5*scale, height=3*scale, useDingbats=FALSE, e={
 grid.arrange(arrangeGrob(grob, g3, ncol=2, widths=c(4.25/6, 1.75/6)), 
              arrangeGrob(legend, ncol=2, widths=c(1.5/6, 4.5/6)),
              ncol=1, heights=c(5/6, 1/6))
-dev.off()
+})

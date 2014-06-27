@@ -190,12 +190,12 @@ PDF("plots/TMbusiness2.pdf", width=9, height=7, e={
 
 dG <- subset(d, subset=N1 == "G Wholesale and retail trade" & depth>1)
 set.seed(20140307)
-PDF("plots/Gbusiness_FR.pdf", width=9, height=7, e={
+PDF("plots/Gbusiness_FR.pdf", width=9, height=7, useDingbats=FALSE, e={
     treegraph(dG, index=c("n2", "n3", "n4", "n5"),  show.labels=TRUE, vertex.layout=igraph::layout.fruchterman.reingold, vertex.size=8, vertex.label.dist=.4, vertex.label.cex=1.1, palette.HCL.options=palette.HCL.optionsExp, vertex.label.family="URWHelvetica")
 })
 
 set.seed(20140307)
-PDF("plots/Gbusiness_KK.pdf", width=9, height=7, e={
+PDF("plots/Gbusiness_KK.pdf", width=9, height=7, useDingbats=FALSE, e={
     treegraph(dG, index=c("n2", "n3", "n4", "n5"),  show.labels=TRUE, vertex.layout=igraph::layout.kamada.kawai, vertex.size=8, vertex.label.dist=.4, vertex.label.cex=1.1, palette.HCL.options=palette.HCL.optionsExp, vertex.label.family="URWHelvetica")
 })
 
@@ -577,12 +577,12 @@ PDF("plots/Treemap_survey_TC.pdf", width=6, height=6, useDingbats=FALSE, e={
 
     tm <- treemap(dats_tm[[group]], index=c("h1", "h2", "h3"), vSize="value", title="", bg.labels=255, overlap.labels=0.1, palette.HCL.options=list(hue_start=hue_start[[group]], hue_end=hue_end[[group]], hue_fraction=.6), fontfamily.labels="URWHelvetica", fontfamily.title="URWHelvetica")
     
-    addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"))
+    addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"), fontfamily="URWHelvetica")
 })
 
 PDF("plots/Treemap_survey_FC.pdf", width=6, height=6, useDingbats=FALSE, e={
     tm <- treemap(dats_tm[[group]], index=c("h1", "h2", "h3"), vSize="value", title="", vColor="h1", type="categorical", position.legend="none", palette="Set1", overlap.labels=0.1, fontfamily.labels="URWHelvetica", fontfamily.title="URWHelvetica")
-    addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"))
+    addSymbols(tm, branches_tm1[[group]], symbols=c("+", "*", "*", "*", "*"), fontfamily="URWHelvetica")
 })
 
 group <- 1
@@ -590,6 +590,9 @@ g1 <- plotBar(dats_bar[[group]], method="firstcat") + theme(text=element_text(fa
 g2 <- plotBar(dats_bar[[group]], method="HCP", hue_fraction=0.6) + theme(text=element_text(family="URWHelvetica"))
 ggsave("plots/Bar_survey_FC.pdf", g1, width=4, height=4, scale=1.5)
 ggsave("plots/Bar_survey_TC.pdf", g2, width=4, height=4, scale=1.5)
+embedFonts("./plots/Bar_survey_FC.pdf", outfile="./plots/Bar_survey_FC.pdf")
+embedFonts("./plots/Bar_survey_TC.pdf", outfile="./plots/Bar_survey_TC.pdf")
 
 
-embedFonts("./paperVisweek2014/hcp.pdf", outfile="./paperVisweek2014/hcp.pdf")
+
+embedFonts("./paperVisweek2014/hcp_v2.pdf", outfile="./paperVisweek2014/hcp_v2.pdf")

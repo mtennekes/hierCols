@@ -140,7 +140,7 @@ getSymbols <- function(s, n) {
 }
 
 
-addSymbols <- function(tm, rect.id, symbols="*") {
+addSymbols <- function(tm, rect.id, symbols="*", fontfamily="sans") {
     require(grid)
     
     symbols <- rep(symbols, length.out=length(rect.id))
@@ -152,7 +152,7 @@ addSymbols <- function(tm, rect.id, symbols="*") {
     w <- tm$tm$w[row_ids]
     h <- tm$tm$h[row_ids]
     
-    grid.text(symbols, x=x+.35*w, y=y+.65*h, gp=gpar(col="blue", cex=2))
+    grid.text(symbols, x=x+.35*w, y=y+.65*h, gp=gpar(col="blue", cex=2, fontfamily=fontfamily))
 }
 
 

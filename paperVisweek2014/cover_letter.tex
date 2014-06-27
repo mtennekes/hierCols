@@ -12,7 +12,7 @@ We would like to thank you for the conditionally acceptance of our manuscript fo
 
 We have fixed all grammatical issues, typos, and confusing terminology addressed by the reviewers, including the supplementary documents. Obviously, we rechecked to the whole document carefully on remaining grammatical and presentation issues. We also took care of the formatting requirements.
 
-In the appendices (on the next pages), we summarize the changes we have made to the manuscript other than the grammatical issues and typos. We improved the manuscript on all eight points listed by the primary reviewer in The Summary Review. Those changes are described in Appendix A. In Appendix B, we describe the remaining changes we have made.
+In the appendices (on the next pages), we summarize the changes we have made to the manuscript other than the grammatical issues and typos. We improved the manuscript on all eight points listed by the primary reviewer in The Summary Review, and the all other issues addressed in the reviews. The changes are summarized in Appendix.
 
 Again, we thank the reviewers for their constructive and careful comments. We hope that the revised manuscript is accepted for publication.
 
@@ -20,38 +20,58 @@ Again, we thank the reviewers for their constructive and careful comments. We ho
 
 \ps
 \newpage
-\noindent{\large \textbf{Appendix A}} \\
+\noindent{\LARGE \textbf{Appendix: summary of changes}} \\
 
-We have improved the paper regarding all main issues listed by the primary reviewer (Review 2):
+We have improved the paper regarding all issues addressed by the reviewers. A summary of these issues are listed below.
+First we list the general changes, and after that the specific changes which we will list in chronological order. The marked items correspond to the issues listed by the primary reviewer (Review 2) in the The Summary Review.
 
-\begin{description}
-\item[Misleading terminology] We corrected all misleading terms addressed by the reviewers. In the revised manuscript we use the term \textit{node-link diagram} where we incorrectly used the term \textit{graph}. Further, we use the term \textit{labels} rather than \textit{codes} which has obviously a different meaning in computer science.
-\item[Role of tree coloring] In line with Review 1 and 4, we briefly addressed the role of tree coloring in the introduction (section 1, first paragraph), and also discussed it in the discussion.
-\item[Clarification algorithm] We better explained and clarified the algorithm: with respect to the hue fraction (last paragraph 3.1), and the permutation step (second paragraph 3.1.1)
-\item[User study] Obviously, we were unable to set up another user study with more advanced tasks within this review cycle. However, we think our user study still showed some insightful results, which is also mentioned in Review 1.  In line with this review, we briefly summarized the user study results in the introduction (section 1, paragraph 5). Also, describe this with one sentence in the abstract (the last one). Moreover, we rewrote the user study results such that only claims are made that are tested statistically in accordance with Review 3 (section X, paragraph X). Furthermore, we extended the user study discussion in section 7 (paragraph 5 and 6). We recommended additional user studies as suggested by Review 3, for further research (section 7, paragraph 7).
-\item[Color vision deficiency] Color vision deficiency is indeed a very important aspect of information visualization. We added a section on color vision deficiency (section 3.4) and added a paragraph in the discussion (section 7, second last paragraph). Furthermore, it was not clearly described whether we took questionnaires from the 10 people with color vision deficiency. In fact we did, but we left out the results since the number of participants (10) was too low to draw statistical conclusions. In the current version of the manuscript, we clarified that we did take questionnaires from them (section 6.2, first paragraph). Furthermore, we described the results briefly (section 6.2, last paragraph).
-\item[Related work] In line with Review 4, we added a related work section (section 2) in which we include and describe the real-world examples addressed by Review 1. We also briefly describe the differences with the Tree Color scheme.
-\item[Presentation problems] We took care of the presentation problems addressed by Review 2.
-\end{description}
+\bigskip
 
-\newpage
-\noindent{\large \textbf{Appendix B}} \\
-
-The other changes we have made are the following:
+\noindent{\Large \textbf{General changes}}
 
 \begin{description}
-\item[Picking angle] We described the permutation step of the algorithm better, and illustrated it with a short example (section 3.1.1, paragraph 2). The reason to chose 144 degrees over the golden angle of 137,5 degrees is that, contrary to the blog post addressed by Review 1, the angle is rounded down to the next sibling. In the case of 5 siblings, the golden angle will be rounded down to 72, resulting in the unwanted permutation order of [1, 2, 3, 4, 5]. Notice that in most cases the golden angle and the angle of 144 degrees will be rounded down to the same angle.
-\item[Sibling coloring] In accordance with Review 3, we mentioned the limitations of our method of hue permutations and reversals earlier in the manuscript, namely in the method description (section 3.1.1., last paragraph). Furthermore, we changed the paragraph in the discussion (section 7, paragraph X)
-\item[Scalability] In section 7, last paragraph, we discussed to what extend Tree Colors are useful for larger datasets, which is questioned by Review 2 and Review 4.
-\item[User study evaluation charts] In accordance with Review 3, we improved the color scheme used in the user study evaluation charts (Figure 20 and 21). We used the proposed color scheme by Okabe and Ito (2002) that is designed for people with low color vision. Reviewer 1 was confused by Figure 21. In section 6.2, paragraph 6, we described this figure as a diverging stacked bar chart. Since this type of chart is very common for preference and Likert scales, we did not explain it any further.
-\item[Variety of visualization approaches] As suggested by Review 3, we improved the case study by adding a different hierarchical visualization approach. We added a sunburst diagram, a radial icicle plot, that distributes space better than the layered icicle plot (i.e., there is more space available for the numerous leaf nodes). To satisfy the page limits, we placed this sunburst diagram in Figure 14, replacing the previous Kamada-Kawai layout node-link diagram.
-\end{description}
-
-Finally, we have made some minor changes:
-\begin{description}
+\item[Misleading terminology*] We corrected all misleading terms addressed by the reviewers. In the revised manuscript we use the term \textit{node-link diagram} where we incorrectly used the term \textit{graph}. Further, we use the term \textit{labels} rather than \textit{codes} which has obviously a different meaning in computer science.
+\item[Presentation problems*] We took care of all presentation problems addressed by Review 2 (and the other reviews).
 \item[Color \textit{schemes} or \textit{palettes}] We noticed that we had used both \textit{color palette(s)} and \textit{color scheme(s)} throughout the manuscript. To be consistent, we changed all instances of \textit{color palette(s)} to \textit{color scheme(s)}, which is in line with the manuscript title.
-\item[Shorter text] In order the meet the required page limit, we made the text of sections 5 and 6 a little shorter.
 \end{description}
+  
+\bigskip
+   
+\noindent{\Large \textbf{Specific changes}}
+
+\begin{description}
+\item[1. Introduction] \mbox{ }
+\begin{description}
+\item[Role of tree coloring*] In line with Review 1 and 4, we briefly addressed the role of tree coloring in the introduction (section 1, first paragraph) and in the discussion (section 7, paragraph 5).
+\item[Properties] In accordance with Review 1, we changed the paragraph about the properties of a hierarchical cholor scheme (section 1, paragraph 3).
+\end{description}
+\item[2. Related work*] In line with Review 4, we added a related work section (section 2) in which we also describe the real-world examples addressed by Review 1 (section 2, second paragraph). We also briefly describe the differences with Tree Colors.
+\item[3. Method] \mbox{ }
+\begin{description}
+\item[Description algorithm*] We better explained and clarified the algorithm: with respect to the hue fraction (section 3.1, last paragraph) and the permutation step (section 3.1.1, second paragraph). We illustrated the permutation step with a short example. 
+\item[Golden angle] Reply to the comment in Review 1 about the picking angle: The reason to chose 144 degrees over the golden angle of 137,5 degrees is that, contrary to the blog post addressed by the reviewer, the angle is rounded down to the next sibling. In the case of 5 siblings, the golden angle will be rounded down to 72, resulting in the unwanted permutation order of [1, 2, 3, 4, 5]. Notice that in most cases the golden angle and the angle of 144 degrees will be rounded down to the same angle. Indeed, by experiments we found that using the golden angle results in very similar color schemes.
+\item[Sibling coloring] In accordance with Review 3, we mentioned the limitations of our method of hue permutations and reversals earlier in the manuscript, namely in the method description (section 3.1.1, last paragraph). Furthermore, we changed the paragraph in the discussion (section 7, paragraph 3)
+\item[Color vision deficiency*] Color vision deficiency is indeed a very important aspect of information visualization. We added a section on color vision deficiency (section 3.4). Furthermore, it was not clearly described whether we took questionnaires from the 10 people with color vision deficiency. In fact we did, but we left out the results since the number of participants (10) was too low to draw statistical conclusions. In the current version of the manuscript, we clarified that we did take questionnaires from them (section 6.2, first paragraph). Furthermore, we described the results briefly (section 6.2, last paragraph). We also discuss this topic in section 7 (second last paragraph).
+\end{description}
+\item[4. Software] In line with Review 2 and 3 we removed superfluous text in section 4 (Software) as well as the figure containing a screenshot of the tool.
+\item[5. Applications] \mbox{ }
+\begin{description}
+\item[Variety of visualization approaches] As suggested by Review 3, we improved the case study (section 5) by adding a different hierarchical visualization approach. We added a sunburst diagram, a radial icicle plot, that distributes space better than the layered icicle plot (i.e., there is more space available for the numerous leaf nodes). To satisfy the page limits, we placed this sunburst diagram in Figure 14, replacing the previous Kamada-Kawai layout node-link diagram. As a consequence, and due to the page limit, we rewrote section 5.1.
+\item[Other treemap] We changed the treemap in Figure 15 (section 5.1). The previous one showed the wrong variable.
+\end{description}
+\item[6. User study]   \mbox{ }
+\begin{description}
+\item[User study setup*]  Obviously, we were unable to set up another user study with more advanced tasks within this review cycle. However, we think our user study still showed some insightful results, which is also mentioned in Review 1.  In line with this review, we briefly summarized the user study results in the introduction (section 1, paragraph 5). We recommended additional user studies as suggested by Review 3, for further research (section 7, paragraph 6).
+\item[Statistical significance*] In accordance with Review 3, we rewrote the user study results such that only claims are made that are tested statistically (section 6.2, paragraphs 3, 4, and 6). Furthermore, we improved the user study related discussion topics (section 7, paragraph 3 and 5).
+\item[Evaluation charts] In accordance with Review 3, we improved the color scheme used in the user study evaluation charts (Figure 20 and 21). We used the proposed color scheme by Okabe and Ito (2002) that is designed for people with low color vision. Reviewer 1 was confused by Figure 21. In section 6.2, paragraph 6, we described this figure as a diverging stacked bar chart. Since this type of chart is very common for preference and Likert scales, we did not explain it any further.
+\end{description}
+\item[7. Discussion] Paragraphs 3, 5, 6, and 7 of section 7 have been rewritten, which mentioned previously (in the topics Role of tree coloring, Sibling coloring, Color vision deficiency, User study setup, and Statistical significance).
+\begin{description}
+\item[Scalability*] In section 7 (last paragraph), we discussed to what extend Tree Colors are useful for larger datasets, which is questioned by Review 2 and Review 4.
+\end{description}
+\end{description}
+
+
 
 
 

@@ -167,10 +167,11 @@ pal <- tabPal$qual$Set1[c(1, 5, 2)]
      facet_grid(viz~read, drop=FALSE) +theme_bw() + coord_flip() +
      theme(panel.grid.major = element_line(colour="gray"), 
             panel.grid.minor = element_blank(), 
-            panel.margin = unit(.5, "lines")))
+            panel.margin = unit(.5, "lines"),
+            text=element_text(family="URWHelvetica")))
 
 
-ggsave("./plots/user_study_results.pdf", width=5, height=2.5, scale=1.5)
+ggsave("./plots/user_study_results.pdf", width=5, height=2.5, scale=1.5, useDingbats=FALSE)
 
 
 grob <- ggplotGrob(g1)
@@ -257,9 +258,10 @@ swap12 <- function(x) {
                        breaks = seq(-80, 80, 20)) +
     facet_wrap(~Subject, ncol=1) + coord_flip() + 
      theme_bw() +
-     theme(panel.margin = unit(.5, "lines")))
+     theme(panel.margin = unit(.5, "lines"),
+           text=element_text(family="URWHelvetica")))
     
-ggsave("./plots/user_study_results2.pdf", g2, width=4, height=2.5, scale=1.7)
+ggsave("./plots/user_study_results2.pdf", g2, width=4, height=2.5, scale=1.7, useDingbats=FALSE)
 
 
 
@@ -340,7 +342,8 @@ levels(u2$antwoord) <- c("SD", "D", "N", "A", "SA")
     facet_grid(viz~subject) +theme_bw() +
     theme(panel.grid.major = element_line(colour="gray"), 
           panel.grid.minor = element_blank(), 
-          panel.margin = unit(.5, "lines")))
+          panel.margin = unit(.5, "lines"),
+          text=element_text(family="URWHelvetica")))
 
 library(gridExtra)
 g_legend<-function(a.gplot){
@@ -360,7 +363,7 @@ g3 <- g3 + theme(legend.position="none")
 
 
 scale=1.5
-pdf("./plots/user_study_results_mod2.pdf", width=5*scale, height=3*scale)
+PDF("./plots/user_study_results_mod2.pdf", width=5*scale, height=3*scale, useDingbats=FALSE)
 grid.arrange(arrangeGrob(grob, g3, ncol=2, widths=c(4.25/6, 1.75/6)), 
              arrangeGrob(legend, ncol=2, widths=c(1.5/6, 4.5/6)),
              ncol=1, heights=c(5/6, 1/6))

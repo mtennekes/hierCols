@@ -596,3 +596,4 @@ embedFonts("./plots/Bar_survey_TC.pdf", outfile="./plots/Bar_survey_TC.pdf")
 
 
 embedFonts("./paperVisweek2014/hcp_v2.pdf", outfile="./paperVisweek2014/hcp_v2.pdf")
+embedFonts("./paperVisweek2014/hcp_v3.pdf", outfile="./paperVisweek2014/hcp_v3.pdf")

@@ -240,7 +240,7 @@
 \newcommand{\vgtc@onlineid}{}
 \newcommand{\onlineid}[1]{\renewcommand{\vgtc@onlineid}{#1}}
 
-\newcommand{\vgtc@preprinttext}{To appear in an IEEE VGTC sponsored conference proceedings}
+\newcommand{\vgtc@preprinttext}{To appear in IEEE Transactions on Visualization and Computer Graphics}
 \newcommand{\preprinttext}[1]{\renewcommand{\vgtc@preprinttext}{#1}}
 
 \newcommand{\vgtc@reviewtext}{Online Submission ID: \vgtc@onlineid}
@@ -253,9 +253,10 @@
 
 %%Comment from here
 \newcommand{\manuscriptnotetxt}{
-Manuscript received 31 March 2013; accepted 1 August 2013; posted online 13 October 2013; mailed on 4 October 2013.\par
+Manuscript received 31 Mar. 2014; accepted 1 Aug. 2014; date of publication xx xxx 2014; date of current version xx xxx 2014.\par
 For information on obtaining reprints of this article, please send \par
-e-mail to: tvcg@computer.org.
+e-mail to: tvcg@computer.org.\par
+The views expressed in this paper are those of the authors and do not necessarily reflect the policies of Statistics Netherlands.
 }
 %% to here to not use the blank
 
@@ -265,7 +266,7 @@ e-mail to: tvcg@computer.org.
 %%  to here
 \newcommand{\manuscriptnote}[1]{\renewcommand{\manuscriptnotetxt}{#1}}
 \newcommand{\copyrighttext}{}
-%%\newcommand{\copyrighttext}{1077-2626/06/\$20.00 \copyright 2006 IEEE%
+%%\newcommand{\copyrighttext}{1077-2626/12/\$31.00 \copyright 2014 IEEE%
 %%\hskip0.5in Published by the IEEE Computer Society}
 \newcommand{\authorfootertext}{}
 \newcommand{\authorfooter}[1]{\renewcommand{\authorfootertext}{{\em#1}}}
@@ -836,3 +837,4 @@ e-mail to: tvcg@computer.org.
 \endinput
 
 % End of file 'vgtc.cls'.
+

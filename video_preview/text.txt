@@ -1,0 +1,11 @@
+We propose a method to color tree- structured data to enhance visual analysis.
+
+We use the Hue-Chroma-Luminance color space model, that is known for its nice perceptual properties.
+
+Hue is used to differentiate the branches of the tree.
+
+Luminance and chroma are used to encode the depth of the nodes.
+
+
+
+

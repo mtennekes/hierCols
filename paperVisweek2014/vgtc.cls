@@ -255,8 +255,7 @@
 \newcommand{\manuscriptnotetxt}{
 Manuscript received 31 Mar. 2014; accepted 1 Aug. 2014; date of publication xx xxx 2014; date of current version xx xxx 2014.\par
 For information on obtaining reprints of this article, please send \par
-e-mail to: tvcg@computer.org.\par
-The views expressed in this paper are those of the authors and do not necessarily reflect the policies of Statistics Netherlands.
+e-mail to: tvcg@computer.org.
 }
 %% to here to not use the blank
 

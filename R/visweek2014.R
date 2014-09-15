@@ -326,6 +326,12 @@ set.seed(20140301)
 p <- treegraph(dat3, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=TRUE, vertex.size=10, vertex.label.dist=.6, vertex.label.cex=.7, edge.width=2, vertex.layout=igraph::layout.fruchterman.reingold, palette.HCL.options=list(hue_fraction=.95), vertex.label.family="URWHelvetica", mai=c(0,0,.1,0))
 dev.off()
 
+jpeg("plots/TreeColors_mini.jpg", width=100, height=100, type = "cairo")
+set.seed(20140301)
+p <- treegraph(dat3, index=c("index1", "index2", "index3"), directed=FALSE, show.labels=FALSE, vertex.size=14, vertex.label.dist=.6, vertex.label.cex=.7, edge.width=2, vertex.layout=igraph::layout.fruchterman.reingold, palette.HCL.options=list(hue_fraction=.95), vertex.label.family="URWHelvetica", mai=c(0,0,.1,0))
+dev.off()
+
+
 #####################################################################################
 #######
 ####### permutation

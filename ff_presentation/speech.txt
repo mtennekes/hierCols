@@ -1,0 +1,16 @@
+Hi, I'm Martijn
+
+In my previous life I was a painter.
+
+I loved to paint beatiful trees.
+
+Recently, I noticed that many datasets also have trees structures,
+
+...so I thought, why not color them, with nice colors
+
+...from the HCL color space model.
+
+So, we present Tree Colors,
+
+to support visual analysis.
+
